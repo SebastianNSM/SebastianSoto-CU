@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Asistentes Cenfotec</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/estandares.css">
+    <link rel="stylesheet" href="../css/estilos_listar_carreras.css">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <nav class="y-align">
+            <img src="../img/logo.png" alt="Logo blanco de Cenfotec">
+            <span id="btnMenu" class="fas fa-bars"></span>
+        </nav>
+        <div id="menu" class="hide">
+            <div>
+                <a href="../html/landing_page.html">Inicio</a>
+                <a href="#">Perfil</a>
+                <a href="#">Modificar perfil</a>
+                <a href="../html/registrar_carrera.html">Registrar carreras</a>
+                <a href="#">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+    <main class="body-grid">
+        <!-- Esta es la primer parte de la pagina -->
+        <section class="body-top body-top-grid">
+            <div id="div_titulo_listar" class="y-align">
+                <h1 class="x-align">Listar</h1>
+            </div>
+            <div id="div_listar_opciones" class="scroll-list">
+                <span class="fas fa-th-list"></span>
+                <a href="#">Sedes</a>
+
+                <span class="fas fa-th-list"></span>
+                <a href="#">Cursos</a>
+
+                <span class="fas fa-th-list"></span>
+                <a href="#">Grupos</a>
+
+                <span class="fas fa-th-list"></span>
+                <a href="#">Laboratorios</a>
+
+                <span class="fas fa-th-list"></span>
+                <a href="#">Usuarios</a>
+
+                <span class="fas fa-th-list"></span>
+                <a href="#">Períodos</a>
+            </div>
+        </section>
+
+        <!-- Esta es la seccion de busqueda para la pagina -->
+        <section class="body-buscar body-buscar-grid">
+            <h1 class="body-buscar-titulo">Carreras</h1>
+            <div class="search-bar body-buscar-barra">
+                <input type="text" placeholder="Buscar" id="txtBusqueda">
+                <button type="button" id="btnBuscar" class="y-align"><span class="x-align fas fa-search"></span></button> 
+            </div>
+        </section>
+
+        <!-- Esta es la tabla donde se listan todas las cosas, en este caso carreas -->
+        <section class="body-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Grado</th>
+                        <th>Código</th>
+                        <th>Creditos</th>
+                        <th>Fecha de creación</th>
+                        <th>Sede</th>
+                        <th>Período</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/carreras_public/servicio_carreras.js"></script>
+    <script src="../js/carreras_public/listar/controlador_listar_carreras.js"></script>
+    <script src="../js/controlador_menu.js"></script>
+
+</body>
+
+</html>

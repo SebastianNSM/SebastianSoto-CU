@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Registrar información de beca</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/estandares.css">
+    <link rel="stylesheet" href="../css/estilos_registrar_carreras.css">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+    
+</head>
+
+<body>
+    <header>
+        <nav class="y-align">
+            <img src="../img/logo.png" alt="Logo blanco de Cenfotec">
+            <span id="btnMenu" class="fas fa-bars"></span>
+        </nav>
+        <div id="menu" class="hide">
+            <div>
+                <a href="../html/landing_page.html">Inicio</a>
+                <a href="#">Perfil</a>
+                <a href="#">Modificar perfil</a>
+                <a href="#">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="titulo" class="y-align">
+            <h1 class="x-align">Registrar</h1>
+        </section>
+        <section id="formulario" class="main-grid">
+            <div class="main-title y-align">
+                <h1 class="x-align">Información de beca</h1>
+            </div>
+            <div class="main-content y-align no-scroll">
+                <div class="input-grid y-align">
+
+                    <label for="numMaxHoras">Máximo de horas trabajadas</label>
+                    <input type="number" id="numMaxHoras" required placeholder="Máximo de horas que un asitente puede trabajar*">
+
+                    <label for="numMaxBeca">Máximo porcentaje de beca</label>
+                    <input type="text" min="1" max="100" id="numMaxBeca" required placeholder="Máximo porcentaje de beca*">
+
+                </div>
+            </div>
+            <div class="main-action y-align">
+                <div id="buttons" class="x-align float">
+                    <button type="button" class="float-left">Salir</button>
+                    <button id="btnRegistrar" type="button" class="float-right">Registrar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- SweetAlert 2 script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../js/becas_public/servicio_becas.js"></script>
+    <script src="../js/becas_public/controlador_becas.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/controlador_menu.js"></script>
+</body>
+
+</html>

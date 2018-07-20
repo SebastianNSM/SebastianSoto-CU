@@ -1,0 +1,217 @@
+@font-face{
+    font-family: leelawad;
+    src: url(../fonts/leelawad.ttf);
+}
+
+/* Estilos generales */
+/* Estilos generales */
+/* Estilos generales */
+
+html{
+    font-family: leelawad;
+    font-size: 1em;
+    background-color: #e6e3ea;
+}
+h1{
+    font-size: 3em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+}
+h2{
+    font-size: 2.5em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+/* USEN ESTO COMO EL ESTANDAR PARA EL HEADER */
+nav{
+    background: linear-gradient(45deg, #1E2142,#441B49);
+    height: 80px;
+    position: relative;
+    margin-bottom: 10px;
+
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.35)
+}
+nav img{
+    margin-left: 45px;
+    width: 125px;
+    height: 55px;
+}
+nav span{
+    position: absolute;
+    right: 100px;
+
+    font-size: 30px;
+    color: 	rgba(230,227,234,0.5);
+}
+nav span:hover{
+    color: 	rgba(230,227,234,0.3);
+}
+
+#menu{
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: 80px;
+    right: 0px;;
+
+    width: 225px;
+    height: 300px;
+    background: linear-gradient(0deg,rgba(0,0,0,0), rgba(68,27,73,0.75));
+}
+
+#menu div{
+    margin: 40px;
+    height: 300px;
+}
+
+#menu a{
+    display: block;
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    padding-bottom: 10px;
+}
+#menu a:hover{
+    color: #9d9d9d;
+}
+/* USEN ESTO COMO EL ESTANDAR PARA EL HEADER */
+
+/* Estilos del scroll */
+/* Estilos del scroll */
+button{
+    background-color: rgba(30,33,66,0.8);
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
+
+    width: 125px;
+    height: 35px;
+    border: none;
+}
+button:hover{
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px;
+    background-color: rgba(30,33,66,0.7);
+}
+/* Estilos del scroll */
+/* Estilos del scroll */
+body::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(68,27,73,0.5);
+  outline: 1px solid slategrey;
+}
+/* Esto es para que el input de date se vea estilizado */
+input{
+    outline: none;
+}
+
+/* Esto es para el input date */
+/* Esto es para el input date */
+
+input{
+    height: 39.70px;
+}
+/* Esto elimina los botones de subir y bajar */
+body ::-webkit-inner-spin-button{
+    display: none;
+}
+/* Esto le da color a la flecha grande para elegir un calendario */
+body ::-webkit-calendar-picker-indicator {
+    font-size: 10px;
+    color:rgba(30,33,66,0.8);
+}
+/* Esto cambia el puntero y elimina el color de fondo para la flecha */
+body ::-webkit-calendar-picker-indicator:hover{
+    background-color: transparent;
+    cursor: pointer;
+} 
+select {
+    border: none;
+    -webkit-appearance: none;
+}
+/* Esto es para el input de creidtos */
+/* Esto es para el input de creidtos */
+
+body ::-webkit-inner-spin-button{
+    display: none;
+}
+
+/* Esto lo tienen todos los registrar */
+/* Esto lo tienen todos los registrar */
+/* Esto lo tienen todos los registrar */
+/* Esto lo tienen todos los registrar */
+
+/* Class */
+/* Class */
+/* Class */
+
+/* Scroll para todos los lists */
+.scroll-list{
+    overflow-y: scroll;
+}
+.scroll-list::-webkit-scrollbar {
+    width: 15px;
+    background-color: rgba(230,227,234,0.5);
+}
+ 
+.scroll-list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.scroll-list::-webkit-scrollbar-thumb {
+  background-color: rgba(30,33,66,0.7);
+  outline: 1px solid slategrey;
+}
+
+/* Position */
+/* Position */
+
+.y-align{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.x-align{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Float */
+/* Float */
+
+.float{
+    display: flow-root;
+}
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+
+/* JS */
+/* JS */
+/* JS */
+.errorInputs{
+    border: 2px solid #D1254D;
+}
+
+/* SweetAlert */
+/* SweetAlert */
+/* SweetAlert */
+
+button.swal2-confirm.swal2-styled{
+    padding: 0px;
+}
