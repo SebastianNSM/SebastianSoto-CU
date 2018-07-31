@@ -1,0 +1,311 @@
+@font-face {
+    font-family: Monserrat;
+    src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+html {
+    font-family: Monserrat;
+    background-color: #fff;
+}
+
+a {
+    text-decoration: none;
+    text-shadow: none;
+    cursor: pointer;
+}
+table span.fas{
+    color: 	rgba(77,84,170, .8);
+}
+/* Estilos del header */
+/* Estilos del header */
+/* Estilos del header */
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+header h1{
+    background-color: #fff;
+    text-align: center;
+    padding: 20px 0px;
+}
+header h1 a {
+    font-size: 2.5em;
+    color: rgba(48, 25, 62, .8);
+    text-shadow: 1px 1px 1px rgba(30, 33, 66, .1);
+}
+
+header nav {
+    height: 50px;
+    text-align: center;
+    background: linear-gradient(45deg, #1E2142, #441B49);
+    position: relative;
+    display: flow-root;
+    margin-bottom: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.35)
+}
+
+header nav a {
+    line-height: 50px;
+    color: white;
+    cursor: pointer;
+}
+header nav> a, nav>div{
+    margin-left: 40px;
+}
+header nav>a:first-child{
+    margin-left: 0px;
+}
+header nav>div{
+    display: inline-block;
+    position: relative;
+}
+header a span {
+    margin-left: 10px;
+}
+header nav img{
+    position: absolute;
+    left: 15px;
+    top: 2.5px;
+    height: 45px;
+}
+.menu{
+    display: none;
+    position: absolute;
+    top: 50px;
+    width: 180px;
+    background-color:#e6e3ea;
+}
+
+
+.menu li a{
+    font-size: 12px;
+    line-height: 2em;
+}
+.menu li{
+    text-align: left;
+    padding-left: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: none;
+    border-collapse: collapse;
+    background-color: rgba(48,25,62,.5);
+}
+.menu li:hover{
+    background-color: rgba(48,25,62,.8);
+}
+/* Estilos del header */
+/* Estilos del header */
+/* Estilos del header */
+
+/* Estructura principal */
+/* Estructura principal */
+/* Estructura principal */
+
+/* Side */
+/* Side */
+#sct_side{
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 130px;
+    left: 0;
+    background-color:rgb(95, 78, 107);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 150px 50px 150px 100px;
+    grid-template-areas:
+    "elementos elementos elementos"
+    "buscar buscar buscar"
+    "title title title"
+    "agregar agregar agregar";
+
+    /* "title title title"
+    "buscar buscar buscar"
+    "elementos elementos elementos"
+    "agregar agregar agregar"; */
+}
+.side-title{
+    grid-area: title;
+    background-image: url(../img/pencils-clips-colour-pencils-foam-rubber-159627.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    font-size: 2em;
+    font-weight: 500;
+    text-shadow: rgba(0, 0, 0, 0.9) 1px 1px 10px;
+    box-shadow: inset 0px 0px 10px 5px rgba(48,25,62, 0.35);
+}
+.side-buscar{
+    grid-area:buscar;
+    background-color: rgba(255, 255, 255, .5);
+    box-shadow: 0px -5px 10px rgba(48,25,62, 0.35);
+}
+.side-buscar>div{
+    margin: 0px auto;
+    height: 23px;
+    border: none;
+    background-color:#fff;
+    box-shadow: inset 0px 2px 3px 1.5px rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: 4fr 0.5fr;
+}
+#txtBusqueda{
+    border: none;
+    background-color: transparent;
+    padding-left: 10px;
+}
+#btnBuscar{
+    color: rgba(0,0,0,.6);
+}
+.side-buscar>div{
+    width: 90%;
+}
+.side-elementos{
+    grid-area: elementos;
+    margin: 10px;
+    position: relative;
+}
+.side-elementos img{
+    width: 80%;
+    height: 80px;
+}
+
+.side-agregar{
+    grid-area: agregar;
+    box-shadow: 0px -5px 10px rgba(48,25,62, 0.35);
+    background-color: rgba(255, 255, 255, .5);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+}
+.side-agregar h1{
+    font-size: 1.6em;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(30, 33, 66, .3);
+    margin-left: 20px;
+}
+.side-agregar span{
+    font-size: 2em; 
+    color: rgba(48, 25, 62, .3);
+}
+
+
+/* Contenido */
+/* Contenido */
+#sct_main_content{
+    margin-top: 145px;
+    margin-left: 265px;
+    margin-right: 15px;
+    position: relative;
+}
+
+/* Tabla */
+table{
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 10px;
+}
+table thead{
+    position: sticky;
+    top: 700px;
+}
+table thead tr{
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.35);
+}
+
+table thead tr th{
+    background-color:rgba(48,25,62,.9);
+    color: #fff;
+    font-weight: bold;
+    padding: 15px;
+}
+
+tbody tr{
+    text-align: center;
+    color: #1E2142;
+    height: 50px;
+}
+
+table tbody tr:hover{
+    background: rgba(68, 27, 73, 0.60);
+    color: white;
+    
+}
+tbody tr:hover >td .fas{
+    color: white;
+}
+
+
+table tbody{
+    background-color: rgba(77,84,170,.2);
+    font-size: 0.8em;
+}
+
+
+table tbody td{
+    padding: 10px;
+    line-height: 30px;
+}
+table tbody td:hover{
+    background: rgba(68, 27, 73, 0.80);
+}
+
+
+tbody tr td span{
+    padding: 0px 5px;
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(77,84,170)
+}
+tbody tr td span.fas:hover{
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* Scroll */
+/* Scroll */
+
+.scroll::-webkit-scrollbar {
+    width: .5em;
+}
+
+.scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(68, 27, 73, 0.5);
+    outline: 1px solid slategrey;
+}
+
+/* Class */
+/* Class */
+/* Class */
+.y-align{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.x-align{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.button{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 38px;
+    padding: 0px 10px;
+    color: white;
+    border: none;
+    outline: none;
+    background-color: rgba(77,84,170, .9);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 2px;
+}
+.button:hover{
+    box-shadow: none;
+    background-color: rgba(77,84,170, .8);
+}

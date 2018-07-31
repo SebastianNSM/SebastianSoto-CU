@@ -1,0 +1,148 @@
+<!-- Inicio de lo que deben tener todos los dashboards -->
+<!-- Inicio de lo que deben tener todos los dashboards -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Asistentes Cenfotec</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/registrar.css">
+    <!-- Si otra hoja de estilos se necesita, se agrega aqui -->
+
+</head>
+
+<body class="scroll">
+    <header>
+        <h1>
+            <a href="../landing_page.html">Asistentes Cenfotec</a>
+        </h1>
+        <nav>
+            <a href="../landing_page.html">Inicio</a>
+            <a href="#">Perfil</a>
+            <div>
+                <a id="btnOpciones">Opciones
+                    <span class="fas fa-caret-down"></span>
+                </a>
+                <ul id="menuOpciones" class="menu">
+                    
+                </ul>
+            </div>
+            <a id="btnCerrarSesion">Cerrar sesión</a>
+        </nav>
+    </header>
+    <!-- Fin de lo que deben tener todos los dashboards -->
+    <!-- Fin de lo que deben tener todos los dashboards -->
+
+    <main>
+        <section id="sct_side">
+            <div class="side-title y-align">
+                <h1 class="x-align">Carreras</h1>
+            </div>
+            <div class="side-buscar y-align">
+                <div class="x-align">
+                    <input type="text" placeholder="Buscar" id="txtBusqueda">
+                    <div class="y-align">
+                        <span id="btnBuscar" class="x-align fas fa-search"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-elementos y-align">
+                <img class="x-align" src="../../img/logo.png" alt="Logo de Cenfotec">
+            </div>
+            <a class="side-agregar" id="btnAgregar">
+                <h1>Agregar</h1>
+                <span class="fas fa-plus"></span>
+            </a>
+        </section>
+        <section id="sct_main_content">
+            <!-- Como ejemplo los datos estan quemados -->
+            <table id="tblCarreras" class="scroll">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Grado</th>
+                        <th>Código</th>
+                        <th>Creditos</th>
+                        <th>Fecha de creación</th>
+                        <th>Sede</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ingenieria de software</td>
+                        <td>Bachillerato</td>
+                        <td>BISOFT-04</td>
+                        <td>492</td>
+                        <td>12/10/2000</td>
+                        <td>Sede central</td>
+                        <td>Activo</td>
+                        <td>
+                            <span class="fas fa-cogs"></span>
+                            <span class="fas fa-trash-alt"></span>
+                            <span class="fas fa-link"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="sct_registrar" class="popup-bg">
+            <!-- Formulario que aparece -->
+            <form class="popup-content">
+                <h1 class="title">Registrar carreras</h1>
+
+                <div class="form">
+                    <input type="text" id="txtNombre" required placeholder="Nombre de la carrera*">
+
+                    <select id="txtGrado" required>
+                        <option value="">Elija un grado</option>
+                        <option value="Bachillerato">Bachillerato</option>
+                        <option value="Diplomado">Diplomado</option>
+                        <option value="Técnico">Técnico</option>
+                        <option value="Maestría">Maestría</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        
+                    </select>
+
+                    <input type="text" id="txtCodigo" required placeholder="Código de carrera*">
+
+                    <input type="number" id="numCreditos" required placeholder="Créditos de la carrera*" min="100" max="500">
+
+                    <input type="date" id="dateFecha" required autocomplete="">
+
+                    <select id="txtSede">
+                            <!-- Debo ser capaz de agregar varias (subdocumento sede) -->
+                        <option value="">Elija una sede</option>
+                    </select>
+
+                    <button type="button" class="button" id="btnRegistrar">Registrar</button>
+                </div>
+            </form>
+            <!-- Formulario que aparece -->
+        </section>
+    </main>
+    <!-- SCRIPTS FIJOS PARA TODOS Dashboards -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../../js/jquery-3.3.1.js"></script>
+    <!-- SCRIPTS FIJOS PARA TODOS -->
+
+    <!-- Todos los servicios necesarios -->
+    <script src="../../js/usuarios_public/servicio_usuarios.js"></script>
+    <script src="../../js/carreras_public/servicio_carreras.js"></script>
+    <script src="../../js/sedes_public/servicio_sedes.js"></script>
+    <!-- Todos los servicios necesarios -->
+
+    <!-- Todos los controladores necesarios -->
+    <script src="../../js/controlador_menu.js"></script>
+    <script src="../../js/carreras_public/controlador_carreras.js"></script>
+    <!-- Todos los controladores necesarios -->
+
+</body>
+
+</html>

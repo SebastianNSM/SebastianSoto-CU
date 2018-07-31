@@ -16,6 +16,8 @@
 
     <main class="main-grid">
         <!-- Title -->
+        <!-- Title -->
+        <!-- Title -->
         <section id="sct_title" class="main-grid-title">
             <div class="title-grid-img y-align">
                 <img src="../img/logo.png" alt="Logo de Cenfotec">
@@ -27,8 +29,13 @@
                 Esta aplicación facilita los procesos administrativos de la universidad Cenfotec, haciendo más eficiente el registro y búsqueda
                 de usuarios, sedes, carreras y cursos entre otros.
             </p>
-            <a href="#" class="title-grid-a x-align">Iniciar sesión</a>
+            <button id="btnIniciar" class="title-grid-a x-align">Iniciar sesión</button>
         </section>
+
+
+        <!-- Mision vision valores -->
+        <!-- Mision vision valores -->
+        <!-- Mision vision valores -->
         <section id="sct_mvv" class="main-grid-mvv">
             <!-- Mision -->
             <div class="mvv-grid-mision mvv-side">
@@ -87,6 +94,10 @@
                 </div>
         </section>
 
+
+        <!-- Funciones del app -->
+        <!-- Funciones del app -->
+        <!-- Funciones del app -->
         <!-- Funciones -->
         <div class="main-grid-funciones">
             <h1>Por qué esta aplicación?</h1>
@@ -102,33 +113,57 @@
             <!-- profesores -->
             <h3>Solicite un asistente</h3>
             <p class="roles-grid-profesores">
-                Asistentes Cenfotec le facilita al profesor solicitar a un asistente,únicamente abra la aplicación, complete la información y el proceso de aprobación iniciará inmediatamente.
+                Asistentes Cenfotec le facilita al profesor solicitar a un asistente,únicamente abra la aplicación, complete la información
+                y el proceso de aprobación iniciará inmediatamente.
             </p>
             <!-- profesores img -->
             <div class="roles-grid-profesores-img">
-                <img src="../img/flow-student.jpg" alt="Facil manejo para el aministrador">
+                <img src="../img/cool notes.jpeg" alt="Facil manejo para el aministrador">
             </div>
             <!-- asistentes -->
             <h3>Rendición de cuentas</h3>
             <p class="roles-grid-asistentes">
-                Una vez el asistente termine su servicio, le debe mostrar al profesor su bitácora. Solo llena un formulario y el profesor puede aprobar o desaprobar la solicitud e incluso agregar actividades a futuro.
+                Una vez el asistente termine su servicio, le debe mostrar al profesor su bitácora. Solo llena un formulario y el profesor
+                puede aprobar o desaprobar la solicitud e incluso agregar actividades a futuro.
             </p>
             <!-- asistentes img -->
             <div class="roles-grid-asistentes-img">
-                <img src="../img/admin_easy.jpeg" alt="Facil manejo para el aministrador">
+                <img src="../img/report.jpeg" alt="Facil manejo para el aministrador">
             </div>
             <!-- administrador -->
             <h3 class="roles-grid-administrador-title">Sin límites</h3>
             <p class="roles-grid-administrador">
-                El administrador puede ayudarle al que sea, cuando sea. No hay límites para las funciones disponibles en el caso de ser administrador. Todo disponible facilmente y sin atrasos.
+                El administrador puede ayudarle al que sea, cuando sea. No hay límites para las funciones disponibles en el caso de ser administrador.
+                Todo disponible facilmente y sin atrasos.
             </p>
             <!-- administrador img -->
             <div class="roles-grid-administrador-img">
-                <img src="../img/asist-sol.jpg" alt="Facil manejo para el aministrador">
+                <img src="../img/admin.jpeg" alt="Facil manejo para el aministrador">
             </div>
-            
+
         </div>
-
+        <!-- Iniciar sesion -->
+        <!-- Iniciar sesion -->
+        <!-- Iniciar sesion -->
+        <section id="sct_iniciar_sesion">
+            <div class="popup-bg animate">
+                <!-- Formulario que aparece -->
+                <form class="popup-content animate">
+                    <div class="popup-form animate">
+                        <h1>Iniciar sesión</h1>
+                        <input type="text" id="txtCorreo" placeholder="ejemplo@ucenfotec.ac.cr">
+                        <div id="divContrasenna">
+                            <input type="password" id="txtContrasenna" placeholder="Contraseña"><a type="button" class="fas fa-lock" id="btnVerContrasenna"></a>
+                        </div>
+                        <button type="button" id="btnIngresar" class="x-align">Ingresar</button>
+                    </div>
+                </form>
+                <!-- Formulario que aparece -->
+            </div>
+        </section>
     </main>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/usuarios_public/servicio_usuarios.js"></script>
+    <script src="../js/controlador_sesion.js"></script>
 </body>

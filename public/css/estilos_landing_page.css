@@ -1,9 +1,9 @@
 @font-face{
-    font-family: leelawad;
-    src: url(../fonts/leelawad.ttf);
+    font-family: Montserrat;
+    src: url(../fonts/Montserrat-Regular.ttf);
 }
 html{
-    font-family: leelawad;
+    font-family: Montserrat;
     background-color: rgba(230,227,234);
 }
 
@@ -26,6 +26,25 @@ h3{
     font-weight: bold;
 }
 
+button{
+    text-decoration: none;
+    text-align: center;
+
+    width: 150px;
+    border: none;
+
+    font-size: 18px;
+    padding: 10px;
+
+    color: white;
+    background-color: rgba(77,84,170, 0.7);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgba(77,84,170);
+    box-shadow: rgba(50, 50, 50, 0.4) 0px 0px 20px;
+}
 /* Grid del main */
 /* Grid del main */
 /* Grid del main */
@@ -34,7 +53,7 @@ h3{
     display: grid;
     grid-gap: 0px 10px;
     grid-template-columns: repeat(3,1fr);
-    grid-template-rows: 600px 800px 250px 400px;
+    grid-template-rows: 600px 800px 250px 500px;
     grid-template-areas: 
     "title title title"
     "mvv mvv mvv"
@@ -78,6 +97,7 @@ h3{
     margin-left: 45px;
     width: 125px;
     height: 55px;
+    box-shadow: none;
 }
 .title-grid-h1{
     grid-area: h1;
@@ -106,27 +126,8 @@ h3{
 
     width: 400px;
 }
-.main-grid-title a{
-    text-decoration: none;
-    text-align: center;
-
-    width: 150px;
-    height: 1em;
-
-    font-size: 18px;
-    padding: 10px;
-
-    color: white;
-    background-color: rgba(68,27,73,0.9);
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
-}
-.main-grid-title a:hover{
-    background-color: rgba(68,27,73,1);
-    box-shadow: rgba(50, 50, 50, 0.4) 0px 0px 20px;
-}
 /* Estilos del header */
 /* Estilos del header */
-
 
 /* Estos son los estilos de mvv */
 /* Estos son los estilos de mvv */
@@ -331,3 +332,95 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 /* Esto es para el scroll */
+
+
+/* Todos los estilos de iniciar sesion */
+/* Todos los estilos de iniciar sesion */
+/* Todos los estilos de iniciar sesion */
+
+/* The popup (background) */
+.popup-bg {
+	display:none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* popup Content Box */
+.popup-content {
+    background-color: #e6e3ea;
+    margin: 4% auto 15% auto;
+    width: 400px; 
+    height: 245px;
+    padding: 30px;
+    border-radius: 5px;
+    position: relative;
+}
+.popup-content h1{
+    text-align: center;
+    color: rgba(30,33,66,0.8);
+    position: relative;
+    font-size: 3em;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #b3b0b6;
+    margin-bottom: 30px;
+}
+.popup-content input{
+    margin: 0px auto;
+    margin-bottom: 2em;
+    width: 80%;
+    height: 34px;
+    display: block;
+    
+    border: none;
+    box-shadow: inset 0px 2px 3px 1.5px rgba(0, 0, 0, 0.2);
+    padding: 0px 10px;
+}
+.popup-content button{
+    background-color: rgba(77,84,170, .9);
+}
+.popup-content button:hover{
+    background-color: rgba(77,84,170, .7);
+}
+/* Add Zoom Animation */
+.animate {
+    transition: ease-in 4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* Estilos del input de contrasenna */
+#divContrasenna{
+    margin: 0px auto;
+    margin-bottom: 2em;
+    width: 340px;
+    height: 34px;
+    border: none;
+    background-color: rgba(77,84,170, 0.7);;
+    box-shadow: inset 0px 2px 3px 1.5px rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: 300px 40px;
+}
+#divContrasenna input{
+    background-color: none;
+    width: 280px;
+    margin: 0px;
+}
+#divContrasenna a{
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+    display: inline;
+    text-align: center;
+    line-height: 34px;
+    cursor: pointer;
+}
+#divContrasenna a:hover{
+    color: rgba(230,227,234);
+}
+input.errorInput {
+    border: 1px solid #D1254D;
+}

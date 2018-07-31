@@ -8,8 +8,7 @@ module.exports.registrar_carrera = function (req, res) {
         codigo_carrera: req.body.codigo_carrera,
         creditos_carrera: req.body.creditos_carrera,
         fecha_carrera: req.body.fecha_carrera,
-        sede_carrera: "Sede Central",
-        periodo_carrera: "Primer período",
+        sede_carrera: req.body.sede_carrera,
         estado_carrera: "Activo"
     });
     nuevaCarrera.save(function (error) {

@@ -8,7 +8,6 @@ let carreraSchema = new mongoose.Schema({
     creditos_carrera: { type : Number, required: true },
     fecha_carrera: { type: Date, required: true },
     sede_carrera: {type: String, required: true},
-    periodo_carrera: {type: String, required: true},
     estado_carrera: { type: String, required: true},
     cursos_carrera : [
         {

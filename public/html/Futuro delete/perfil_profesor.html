@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/estandares.css" />
+    <link rel="stylesheet" href="../css/estilos_perfiles.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <nav class="y-align">
+            <img src="../img/logo.png" alt="Logo blanco de Cenfotec">
+            <span id="btnMenu" class="fas fa-bars"></span>
+        </nav>
+        <div id="menu" class="hide">
+            <div>
+                <a href="#">Inicio</a>
+                <a href="#">Perfil</a>
+                <a href="#">Modificar perfil</a>
+                <a href="registrar_sedes.html">Registrar Sedes</a>
+                <a href="../html/index.html">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-grid">
+            <div class="sidebar">
+                <div class="div-foto">
+
+                </div>
+                <div>
+                    <h3>Administrador</h3>
+                </div>
+                <div class="">
+                    <h3 class="label">Nombre:</h3>>
+                </div>
+                <div class="">
+                    <h3>Correo electrónico</h3>
+                </div>
+                <div class="">
+                    <h3>Número telefónico:</h3>
+                </div>
+                <div class="">
+                    <h3>Número de Cédula:</h3>
+                </div>
+                <div>
+                    <button id="btnVolver" type="button">Volver</button>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="main-content-title y-align">
+                    <!-- Esto cambia con cada click de la persona en la lista de acciones -->
+                    <h1 class="x-align" id="tituloPerfil">Profesor</h1>
+                </div>
+
+                <!-- Esta es la lista de posibles acciones -->
+                <div class="main-content-list scroll-list">
+
+                    <span class="fas fa-th-list"></span>
+                    <a id="aSolicitudes">Solicitudes</a>
+
+                    <span class="fas fa-th-list"></span>
+                    <a id="aBitacora">Bitácora</a>
+
+                </div>
+                <div class="main-content-registrar option-grid">
+                    <div class="far">
+                        <a class="far fa-address-book"></a>
+                    </div>
+                    <div class="title">
+                        <!-- El href del caso base debe ser #registrar_usuarios.html -->
+                        <a href="#" id="lnkRegistrar">Registrar</a>
+                    </div>
+                </div>
+                <div class="main-content-listar option-grid">
+                    <div class="far">
+                        <a class="far fa-file-code"></a>
+                    </div>
+                    <div class="title">
+                        <!-- El href del caso base debe ser #listar_usuarios.html -->
+                        <a href="#" id="lnkListar">Listar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/cambiar_perfil_profesor.js"></script>
+    <script src="../js/controlador_menu.js"></script>
+</body>
+
+</html>

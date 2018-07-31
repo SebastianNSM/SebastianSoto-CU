@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Registrar información de beca</title>
+    <title>Registrar Carrera</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/estandares.css">
     <link rel="stylesheet" href="../css/estilos_registrar_carreras.css">
@@ -24,7 +24,8 @@
                 <a href="../html/landing_page.html">Inicio</a>
                 <a href="#">Perfil</a>
                 <a href="#">Modificar perfil</a>
-                <a href="#">Cerrar sesión</a>
+                <a href="../html/listar_carreras.html">Listar carreras</a>
+                <a id="btnCerrarSesion">Cerrar sesión</a>
             </div>
         </div>
     </header>
@@ -34,17 +35,30 @@
         </section>
         <section id="formulario" class="main-grid">
             <div class="main-title y-align">
-                <h1 class="x-align">Información de beca</h1>
+                <h1 class="x-align">Carrera</h1>
             </div>
-            <div class="main-content y-align no-scroll">
-                <div class="input-grid y-align">
+            <div class="main-content scroll-list">
+                <div class="input-grid">
 
-                    <label for="numMaxHoras">Máximo de horas trabajadas</label>
-                    <input type="number" id="numMaxHoras" required placeholder="Máximo de horas que un asitente puede trabajar*">
+                    <label for="txtNombre">Nombre</label>
+                    <input type="text" id="txtNombre" required placeholder="Nombre de la carrera*">
 
-                    <label for="numMaxBeca">Máximo porcentaje de beca</label>
-                    <input type="text" min="1" max="100" id="numMaxBeca" required placeholder="Máximo porcentaje de beca*">
+                    <label for="txtGrado">Grado</label>
+                    <select id="txtGrado" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="Bachillerato">Bachillerato</option>
+                        <option value="Diplomado">Diplomado</option>
+                        <option value="Técnico">Técnico</option>
+                    </select>
 
+                    <label for="txtCodigo">Código</label>
+                    <input type="text" id="txtCodigo" required placeholder="Código de carrera*">
+
+                    <label for="numCreditos">Créditos</label>
+                    <input type="number" id="numCreditos" required placeholder="Créditos de la carrera*" min="1" max="100">
+
+                    <label for="dateFecha">Fecha de creación</label>
+                    <input type="date" id="dateFecha" required>
                 </div>
             </div>
             <div class="main-action y-align">
@@ -56,10 +70,11 @@
         </section>
     </main>
     <!-- SweetAlert 2 script -->
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
-    <script src="../js/becas_public/servicio_becas.js"></script>
-    <script src="../js/becas_public/controlador_becas.js"></script>
     <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/carreras_public/servicio_carreras.js"></script>
+    <script src="../js/carreras_public/registrar/controlador_registrar_carreras.js"></script>
     <script src="../js/controlador_menu.js"></script>
 </body>
 

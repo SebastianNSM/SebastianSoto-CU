@@ -14,7 +14,8 @@ function registrarCarrera (paInfoCarrera)
             grado_carrera: paInfoCarrera[1],
             codigo_carrera: paInfoCarrera[2],
             creditos_carrera: paInfoCarrera[3],
-            fecha_carrera: paInfoCarrera[4]
+            fecha_carrera: paInfoCarrera[4],
+            sede_carrera: paInfoCarrera[5]
         }
     });
 
