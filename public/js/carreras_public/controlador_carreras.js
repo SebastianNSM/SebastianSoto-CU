@@ -55,6 +55,7 @@ let dFechaActual = dHoy;
 // Esta funcion prepara los inputs de sede para elegir de la lista correspondiente
 function imprimirSedes() {
     let sltSede = document.querySelectorAll('select[name = "sede"]');
+    sltSede.innerHTML = '';
     let listaSedes = obtenerListaSedes();
 
     for (let k = 0; k < sltSede.length; k++) {
@@ -82,6 +83,35 @@ function imprimirCursos() {
             inputCurso.options.add(nuevaOpcion);
         }
     }
+}
+
+// Eliminar
+// Eliminar
+// Eliminar
+
+function eliminar_carrera() {
+    let _id = this.dataset._id;
+    swal({
+        title: 'Desea eliminar esta carrera?',
+        text: "La carrera se eliminará permanentemente",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar!'
+    }).then((result) => {
+        if (result.value) {
+            eliminarCarrera(_id);
+            
+            reload();
+            swal(
+                'Eliminado!',
+                'El usuario ha sido eliminado con éxito',
+                'success'
+            )
+        }
+    });
+
 }
 
 // Buscar
@@ -193,6 +223,8 @@ function mostrarListaCarreras(paBuscar) {
             botonEliminar.classList.add('fa-trash-alt');
 
             botonEliminar.dataset._id = listaCarreras[i]['_id'];
+
+            botonEliminar.addEventListener('click', eliminar_carrera);
 
             celdaOpciones.appendChild(botonEliminar);
 
@@ -465,6 +497,8 @@ function limpiarFormularioModificar() {
 };
 
 function reload() {
-    location.reload();
+    mostrarListaCarreras();
+    imprimirSedes();
+    imprimirCursos();
 }
 // Esto es para que despliegue el formulario
