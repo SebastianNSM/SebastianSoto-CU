@@ -91,14 +91,14 @@ function accionRol(psRol) {
 // Contrasenna visible o no
 let botonVer = document.querySelector('#btnVerContrasenna');
 botonVer.addEventListener('click', function () {
-    let isOpen = botonVer.classList.contains('fa-lock-open');
+    let isOpen = botonVer.classList.contains('fa-eye');
     if (isOpen) {
-        botonVer.classList.remove('fa-lock-open');
-        botonVer.classList.add('fa-lock');
+        botonVer.classList.remove('fa-eye');
+        botonVer.classList.add('fa-eye-slash');
         inputContrasenna.type = 'password';
     } else {
-        botonVer.classList.remove('fa-lock');
-        botonVer.classList.add('fa-lock-open');
+        botonVer.classList.remove('fa-eye-slash');
+        botonVer.classList.add('fa-eye');
         inputContrasenna.type = 'text';
     }
 });

@@ -13,9 +13,27 @@ router.route('/listar_carrera')
         carrerasApi.listar_carrera(req, res);
     });
 
-router.route('/agregar_carrera')
+router.route('/agregar_curso_carrera')
     .post(function (req, res) {
-        users.agregar_titulo(req, res);
+        carrerasApi.agregar_curso_carrera(req, res);
+    });
+router.route('/agregar_sede_carrera')
+    .post(function (req, res) {
+        carrerasApi.agregar_sede_carrera(req, res);
+    });
+router.route('/buscar_carrera')
+    .post(function (req, res) {
+        carrerasApi.buscar_carrera(req, res);
+    });
+
+router.route('/modificar_carrera')
+    .post(function (req, res) {
+        carrerasApi.modificar_carrera(req, res);
+    });
+
+router.route('/eliminar_carrera')
+    .post(function (req, res) {
+        carrerasApi.eliminar_carrera(req, res);
     });
 
 module.exports = router;

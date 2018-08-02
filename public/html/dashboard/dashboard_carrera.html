@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
     <link rel="stylesheet" href="../../css/dashboard.css">
-    <link rel="stylesheet" href="../../css/registrar.css">
+    <link rel="stylesheet" href="../../css/formularios.css">
     <!-- Si otra hoja de estilos se necesita, se agrega aqui -->
 
 </head>
@@ -25,11 +25,21 @@
             <a href="../landing_page.html">Inicio</a>
             <a href="#">Perfil</a>
             <div>
+                <a id="btnBeca">Beca
+                    <span class="fas fa-caret-down"></span>
+                </a>
+                <!-- Agregar esta parte nueva y cambiar el controlador menu -->
+                <ul id="menuBeca" class="menu">
+                    
+                </ul>
+            </div>
+
+            <div>
                 <a id="btnOpciones">Opciones
                     <span class="fas fa-caret-down"></span>
                 </a>
                 <ul id="menuOpciones" class="menu">
-                    
+
                 </ul>
             </div>
             <a id="btnCerrarSesion">Cerrar sesión</a>
@@ -70,6 +80,7 @@
                         <th>Creditos</th>
                         <th>Fecha de creación</th>
                         <th>Sede</th>
+                        <th>Cursos</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                     </tr>
@@ -101,13 +112,16 @@
                     <input type="text" id="txtNombre" required placeholder="Nombre de la carrera*">
 
                     <select id="txtGrado" required>
+
                         <option value="">Elija un grado</option>
+                        <option value="Maestría">Maestría</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        <option value="Posgrado">Posgrado</option>
                         <option value="Bachillerato">Bachillerato</option>
                         <option value="Diplomado">Diplomado</option>
                         <option value="Técnico">Técnico</option>
-                        <option value="Maestría">Maestría</option>
-                        <option value="Licenciatura">Licenciatura</option>
-                        
+
+
                     </select>
 
                     <input type="text" id="txtCodigo" required placeholder="Código de carrera*">
@@ -116,15 +130,81 @@
 
                     <input type="date" id="dateFecha" required autocomplete="">
 
-                    <select id="txtSede">
-                            <!-- Debo ser capaz de agregar varias (subdocumento sede) -->
-                        <option value="">Elija una sede</option>
-                    </select>
-
                     <button type="button" class="button" id="btnRegistrar">Registrar</button>
                 </div>
             </form>
             <!-- Formulario que aparece -->
+        </section>
+        <section id="sct_asociar" class="popup-bg">
+            <!-- Formulario que aparece -->
+            <form class="popup-content">
+                <h1 class="title">Asociar a carreras</h1>
+
+                <div class="form">
+                    <select name="sede" id="txtSedeAsociar">
+                        <!-- Debo ser capaz de agregar varias (subdocumento sede) -->
+                        <option value="">Elija una sede</option>
+                    </select>
+                    <select name="curso" id="txtCurso">
+                        <option value="">Cambie el curso</option>
+                    </select>
+                    <button type="button" class="button" id="btnAsociar">Asociar</button>
+                </div>
+            </form>
+            <!-- Formulario que aparece -->
+        </section>
+        <section id="sct_modificar" class="popup-bg">
+            <!-- Formulario que aparece -->
+            <form class="popup-content scroll">
+                <h1 class="title">Modificar carrera</h1>
+
+                <div class="form">
+                    <input type="text" id="txtNombreActual" required placeholder="Nombre de la carrera*">
+
+                    <select id="txtGradoActual" required>
+
+                        <option value="">Elija un grado</option>
+                        <option value="Maestría">Maestría</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        <option value="Posgrado">Posgrado</option>
+                        <option value="Bachillerato">Bachillerato</option>
+                        <option value="Diplomado">Diplomado</option>
+                        <option value="Técnico">Técnico</option>
+
+
+                    </select>
+
+                    <input type="text" id="txtCodigoActual" required placeholder="Código de carrera*">
+
+                    <input type="number" id="numCreditosActual" required placeholder="Créditos de la carrera*" min="100" max="500">
+                    
+                    <input type="date" id="dateFechaActual" required autocomplete="">
+
+                    <select name="sede" id="txtSedeActual">
+                        <option value="">Cambie la sede</option>
+                    </select>
+
+                    <select name="curso" id="txtCursoActual">
+                        <option value="">Cambie el curso</option>
+                    </select>
+
+                    <select id="txtEstadoActual">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+
+                    <button type="button" class="button" id="btnActualizar">Actualizar</button>
+                </div>
+            </form>
+            <!-- Formulario que aparece -->
+        </section>
+        <section name="sct_cursos" class="popup-bg">
+            <div class="popup-content">
+                <h1 class="title"></h1>
+                <ul>
+                    
+                </ul>
+            </div>
         </section>
     </main>
     <!-- SCRIPTS FIJOS PARA TODOS Dashboards -->
@@ -134,6 +214,7 @@
 
     <!-- Todos los servicios necesarios -->
     <script src="../../js/usuarios_public/servicio_usuarios.js"></script>
+    <script src="../../js/cursos_public/servicio_cursos.js"></script>
     <script src="../../js/carreras_public/servicio_carreras.js"></script>
     <script src="../../js/sedes_public/servicio_sedes.js"></script>
     <!-- Todos los servicios necesarios -->

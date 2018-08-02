@@ -8,7 +8,6 @@ module.exports.registrar_carrera = function (req, res) {
         codigo_carrera: req.body.codigo_carrera,
         creditos_carrera: req.body.creditos_carrera,
         fecha_carrera: req.body.fecha_carrera,
-        sede_carrera: req.body.sede_carrera,
         estado_carrera: "Activo"
     });
     nuevaCarrera.save(function (error) {
@@ -33,9 +32,9 @@ module.exports.listar_carrera = function (req, res) {
         }
     );
 };
-module.exports.agregar_carrera = function (req, res) {
+module.exports.agregar_curso_carrera = function (req, res) {
 
-    userModel.update(
+    carreraModel.update(
         { _id: req.body._id },
         {
             $push:
@@ -55,4 +54,56 @@ module.exports.agregar_carrera = function (req, res) {
             }
         }
     )
+};
+module.exports.agregar_sede_carrera = function (req, res) {
+
+    carreraModel.update(
+        { _id: req.body._id },
+        {
+            $push:
+            {
+                'sedes_carrera':
+                {
+                    nombre_sede: req.body.nombre_sede,
+                }
+            }
+        },
+        function (error) {
+            if (error) {
+                res.json({ success: false, msg: 'No se pudo registrar la sede, ocurrió el siguiente error' + error });
+            } else {
+                res.json({ success: true, msg: 'La sede se registró con éxito' });
+            }
+        }
+    )
+};
+module.exports.buscar_carrera = function (req, res) {
+    carreraModel.findById({ _id: req.body._id }).then(
+        function (carrera) {
+            res.send(carrera);
+        }
+    );
+};
+module.exports.modificar_carrera = function (req, res) {
+    carreraModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err) {
+            if (err) {
+                res.json({ success: false, msg: 'La carrera no se ha podido modificar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'Se ha actualizado correctamente. ' + res });
+            }
+        });
+};
+
+module.exports.eliminar_carrera = function (req, res) {
+    carreraModel.findByIdAndDelete(req.body._id,
+        function (err) {
+            if (err) {
+                res.json({ success: false, msg: 'La carrera no se ha podido eliminar. ' + handleError(err) });
+
+            } else {
+                res.json({ success: true, msg: 'Se ha eliminado correctamente. ' + res });
+            }
+        });
 };

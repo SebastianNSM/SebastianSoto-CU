@@ -66,6 +66,7 @@ const carreras = require('./components/carreras/carreras.route');
 const becas = require('./components/becas/becas.route');
 const users = require('./components/users/users.route');
 const sedes = require('./components/sedes/sedes.route');
+const cursos = require('./components/cursos/curso.route');
 /**
  * Le indicamos que le de acceso externo a las rutas inicializadas
  */
@@ -73,6 +74,7 @@ app.use('/api', carreras);
 app.use('/api', becas);
 app.use('/api', users);
 app.use('/api', sedes);
+app.use('/api', cursos);
 
 
 

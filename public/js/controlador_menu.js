@@ -12,6 +12,16 @@ $('#menuOpciones, header nav>div').mouseleave(function () {
     $('#menuOpciones').slideUp('250');
 });
 
+// Para menu beca
+$('#btnBeca').click(function () {
+    if ($('#menuBeca').css('display') === 'none') {
+        $('#menuBeca').slideDown('250');
+    }
+});
+$('#menuBeca, header nav>div').mouseleave(function () {
+    $('#menuBeca').slideUp('250');
+});
+
 // Para cerrar sesion
 let botonCerrar = document.querySelector('#btnCerrarSesion');
 botonCerrar.addEventListener('click', cerrarSesion);
@@ -41,30 +51,51 @@ function leerRolOpciones() {
     let opcionesAsistenteDecanatura = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos'];
     let opcionesProfesor = ['Bitácora', 'Solicitud'];
     let opcionesAsistente = ['Bitácora'];
+
+    let becaAsistente = ['Porcentaje de actual'];
+    let becaSuperior = ['Información de beca','Modificar información de beca'];
+
     switch (rolActual) {
         case 'Administrador':
             imprimirOpciones(opcionesAdministrador);
+            imprimirOpcionesBeca(becaSuperior);
             break;
         case 'Rector':
             imprimirOpciones(opcionesRectoria);
+            imprimirOpcionesBeca(becaSuperior);
             break;
         case 'Decanatura':
             imprimirOpciones(opcionesDecanatura);
+            imprimirOpcionesBeca(becaSuperior);
             break;
         case 'AsistenteDecanatura':
             imprimirOpciones(opcionesAsistenteDecanatura);
+            imprimirOpcionesBeca(becaSuperior);
             break;
         case 'Profesor':
             imprimirOpciones(opcionesProfesor);
             break;
         case 'Asistente':
             imprimirOpciones(opcionesAsistente);
+            imprimirOpcionesBeca(becaAsistente);
             break;
     }
 }
 
 function imprimirOpciones(paOpciones) {
     let menu = document.querySelector('#menuOpciones');
+    for (let i = 0; i < paOpciones.length; i++) {
+        let newLi = document.createElement('li');
+        let newA = document.createElement('a');
+        newA.href = "#";//Aca va el link al que redirecciona.
+        newA.textContent = paOpciones[i];
+        newLi.appendChild(newA);
+        menu.appendChild(newLi);
+    }
+}
+
+function imprimirOpcionesBeca(paOpciones){
+    let menu = document.querySelector('#menuBeca');
     for (let i = 0; i < paOpciones.length; i++) {
         let newLi = document.createElement('li');
         let newA = document.createElement('a');

@@ -15,7 +15,6 @@ function registrarCarrera (paInfoCarrera)
             codigo_carrera: paInfoCarrera[2],
             creditos_carrera: paInfoCarrera[3],
             fecha_carrera: paInfoCarrera[4],
-            sede_carrera: paInfoCarrera[5]
         }
     });
 
@@ -57,4 +56,130 @@ function obtenerListaCarreras(){
 
       return respuesta;
     
+}
+function buscarCarrera(pid){
+    let usuario = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/buscar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pid
+        }
+      });
+    
+      peticion.done(function(response){
+        carrera = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return carrera;
+};
+function actualizarCarrera(paInfoCarreraActual){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: paInfoCarreraActual[0],
+            nombre_carrera : paInfoCarreraActual[1],
+            grado_carrera : paInfoCarreraActual[2],
+            codigo_carrera : paInfoCarreraActual[3],
+            creditos_carrera : paInfoCarreraActual[4],
+            fecha_carrera : paInfoCarreraActual[5],
+            sedes_carrera : paInfoCarreraActual[6],
+            cursos_carrera : paInfoCarreraActual[7],
+            estado_carrera: paInfoCarreraActual[8],
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};
+function eliminarCarrera(_pid){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/eliminar_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: _pid
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};
+function agregarCursoCarrera(pid, sNombreCurso, sCodigoCurso){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/agregar_curso_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pid,
+            nombre_curso : sNombreCurso,
+            codigo_curso : sCodigoCurso
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+}
+function agregarSedeCarrera(pid, sNombreSede){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/agregar_sede_carrera',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pid,
+            nombre_sede : sNombreSede,
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
 }

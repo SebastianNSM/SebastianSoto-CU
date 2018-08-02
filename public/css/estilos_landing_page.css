@@ -25,7 +25,9 @@ h3{
     color: #1e2142;
     font-weight: bold;
 }
-
+input{
+    outline: none;
+}
 button{
     text-decoration: none;
     text-align: center;
