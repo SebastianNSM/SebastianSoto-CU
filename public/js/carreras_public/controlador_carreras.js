@@ -122,6 +122,45 @@ inputBuscar.addEventListener('keyup', function () {
     mostrarListaCarreras(busqueda);
 });
 
+// Registrar
+// Registrar
+// Registrar
+function obtenerDatos() {
+    let infoCarrera = [];
+
+    sNombre = inputNombre.value;
+    sGrado = inputGrado.value;
+    sCodigo = inputCodigo.value;
+    nCreditos = inputCreditos.value;
+    dFecha = inputFecha.value;
+
+    let bError = false;
+    bError = validarRegistrar();
+
+    if (bError) {
+        swal({
+            title: 'Registro incorrecto',
+            text: 'No se pudo registrar la carrera, verifique que completó correctamente la información que se le solicita',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        swal({
+            title: 'Registro correcto',
+            text: 'La carrera se registró correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        infoCarrera.push(sNombre, sGrado, sCodigo, nCreditos, dFecha);
+        registrarCarrera(infoCarrera);
+        $('.swal2-confirm').click(function () {
+            reload();
+        });
+        limpiarFormularioRegistrar();
+    }
+};
+
+
 function buscarCarreraId() {
     let _id = this.dataset._id;
     let carrera = buscarCarrera(_id);
@@ -247,44 +286,6 @@ function mostrarListaCarreras(paBuscar) {
     }
 };
 
-// Registrar
-// Registrar
-// Registrar
-
-function obtenerDatos() {
-    let infoCarrera = [];
-
-    sNombre = inputNombre.value;
-    sGrado = inputGrado.value;
-    sCodigo = inputCodigo.value;
-    nCreditos = inputCreditos.value;
-    dFecha = inputFecha.value;
-
-    let bError = false;
-    bError = validarRegistrar();
-
-    if (bError) {
-        swal({
-            title: 'Registro incorrecto',
-            text: 'No se pudo registrar la carrera, verifique que completó correctamente la información que se le solicita',
-            type: 'warning',
-            confirmButtonText: 'Entendido'
-        });
-    } else {
-        swal({
-            title: 'Registro correcto',
-            text: 'La carrera se registró correctamente',
-            type: 'success',
-            confirmButtonText: 'Entendido'
-        });
-        infoCarrera.push(sNombre, sGrado, sCodigo, nCreditos, dFecha);
-        registrarCarrera(infoCarrera);
-        $('.swal2-confirm').click(function () {
-            reload();
-        });
-        limpiarFormularioRegistrar();
-    }
-};
 
 // Modificar
 // Modificar
@@ -500,5 +501,8 @@ function reload() {
     mostrarListaCarreras();
     imprimirSedes();
     imprimirCursos();
+    ppRegistrar.style.display = "none";
+    ppAsociar.style.display = "none";
+    ppActualizar.style.display = "none";
 }
 // Esto es para que despliegue el formulario
