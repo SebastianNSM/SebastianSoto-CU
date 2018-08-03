@@ -58,7 +58,7 @@ function obtenerListaCarreras(){
     
 }
 function buscarCarrera(pid){
-    let usuario = '';
+    let carrera = '';
     let peticion = $.ajax({
         url : 'http://localhost:4000/api/buscar_carrera',
         type : 'post',

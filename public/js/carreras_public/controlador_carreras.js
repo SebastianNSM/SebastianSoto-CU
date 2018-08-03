@@ -3,22 +3,20 @@ mostrarListaCarreras();
 imprimirSedes();
 imprimirCursos();
 
-// Declaracion de variables globales
+// Esto es para el registrar
 let botonRegistrar = document.querySelector('#btnRegistrar');
 botonRegistrar.addEventListener('click', obtenerDatos);
-
 let inputBuscar = document.querySelector('#txtBusqueda');
 let inputNombre = document.querySelector('#txtNombre');
 let inputGrado = document.querySelector('#txtGrado');
 let inputCodigo = document.querySelector('#txtCodigo');
 let inputCreditos = document.querySelector('#numCreditos');
 let inputFecha = document.querySelector('#dateFecha');
-let inputCurso = document.querySelector('#txtCurso');
 inputFecha.valueAsDate = new Date();
 
+// Esto es para el modificar
 let botonActualizar = document.querySelector('#btnActualizar');
 botonActualizar.addEventListener('click', obtenerDatosActual);
-
 let inputNombreActual = document.querySelector('#txtNombreActual');
 let inputGradoActual = document.querySelector('#txtGradoActual');
 let inputCodigoActual = document.querySelector('#txtCodigoActual');
@@ -26,9 +24,13 @@ let inputCreditosActual = document.querySelector('#numCreditosActual');
 let inputFechaActual = document.querySelector('#dateFechaActual');
 let inputSedeActual = document.querySelector('#txtSedeActual');
 let inputCursoActual = document.querySelector('#txtCursoActual');
-let inputEstadoActual = document.querySelector('#txtEstado');
+let inputEstadoActual = document.querySelector('#txtEstadoActual');
+let inputIdCarrera = document.querySelector('#txtId');
 
-inputFechaActual.valueAsDate = new Date();
+// Esto es para el asociar
+let inputSedeAsociar = document.querySelector('#txtSedeAsociar');
+let inputCursoAsociar = document.querySelector('#txtCursoAsociar');
+
 
 let regexSoloLetras = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/;
 let regexCodigo = /^[a-zA-Z0-9-]+$/;
@@ -45,9 +47,11 @@ let dFecha = dHoy;
 let sNombreActual = "";
 let sGradoActual = "";
 let sSedeActual = "";
+let sCursoActual = "";
 let sCodigoActual = "";
 let nCreditosActual = "";
 let dFechaActual = dHoy;
+let sEstadoActual = "";
 
 // Declaracion de variables globales
 
@@ -63,32 +67,48 @@ function imprimirSedes() {
             let inputSede = sltSede[k];
             let nuevaOpcion = new Option(listaSedes[i]['nombre_sede']);
             nuevaOpcion.value = listaSedes[i]['nombre_sede'];
+            nuevaOpcion.dataset._id = listaSedes[i]['_id'];
             inputSede.options.add(nuevaOpcion);
         }
     }
 }
-
 // Esta funcion prepara los inputs cursos para la lista
 function imprimirCursos() {
     let sltCurso = document.querySelectorAll('select[name = "curso"]');
-
+    sltCurso.innerHTML = '';
     // Error si cambian el nombre de obtenerCursos
     let listaCurso = obtenerCursos();
 
     for (let k = 0; k < sltCurso.length; k++) {
         for (let i = 0; i < listaCurso.length; i++) {
-            let inputCurso = sltCurso[k];
+            let optionCurso = sltCurso[k];
             let nuevaOpcion = new Option(listaCurso[i]['nombre_curso']);
             nuevaOpcion.value = listaCurso[i]['nombre_curso'];
-            inputCurso.options.add(nuevaOpcion);
+            nuevaOpcion.dataset._id = listaCurso[i]['_id'];
+            optionCurso.options.add(nuevaOpcion);
         }
+    }
+}
+// Asociar
+// Asociar
+// Asociar
+function obtenerDatosAsociar(pid) {
+    let idSede = inputSedeAsociar.value;
+    let idCurso = inputCursoAsociar.value;
+
+    // En caso de que sedes tenga informacion
+    if (sNombreSede != "") {
+
+    }
+    // En caso de que cursos tenga informacion
+    if (sNombreCurso != "") {
+
     }
 }
 
 // Eliminar
 // Eliminar
 // Eliminar
-
 function eliminar_carrera() {
     let _id = this.dataset._id;
     swal({
@@ -102,7 +122,7 @@ function eliminar_carrera() {
     }).then((result) => {
         if (result.value) {
             eliminarCarrera(_id);
-            
+
             reload();
             swal(
                 'Eliminado!',
@@ -121,6 +141,61 @@ inputBuscar.addEventListener('keyup', function () {
     let busqueda = inputBuscar.value;
     mostrarListaCarreras(busqueda);
 });
+function buscar_por_carrera_id() {
+    let _id = this.dataset._id;
+    let carrera = buscarCarrera(_id);
+    
+    inputNombreActual.value = carrera['nombre_carrera'];
+    inputGradoActual.value = carrera['grado_carrera'];
+    inputCodigoActual.value = carrera['codigo_carrera'];
+    inputCreditosActual.value = Number(carrera['creditos_carrera']);
+
+    // Esto es para que se pueda meter la fecha
+    let fechaCompleta = new Date(carrera['fecha_carrera']);
+    let anno = fechaCompleta.getUTCFullYear();
+    let mes = fechaCompleta.getUTCMonth() + 1;
+    let dia = fechaCompleta.getUTCDate();
+    let stringFecha = anno + "-" + mes + "-" + dia;
+    inputFechaActual.valueAsDate = new Date(stringFecha);
+
+    // Solo imprime el primer sede que tenga
+    let valorSede;
+    let idSede;
+    if (tieneAsociado(carrera, 'sedes_carrera')) {
+        valorSede = carrera['sedes_carrera'][0]['nombre_sede'];
+        idSede = carrera['sedes_carrera'][0]['_id'];
+    } else {
+        valorSede = "";
+        idSede = "";
+    }
+    inputSedeActual.value = valorSede;
+    inputSedeActual.dataset._id = idSede;
+
+    // Solo imprime el primer curso que tenga
+    let valorCurso;
+    let idCurso;
+    if (tieneAsociado(carrera, 'cursos_carrera')) {
+        valorCurso = carrera['cursos_carrera'][0]['nombre_curso'];
+        idCurso = carrera['cursos_carrera'][0]['_id'];
+    } else {
+        valorCurso = "";
+        idCurso = "";
+    }
+
+    // AYUDA PABS no lee ni asigna el valor curso
+    inputCursoActual.value = valorCurso;
+    // AYUDA PABS
+
+    inputCursoActual.dataset._id = idCurso;
+    inputEstadoActual.value = carrera['estado_carrera'];
+    inputIdCarrera.value = carrera['_id'];
+}
+function tieneAsociado(objeto, contenido) {
+    if (objeto[contenido].length != 0)
+        return true;
+    else
+        return false;
+}
 
 // Registrar
 // Registrar
@@ -160,22 +235,6 @@ function obtenerDatos() {
     }
 };
 
-
-function buscarCarreraId() {
-    let _id = this.dataset._id;
-    let carrera = buscarCarrera(_id);
-
-    inputNombreActual.value = carrera['nombre_carrera'];
-    inputGradoActual.value = carrera['grado_carrera'];
-    inputCodigoActual.value = carrera['codigo_carrera'];
-    inputCreditosActual.value = carrera['creditos_carrera'];
-    inputFechaActual.value = carrera['fecha_carrera'];
-    inputSedeActual.value = carrera['sedes_carrera'];
-    inputCursoActual.value = carrera['cursos_carrera'];
-    inputEstadoActual.value = carrera['estado_carrera'];
-
-}
-
 // Listar
 // Listar
 // Listar
@@ -214,29 +273,10 @@ function mostrarListaCarreras(paBuscar) {
             let nMes = dFecha.getUTCMonth() + 1;
             let nAnno = dFecha.getUTCFullYear();
             // Esto despliega la informacion separada para darle formato
-            celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;;
+            celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
 
-            // Esto cambia el estado de la carrera en caso de no estar definida
-            if (listaCarreras[i]['sedes_carrera'].length != 0) {
-                for (let s = 0; s < listaCarreras[i]['sedes_carrera'].length; s++) {
-                    if (listaCarreras[i]['sedes_carrera'][s]['nombre_sede'] != undefined) {
-                        celdaSede.innerHTML = listaCarreras[i]['sedes_carrera'][s]['nombre_sede'];
-                    }
-                }
-            } else {
-                celdaSede.innerHTML = "-";
-            }
+            
 
-            // Esto cambia el estado de la carrera en caso de no estar definida
-            if (listaCarreras[i]['cursos_carrera'].length != 0) {
-                for (let s = 0; s < listaCarreras[i]['cursos_carrera'].length; s++) {
-                    if (listaCarreras[i]['cursos_carrera'][s]['nombre_curso'] != undefined) {
-                        celdaCursos.innerHTML = listaCarreras[i]['cursos_carrera'][s]['nombre_curso'];
-                    }
-                }
-            } else {
-                celdaCursos.innerHTML = "-";
-            }
 
             celdaEstado.innerHTML = listaCarreras[i]['estado_carrera'];
 
@@ -247,11 +287,10 @@ function mostrarListaCarreras(paBuscar) {
 
             botonEditar.dataset._id = listaCarreras[i]['_id'];
 
+            botonEditar.addEventListener('click', buscar_por_carrera_id);
             botonEditar.addEventListener('click', function () {
-
                 ppActualizar.style.display = "block";
             });
-
             celdaOpciones.appendChild(botonEditar);
 
 
@@ -260,12 +299,11 @@ function mostrarListaCarreras(paBuscar) {
             let botonEliminar = document.createElement('span');
             botonEliminar.classList.add('fas');
             botonEliminar.classList.add('fa-trash-alt');
-
             botonEliminar.dataset._id = listaCarreras[i]['_id'];
 
-            botonEliminar.addEventListener('click', eliminar_carrera);
-
             celdaOpciones.appendChild(botonEliminar);
+            botonEliminar.addEventListener('click', eliminar_carrera);
+            // Este es el boton de eliminar
 
 
 
@@ -293,11 +331,15 @@ function mostrarListaCarreras(paBuscar) {
 function obtenerDatosActual() {
     let infoCarreraActual = [];
 
+    let id = inputIdCarrera.value;
     sNombreActual = inputNombreActual.value;
     sGradoActual = inputGradoActual.value;
-    sSedeActual = inputSedeActual.value;
     sCodigoActual = inputCodigoActual.value;
+    nCreditosActual = inputCreditosActual.value;
     dFechaActual = inputFechaActual.value;
+    sSedeActual = inputSedeActual.value;
+    sCursoActual = inputCursoActual.value;
+    sEstadoActual = inputEstadoActual.value;
 
     let bError = false;
     bError = validarActualizar();
@@ -316,8 +358,8 @@ function obtenerDatosActual() {
             type: 'success',
             confirmButtonText: 'Entendido'
         });
-        infoCarreraActual.push(sNombre, sGrado, sCodigo, nCreditos, dFecha, sSede);
-        registrarCarrera(infoCarrera);
+        infoCarreraActual.push(id, sNombreActual, sGradoActual, sCodigoActual, nCreditosActual, dFechaActual, sSedeActual, sCursoActual, sEstadoActual);
+        actualizarCarrera(infoCarreraActual);
         $('.swal2-confirm').click(function () {
             reload();
         });
@@ -325,6 +367,7 @@ function obtenerDatosActual() {
     }
 };
 
+// Validar
 function validarRegistrar() {
     let bError = false;
     sNombre = inputNombre.value;
@@ -388,61 +431,61 @@ function validarRegistrar() {
 };
 function validarActualizar() {
     let bError = false;
-    sNombre = inputNombre.value;
-    sGrado = inputGrado.value;
-    sCodigo = inputCodigo.value;
-    nCreditos = Number(inputCreditos.value);
-    dFecha = new Date(inputFecha.value);
+    sNombreActual = inputNombreActual.value;
+    sGradoActual = inputGradoActual.value;
+    sCodigoActual = inputCodigoActual.value;
+    nCreditosActual = Number(inputCreditosActual.value);
+    dFechaActual = new Date(inputFechaActual.value);
 
     // Validacion contra blancos
-    let arregloInputs = document.querySelectorAll('#sct_registrar input:required');
-    for (let i = 0; i < arregloInputs.length; i++) {
-        if (arregloInputs[i].value == '') {
+    let arregloInputsModificar = document.querySelectorAll('#sct_modificar input:required');
+    for (let i = 0; i < arregloInputsModificar.length; i++) {
+        if (arregloInputsModificar[i].value == '') {
             bError = true;
-            arregloInputs[i].classList.add('errorInput');
+            arregloInputsModificar[i].classList.add('errorInput');
         } else {
-            arregloInputs[i].classList.remove('errorInput');
+            arregloInputsModificar[i].classList.remove('errorInput');
         }
     };
 
     // Validacion para el nombre
-    if (regexSoloLetras.test(sNombre) == false) {
+    if (regexSoloLetras.test(sNombreActual) == false) {
         bError = true;
-        inputNombre.classList.add('errorInput');
+        inputNombreActual.classList.add('errorInput');
     } else {
-        inputNombre.classList.remove('errorInput');
+        inputNombreActual.classList.remove('errorInput');
     };
 
     // Validacion para el grado
-    if (sGrado == "") {
+    if (sGradoActual == "") {
         bError = true;
-        inputGrado.classList.add('errorInput');
+        inputGradoActual.classList.add('errorInput');
     } else {
-        inputGrado.classList.remove('errorInput');
+        inputGradoActual.classList.remove('errorInput');
     };
 
     // Validacion para el codigo
-    if (regexCodigo.test(sCodigo) == false) {
+    if (regexCodigo.test(sCodigoActual) == false) {
         bError = true;
-        inputCodigo.classList.add('errorInput');
+        inputCodigoActual.classList.add('errorInput');
     } else {
-        inputCodigo.classList.remove('errorInput');
+        inputCodigoActual.classList.remove('errorInput');
     };
 
     // Validacion para los creditos
-    if ((regexCreditos.test(nCreditos) == false) || nCreditos < inputCreditos.min || nCreditos > inputCreditos.max) {
+    if ((regexCreditos.test(nCreditosActual) == false) || nCreditosActual < inputCreditosActual.min || nCreditosActual > inputCreditosActual.max) {
         bError = true;
-        inputCreditos.classList.add('errorInput');
+        inputCreditosActual.classList.add('errorInput');
     } else {
-        inputCreditos.classList.remove('errorInput');
+        inputCreditosActual.classList.remove('errorInput');
     };
 
     // Validacion de la fecha
-    if (dFecha > dHoy || inputFecha.value == "") {
+    if (dFechaActual > dHoy || inputFechaActual.value == "") {
         bError = true;
-        inputFecha.classList.add('errorInput');
+        inputFechaActual.classList.add('errorInput');
     } else {
-        inputFecha.classList.remove('errorInput');
+        inputFechaActual.classList.remove('errorInput');
     };
 
     return bError;
@@ -490,17 +533,20 @@ function limpiarFormularioRegistrar() {
 };
 
 function limpiarFormularioModificar() {
-    inputNombre.value = "";
-    inputGrado.value = "";
-    inputCodigo.value = "";
-    inputCreditos.value = "";
-    inputFecha.valueAsDate = dHoy;
+    inputNombreActual.value = "";
+    inputGradoActual.value = "";
+    inputCodigoActual.value = "";
+    inputCreditosActual.value = "";
+    inputFechaActual.value = "";
+    inputSedeActual.value = "";
+    inputCursoActual.value = "";
+    inputEstadoActual.value = "";
+
 };
 
 function reload() {
     mostrarListaCarreras();
     imprimirSedes();
-    imprimirCursos();
     ppRegistrar.style.display = "none";
     ppAsociar.style.display = "none";
     ppActualizar.style.display = "none";

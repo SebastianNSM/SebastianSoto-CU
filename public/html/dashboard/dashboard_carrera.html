@@ -30,7 +30,7 @@
                 </a>
                 <!-- Agregar esta parte nueva y cambiar el controlador menu -->
                 <ul id="menuBeca" class="menu">
-                    
+
                 </ul>
             </div>
 
@@ -145,8 +145,8 @@
                         <!-- Debo ser capaz de agregar varias (subdocumento sede) -->
                         <option value="">Elija una sede</option>
                     </select>
-                    <select name="curso" id="txtCurso">
-                        <option value="">Cambie el curso</option>
+                    <select name="curso" id="txtCursoAsociar">
+                        <option value="">Elija un curso</option>
                     </select>
                     <button type="button" class="button" id="btnAsociar">Asociar</button>
                 </div>
@@ -159,6 +159,9 @@
                 <h1 class="title">Modificar carrera</h1>
 
                 <div class="form">
+
+                    <input type="hidden" id="txtId">
+
                     <input type="text" id="txtNombreActual" required placeholder="Nombre de la carrera*">
 
                     <select id="txtGradoActual" required>
@@ -177,7 +180,7 @@
                     <input type="text" id="txtCodigoActual" required placeholder="Código de carrera*">
 
                     <input type="number" id="numCreditosActual" required placeholder="Créditos de la carrera*" min="100" max="500">
-                    
+
                     <input type="date" id="dateFechaActual" required autocomplete="">
 
                     <select name="sede" id="txtSedeActual">
@@ -188,7 +191,8 @@
                         <option value="">Cambie el curso</option>
                     </select>
 
-                    <select id="txtEstadoActual">
+                    <select id="txtEstadoActual" required>
+                        <option value="">Cambie el estado</option>
                         <option value="Activo">Activo</option>
                         <option value="Inactivo">Inactivo</option>
                     </select>
@@ -202,7 +206,7 @@
             <div class="popup-content">
                 <h1 class="title"></h1>
                 <ul>
-                    
+
                 </ul>
             </div>
         </section>
