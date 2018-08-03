@@ -95,7 +95,7 @@ function actualizarCarrera(paInfoCarreraActual){
             codigo_carrera : paInfoCarreraActual[3],
             creditos_carrera : paInfoCarreraActual[4],
             fecha_carrera : paInfoCarreraActual[5],
-            sedes_carrera : paInfoCarreraActual[6],
+            nombre_sede : paInfoCarreraActual[6],
             cursos_carrera : paInfoCarreraActual[7],
             estado_carrera: paInfoCarreraActual[8],
         }
@@ -146,30 +146,6 @@ function agregarCursoCarrera(pid, sNombreCurso, sCodigoCurso){
             _id : pid,
             nombre_curso : sNombreCurso,
             codigo_curso : sCodigoCurso
-        }
-      });
-    
-      peticion.done(function(response){
-       respuesta = response;
-      });
-    
-      peticion.fail(function(response){
-       
-      });
-
-      return respuesta;
-}
-function agregarSedeCarrera(pid, sNombreSede){
-    let respuesta = '';
-    let peticion = $.ajax({
-        url : 'http://localhost:4000/api/agregar_sede_carrera',
-        type : 'post',
-        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-        dataType : 'json',
-        async : false,
-        data:{
-            _id : pid,
-            nombre_sede : sNombreSede,
         }
       });
     

@@ -17,10 +17,7 @@ router.route('/agregar_curso_carrera')
     .post(function (req, res) {
         carrerasApi.agregar_curso_carrera(req, res);
     });
-router.route('/agregar_sede_carrera')
-    .post(function (req, res) {
-        carrerasApi.agregar_sede_carrera(req, res);
-    });
+
 router.route('/buscar_carrera')
     .post(function (req, res) {
         carrerasApi.buscar_carrera(req, res);

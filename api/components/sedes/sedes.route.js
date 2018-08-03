@@ -13,4 +13,9 @@ router.route('/listar_sedes')
         sedes.listar(req, res);
 });
 
+router.route('/agregar_carrera_sede')
+    .post(function (req, res) {
+        sedes.agregar_carrera_sede(req, res);
+    });
+
 module.exports = router;

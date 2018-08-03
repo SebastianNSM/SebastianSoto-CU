@@ -1,6 +1,6 @@
 'use strict';
 mostrarListaCarreras();
-imprimirSedes();
+// imprimirSedes();
 imprimirCursos();
 
 // Esto es para el registrar
@@ -22,13 +22,13 @@ let inputGradoActual = document.querySelector('#txtGradoActual');
 let inputCodigoActual = document.querySelector('#txtCodigoActual');
 let inputCreditosActual = document.querySelector('#numCreditosActual');
 let inputFechaActual = document.querySelector('#dateFechaActual');
-let inputSedeActual = document.querySelector('#txtSedeActual');
+// let inputSedeActual = document.querySelector('#txtSedeActual');
 let inputCursoActual = document.querySelector('#txtCursoActual');
 let inputEstadoActual = document.querySelector('#txtEstadoActual');
 let inputIdCarrera = document.querySelector('#txtId');
 
 // Esto es para el asociar
-let inputSedeAsociar = document.querySelector('#txtSedeAsociar');
+// let inputSedeAsociar = document.querySelector('#txtSedeAsociar');
 let inputCursoAsociar = document.querySelector('#txtCursoAsociar');
 
 
@@ -46,7 +46,7 @@ let dFecha = dHoy;
 
 let sNombreActual = "";
 let sGradoActual = "";
-let sSedeActual = "";
+// let sSedeActual = "";
 let sCursoActual = "";
 let sCodigoActual = "";
 let nCreditosActual = "";
@@ -57,21 +57,23 @@ let sEstadoActual = "";
 
 
 // Esta funcion prepara los inputs de sede para elegir de la lista correspondiente
-function imprimirSedes() {
-    let sltSede = document.querySelectorAll('select[name = "sede"]');
-    sltSede.innerHTML = '';
-    let listaSedes = obtenerListaSedes();
+// function imprimirSedes() {
+//     let sltSede = document.querySelectorAll('select[name = "sede"]');
+//     sltSede.innerHTML = '';
+//     let listaSedes = obtenerListaSedes();
 
-    for (let k = 0; k < sltSede.length; k++) {
-        for (let i = 0; i < listaSedes.length; i++) {
-            let inputSede = sltSede[k];
-            let nuevaOpcion = new Option(listaSedes[i]['nombre_sede']);
-            nuevaOpcion.value = listaSedes[i]['nombre_sede'];
-            nuevaOpcion.dataset._id = listaSedes[i]['_id'];
-            inputSede.options.add(nuevaOpcion);
-        }
-    }
-}
+//     for (let k = 0; k < sltSede.length; k++) {
+//         for (let i = 0; i < listaSedes.length; i++) {
+//             let inputSede = sltSede[k];
+//             let nuevaOpcion = new Option(listaSedes[i]['nombre_sede']);
+//             nuevaOpcion.value = listaSedes[i]['nombre_sede'];
+//             nuevaOpcion.dataset._id = listaSedes[i]['_id'];
+//             inputSede.options.add(nuevaOpcion);
+//         }
+//     }
+// }
+
+
 // Esta funcion prepara los inputs cursos para la lista
 function imprimirCursos() {
     let sltCurso = document.querySelectorAll('select[name = "curso"]');
@@ -144,11 +146,12 @@ inputBuscar.addEventListener('keyup', function () {
 function buscar_por_carrera_id() {
     let _id = this.dataset._id;
     let carrera = buscarCarrera(_id);
-    
+
     inputNombreActual.value = carrera['nombre_carrera'];
     inputGradoActual.value = carrera['grado_carrera'];
     inputCodigoActual.value = carrera['codigo_carrera'];
     inputCreditosActual.value = Number(carrera['creditos_carrera']);
+    inputIdCarrera.value = _id;
 
     // Esto es para que se pueda meter la fecha
     let fechaCompleta = new Date(carrera['fecha_carrera']);
@@ -158,18 +161,6 @@ function buscar_por_carrera_id() {
     let stringFecha = anno + "-" + mes + "-" + dia;
     inputFechaActual.valueAsDate = new Date(stringFecha);
 
-    // Solo imprime el primer sede que tenga
-    let valorSede;
-    let idSede;
-    if (tieneAsociado(carrera, 'sedes_carrera')) {
-        valorSede = carrera['sedes_carrera'][0]['nombre_sede'];
-        idSede = carrera['sedes_carrera'][0]['_id'];
-    } else {
-        valorSede = "";
-        idSede = "";
-    }
-    inputSedeActual.value = valorSede;
-    inputSedeActual.dataset._id = idSede;
 
     // Solo imprime el primer curso que tenga
     let valorCurso;
@@ -181,8 +172,6 @@ function buscar_por_carrera_id() {
         valorCurso = "";
         idCurso = "";
     }
-
-    // AYUDA PABS no lee ni asigna el valor curso
     inputCursoActual.value = valorCurso;
     // AYUDA PABS
 
@@ -275,8 +264,20 @@ function mostrarListaCarreras(paBuscar) {
             // Esto despliega la informacion separada para darle formato
             celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
 
+            let aCursosCarrera = listaCarreras[i]['cursos_carrera'];
+            celdaSede.innerHTML = 'Mantenimiento';
             
-
+            if (aCursosCarrera.length > 0) {
+                for (let j = 0; j < aCursosCarrera.length; j++) {
+                    if(aCursosCarrera[j] == null){
+                        celdaCursos.innerHTML = "-";
+                    }else{
+                        celdaCursos.innerHTML = aCursosCarrera[j]['nombre_curso'];
+                    }
+                }
+            } else {
+                celdaCursos.innerHTML = "-";
+            }
 
             celdaEstado.innerHTML = listaCarreras[i]['estado_carrera'];
 
@@ -337,7 +338,7 @@ function obtenerDatosActual() {
     sCodigoActual = inputCodigoActual.value;
     nCreditosActual = inputCreditosActual.value;
     dFechaActual = inputFechaActual.value;
-    sSedeActual = inputSedeActual.value;
+    // sSedeActual = inputSedeActual.value;
     sCursoActual = inputCursoActual.value;
     sEstadoActual = inputEstadoActual.value;
 
@@ -517,11 +518,7 @@ window.onclick = function (event) {
 }
 
 function limpiarAsociar() {
-    inputNombre.value = "";
-    inputGrado.value = "";
-    inputCodigo.value = "";
-    inputCreditos.value = "";
-    inputFecha.valueAsDate = dHoy;
+    // Hacer esto
 };
 
 function limpiarFormularioRegistrar() {
@@ -538,7 +535,7 @@ function limpiarFormularioModificar() {
     inputCodigoActual.value = "";
     inputCreditosActual.value = "";
     inputFechaActual.value = "";
-    inputSedeActual.value = "";
+    // inputSedeActual.value = "";
     inputCursoActual.value = "";
     inputEstadoActual.value = "";
 
@@ -546,7 +543,10 @@ function limpiarFormularioModificar() {
 
 function reload() {
     mostrarListaCarreras();
-    imprimirSedes();
+    // imprimirSedes();
+    limpiarAsociar();
+    limpiarFormularioModificar();
+    limpiarFormularioRegistrar();
     ppRegistrar.style.display = "none";
     ppAsociar.style.display = "none";
     ppActualizar.style.display = "none";

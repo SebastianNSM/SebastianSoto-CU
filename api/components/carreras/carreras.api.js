@@ -27,9 +27,17 @@ module.exports.registrar_carrera = function (req, res) {
 
 module.exports.listar_carrera = function (req, res) {
     carreraModel.find().sort({ nombre_carrera: 'asc' }).then(
-        function (carreras) {
-            res.send(carreras);
+        function (carreras, error) {
+            if (error) {
+               
+                res.json({ success: false, msg: 'No se pudo registrar la sede, ocurrió el siguiente error' + error });
+            } else {
+                
+                res.send(carreras);
+
+            }
         }
+       
     );
 };
 module.exports.agregar_curso_carrera = function (req, res) {
@@ -50,33 +58,12 @@ module.exports.agregar_curso_carrera = function (req, res) {
             if (error) {
                 res.json({ success: false, msg: 'No se pudo registrar el curso, ocurrió el siguiente error' + error });
             } else {
-                res.json({ success: true, msg: 'El curso se registró con éxito' });
+               res.json({ success: true, msg: 'Se ha actualizado correctamente. ' + res });
             }
         }
     )
 };
-module.exports.agregar_sede_carrera = function (req, res) {
 
-    carreraModel.update(
-        { _id: req.body._id },
-        {
-            $push:
-            {
-                'sedes_carrera':
-                {
-                    nombre_sede: req.body.nombre_sede,
-                }
-            }
-        },
-        function (error) {
-            if (error) {
-                res.json({ success: false, msg: 'No se pudo registrar la sede, ocurrió el siguiente error' + error });
-            } else {
-                res.json({ success: true, msg: 'La sede se registró con éxito' });
-            }
-        }
-    )
-};
 module.exports.buscar_carrera = function (req, res) {
     carreraModel.findById({ _id: req.body._id }).then(
         function (carrera) {
@@ -88,7 +75,7 @@ module.exports.modificar_carrera = function (req, res) {
     carreraModel.findByIdAndUpdate(req.body._id, { $set: req.body },
         function (err) {
             if (err) {
-                res.json({ success: false, msg: 'La carrera no se ha podido modificar. ' + handleError(err) });
+                res.json({ success: false, msg: 'La carrera no se ha podido modificar. ' + err });
 
             } else {
                 res.json({ success: true, msg: 'Se ha actualizado correctamente. ' + res });
