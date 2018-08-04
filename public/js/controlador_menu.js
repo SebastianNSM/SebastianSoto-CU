@@ -68,7 +68,7 @@ function leerRolOpciones() {
             imprimirOpciones(opcionesDecanatura);
             imprimirOpcionesBeca(becaSuperior);
             break;
-        case 'Asistente de decanatura':
+        case 'AsistenteDecanatura':
             imprimirOpciones(opcionesAsistenteDecanatura);
             imprimirOpcionesBeca(becaSuperior);
             break;

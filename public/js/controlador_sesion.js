@@ -75,7 +75,7 @@ function accionRol(psRol) {
         case 'Decanatura':
             window.location.href = "../html/dashboard/dashboard_carrera.html";
             break;
-        case 'Asistente de decanatura':
+        case 'Asistente decanatura':
             window.location.href = "../html/dashboard/dashboard_carrera.html";
             break;
         case 'Profesor':

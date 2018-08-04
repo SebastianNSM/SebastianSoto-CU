@@ -214,34 +214,33 @@ function obtenerDatosAsociar() {
     let nombreSede = inputSedeAsociar.value;
     let nombreCurso = inputCursoAsociar.value;
 
-    if (nombreSede != "" || nombreCurso != "") {
-        // En caso de que sedes tenga informacion
-        if (nombreSede != "") {
-            let nombre_carrera = inputSedeAsociar.dataset.nombre_carrera;
-            let codigo_carrera = inputSedeAsociar.dataset.codigo_carrera;
-            let idSede = getIdSede(nombreSede);
+    // En caso de que sedes tenga informacion
+    if (nombreSede != "") {
+        let nombre_carrera = inputSedeAsociar.dataset.nombre_carrera;
+        let codigo_carrera = inputSedeAsociar.dataset.codigo_carrera;
+        let idSede = getIdSede(nombreSede);
 
-            agregarCarreraSede(idSede, nombre_carrera, codigo_carrera);
-        }
-        // En caso de que cursos tenga informacion
-        if (nombreCurso != "") {
-            let infoCurso = getInfoCurso(nombreCurso);
-            let idCurso = infoCurso['_id'];
-            infoCurso = buscar_curso_id(idCurso);
+        agregarCarreraSede(idSede, nombre_carrera, codigo_carrera);
+    }
+    // En caso de que cursos tenga informacion
+    if (nombreCurso != "") {
+        let infoCurso = getInfoCurso(nombreCurso);
+        let idCurso = infoCurso['_id'];
+        infoCurso = buscar_curso_id(idCurso);
 
-            agregarCursoCarrera(_id, infoCurso['nombre_curso'], infoCurso['codigo_curso']);
-        }
         swal({
             title: 'Asociación correcta',
             text: 'La información se asoció correctamente',
             type: 'success',
             confirmButtonText: 'Entendido'
         });
+
+        agregarCursoCarrera(_id, infoCurso['nombre_curso'], infoCurso['codigo_curso']);
+
         $('.swal2-confirm').click(function () {
             reload();
         });
     }
-
     ppAsociar.style.display = "none";
 }
 function getInfoCurso(pCursoNombre) {
@@ -347,8 +346,27 @@ function mostrarListaCarreras(paBuscar) {
             // Esto despliega la informacion separada para darle formato
             celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
 
-            // // Esto es lo que hace por defecto, mientras no tenga el asociar de sedes listo
-            celdaSede.innerHTML = existeEnSede(listaCarreras[i]['nombre_carrera']);
+            // Esto es lo que hace por defecto, mientras no tenga el asociar de sedes listo
+            let listaSedes = obtenerListaSedes();
+
+            // Esto va por cada sede registrada
+            for (let i = 0; i < listaSedes.length; i++) {
+                // Si la sede tiene carreras
+                if (listaSedes[i]['carreras_sede'] != "") {
+                    // Esto va por cada carrera de dicha sede
+                    for (let j = 0; listaSedes[i]['carreras_sede'].length; j++) {
+
+                        if (listaCarreras['carreras_sede'] == null) {
+                            celdaSede.innerHTML = "-";
+                        } else {
+                            let carreraSede = listaSedes['carreras_sede'][j]['nombre_carrera'];
+                            console.log(carreraSede);
+                        }
+                    }
+                }else{
+                    celdaSede.innerHTML = "-";
+                }
+            }
 
             // Esto Imprime el curso que tenga asociado en caso de tener algo
             let aCursosCarrera = listaCarreras[i]['cursos_carrera'];
@@ -416,24 +434,7 @@ function mostrarListaCarreras(paBuscar) {
     }
 };
 
-function existeEnSede(psNombreCarrera) {
-    let text = "-";
-    let listaSedes = obtenerListaSedes();
-    for (let i = 0; i < listaSedes.length; i++) {
-        if (listaSedes[i]['carreras_sede'] == "" || listaSedes[i]['carreras_sede'] == null) {
-            console.log('La sede: '+listaSedes[i]['nombre_sede']+' no tiene carreras asosiadas');
-        } else {
-            for (let j = 0; j < listaSedes[i]['carreras_sede'].length; j++) {
-                let nombreCarreraActual = listaSedes[i]['carreras_sede'][j]['nombre_carrera'];
-                if (nombreCarreraActual === psNombreCarrera) {
-                    text = listaSedes[i]['nombre_sede'];
-                    break;
-                }
-            }
-        }
-    }
-    return text;
-}
+
 // Validar
 function validarRegistrar() {
     let bError = false;
