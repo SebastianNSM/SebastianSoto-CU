@@ -2,16 +2,11 @@
 let mongoose = require('mongoose');
 
 let carreraSchema = new mongoose.Schema({
-    nombre_carrera: { type: String, unique: true, required: true },
+    nombre_carrera: { type: String, required: true },
     grado_carrera: { type: String, required: true },
     codigo_carrera: { type: String, unique: true, required: true },
     creditos_carrera: { type: Number, required: true },
     fecha_carrera: { type: Date, required: true },
-    sedes_carrera: [
-        {
-            nombre_sede: { type: String }
-        }
-    ],
     cursos_carrera: [
         {
             nombre_curso: { type: String },

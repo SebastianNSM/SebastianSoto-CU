@@ -1,6 +1,6 @@
 'use strict';
 mostrarListaCarreras();
-// imprimirSedes();
+imprimirSedes();
 imprimirCursos();
 
 // Esto es para el registrar
@@ -22,13 +22,15 @@ let inputGradoActual = document.querySelector('#txtGradoActual');
 let inputCodigoActual = document.querySelector('#txtCodigoActual');
 let inputCreditosActual = document.querySelector('#numCreditosActual');
 let inputFechaActual = document.querySelector('#dateFechaActual');
-// let inputSedeActual = document.querySelector('#txtSedeActual');
+let inputSedeActual = document.querySelector('#txtSedeActual');
 let inputCursoActual = document.querySelector('#txtCursoActual');
 let inputEstadoActual = document.querySelector('#txtEstadoActual');
 let inputIdCarrera = document.querySelector('#txtId');
 
 // Esto es para el asociar
-// let inputSedeAsociar = document.querySelector('#txtSedeAsociar');
+let btnAsociar = document.querySelector('#btnAsociar');
+btnAsociar.addEventListener('click', obtenerDatosAsociar);
+let inputSedeAsociar = document.querySelector('#txtSedeAsociar');
 let inputCursoAsociar = document.querySelector('#txtCursoAsociar');
 
 
@@ -46,34 +48,33 @@ let dFecha = dHoy;
 
 let sNombreActual = "";
 let sGradoActual = "";
-// let sSedeActual = "";
+let sSedeActual = "";
 let sCursoActual = "";
 let sCodigoActual = "";
 let nCreditosActual = "";
 let dFechaActual = dHoy;
 let sEstadoActual = "";
 
-// Declaracion de variables globales
+let sSedeAsociar = "";
+let sCursoAsociar = "";
 
 
 // Esta funcion prepara los inputs de sede para elegir de la lista correspondiente
-// function imprimirSedes() {
-//     let sltSede = document.querySelectorAll('select[name = "sede"]');
-//     sltSede.innerHTML = '';
-//     let listaSedes = obtenerListaSedes();
+function imprimirSedes() {
+    let sltSede = document.querySelectorAll('select[name = "sede"]');
+    sltSede.innerHTML = '';
+    let listaSedes = obtenerListaSedes();
 
-//     for (let k = 0; k < sltSede.length; k++) {
-//         for (let i = 0; i < listaSedes.length; i++) {
-//             let inputSede = sltSede[k];
-//             let nuevaOpcion = new Option(listaSedes[i]['nombre_sede']);
-//             nuevaOpcion.value = listaSedes[i]['nombre_sede'];
-//             nuevaOpcion.dataset._id = listaSedes[i]['_id'];
-//             inputSede.options.add(nuevaOpcion);
-//         }
-//     }
-// }
-
-
+    for (let k = 0; k < sltSede.length; k++) {
+        for (let i = 0; i < listaSedes.length; i++) {
+            let inputSede = sltSede[k];
+            let nuevaOpcion = new Option(listaSedes[i]['nombre_sede']);
+            nuevaOpcion.value = listaSedes[i]['nombre_sede'];
+            nuevaOpcion.dataset._id = listaSedes[i]['_id'];
+            inputSede.options.add(nuevaOpcion);
+        }
+    }
+}
 // Esta funcion prepara los inputs cursos para la lista
 function imprimirCursos() {
     let sltCurso = document.querySelectorAll('select[name = "curso"]');
@@ -86,27 +87,11 @@ function imprimirCursos() {
             let optionCurso = sltCurso[k];
             let nuevaOpcion = new Option(listaCurso[i]['nombre_curso']);
             nuevaOpcion.value = listaCurso[i]['nombre_curso'];
-            nuevaOpcion.dataset._id = listaCurso[i]['_id'];
             optionCurso.options.add(nuevaOpcion);
         }
     }
 }
-// Asociar
-// Asociar
-// Asociar
-function obtenerDatosAsociar(pid) {
-    let idSede = inputSedeAsociar.value;
-    let idCurso = inputCursoAsociar.value;
 
-    // En caso de que sedes tenga informacion
-    if (sNombreSede != "") {
-
-    }
-    // En caso de que cursos tenga informacion
-    if (sNombreCurso != "") {
-
-    }
-}
 
 // Eliminar
 // Eliminar
@@ -186,8 +171,7 @@ function tieneAsociado(objeto, contenido) {
         return false;
 }
 
-// Registrar
-// Registrar
+
 // Registrar
 function obtenerDatos() {
     let infoCarrera = [];
@@ -220,12 +204,120 @@ function obtenerDatos() {
         $('.swal2-confirm').click(function () {
             reload();
         });
-        limpiarFormularioRegistrar();
     }
 };
 
-// Listar
-// Listar
+
+// Asociar
+// Asociar
+// Asociar
+function obtenerDatosAsociar() {
+    let _id = this.dataset._id;
+    let nombreSede = inputSedeAsociar.value;
+    let nombreCurso = inputCursoAsociar.value;
+
+    // En caso de que sedes tenga informacion
+    if (nombreSede != "") {
+    
+    }
+    // En caso de que cursos tenga informacion
+    if (nombreCurso != "") {
+        let infoCurso = getInfoCurso(nombreCurso);
+        let idCurso = infoCurso['_id'];
+        infoCurso = buscar_curso_id(idCurso);
+
+        swal({
+            title: 'Asociación correcta',
+            text: 'La carrera se asoció correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+
+        agregarCursoCarrera(_id,infoCurso['nombre_curso'], infoCurso['codigo_curso']);
+
+        $('.swal2-confirm').click(function () {
+            reload();
+        });        
+    }
+    ppAsociar.style.display = "none";
+}
+function getInfoCurso(pCursoNombre) {
+    let listaCurso = obtenerCursos();
+    let informacionCurso = "";
+    for (let i = 0; i < listaCurso.length; i++) {
+        if (listaCurso[i]['nombre_curso'] == pCursoNombre) {
+            let cursoId = listaCurso[i]['_id'];
+            informacionCurso = buscar_curso_id(cursoId);
+        }
+    }
+    return informacionCurso;
+}
+function asociarSweetAlert(bError, funct, _id) {
+    if (bError) {
+        swal({
+            title: 'Asociación incorrecta',
+            text: 'No se pudo asociar la carrera, verifique que completó correctamente la información que se le solicita',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        swal({
+            title: 'Asociación correcta',
+            text: 'La carrera se asoció correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+
+        funct(_id);
+
+        $('.swal2-confirm').click(function () {
+            reload();
+        });
+    }
+}
+
+
+// Modificar
+// Esto recibe la sede actual, no funciona (mantenimiento)
+function obtenerDatosActual() {
+    let infoCarreraActual = [];
+
+    let id = inputIdCarrera.value;
+    sNombreActual = inputNombreActual.value;
+    sGradoActual = inputGradoActual.value;
+    sCodigoActual = inputCodigoActual.value;
+    nCreditosActual = inputCreditosActual.value;
+    dFechaActual = inputFechaActual.value;
+    // sSedeActual = inputSedeActual.value;
+    sCursoActual = inputCursoActual.value;
+    sEstadoActual = inputEstadoActual.value;
+
+    let bError = false;
+    bError = validarActualizar();
+
+    if (bError) {
+        swal({
+            title: 'Actualización incorrecta',
+            text: 'No se pudo actualizar la carrera, verifique que completó correctamente la información que se le solicita',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        swal({
+            title: 'Actualización correcta',
+            text: 'La carrera se actualizó correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        infoCarreraActual.push(id, sNombreActual, sGradoActual, sCodigoActual, nCreditosActual, dFechaActual, sSedeActual, sCursoActual, sEstadoActual);
+        actualizarCarrera(infoCarreraActual);
+        $('.swal2-confirm').click(function () {
+            reload();
+        });
+    }
+};
+
+
 // Listar
 function mostrarListaCarreras(paBuscar) {
     let listaCarreras = obtenerListaCarreras();
@@ -265,13 +357,14 @@ function mostrarListaCarreras(paBuscar) {
             celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
 
             let aCursosCarrera = listaCarreras[i]['cursos_carrera'];
-            celdaSede.innerHTML = 'Mantenimiento';
-            
+
+            celdaSede.innerHTML = '-';
+
             if (aCursosCarrera.length > 0) {
                 for (let j = 0; j < aCursosCarrera.length; j++) {
-                    if(aCursosCarrera[j] == null){
+                    if (aCursosCarrera[j] == null) {
                         celdaCursos.innerHTML = "-";
-                    }else{
+                    } else {
                         celdaCursos.innerHTML = aCursosCarrera[j]['nombre_curso'];
                     }
                 }
@@ -317,6 +410,7 @@ function mostrarListaCarreras(paBuscar) {
 
             botonAsociar.addEventListener('click', function () {
                 ppAsociar.style.display = "block";
+                btnAsociar.dataset._id = botonAsociar.dataset._id;
             });
 
             celdaOpciones.appendChild(botonAsociar);
@@ -325,48 +419,6 @@ function mostrarListaCarreras(paBuscar) {
     }
 };
 
-
-// Modificar
-// Modificar
-// Modificar
-function obtenerDatosActual() {
-    let infoCarreraActual = [];
-
-    let id = inputIdCarrera.value;
-    sNombreActual = inputNombreActual.value;
-    sGradoActual = inputGradoActual.value;
-    sCodigoActual = inputCodigoActual.value;
-    nCreditosActual = inputCreditosActual.value;
-    dFechaActual = inputFechaActual.value;
-    // sSedeActual = inputSedeActual.value;
-    sCursoActual = inputCursoActual.value;
-    sEstadoActual = inputEstadoActual.value;
-
-    let bError = false;
-    bError = validarActualizar();
-
-    if (bError) {
-        swal({
-            title: 'Actualización incorrecta',
-            text: 'No se pudo actualizar la carrera, verifique que completó correctamente la información que se le solicita',
-            type: 'warning',
-            confirmButtonText: 'Entendido'
-        });
-    } else {
-        swal({
-            title: 'Actualización correcta',
-            text: 'La carrera se actualizó correctamente',
-            type: 'success',
-            confirmButtonText: 'Entendido'
-        });
-        infoCarreraActual.push(id, sNombreActual, sGradoActual, sCodigoActual, nCreditosActual, dFechaActual, sSedeActual, sCursoActual, sEstadoActual);
-        actualizarCarrera(infoCarreraActual);
-        $('.swal2-confirm').click(function () {
-            reload();
-        });
-        limpiarFormularioModificar();
-    }
-};
 
 // Validar
 function validarRegistrar() {
@@ -510,15 +562,18 @@ window.onclick = function (event) {
     }
     if (event.target == ppAsociar) {
         ppAsociar.style.display = "none";
+        limpiarAsociar();
     }
     if (event.target == ppActualizar) {
         ppActualizar.style.display = "none";
+        limpiarFormularioModificar();
     }
 
 }
 
 function limpiarAsociar() {
-    // Hacer esto
+    inputSedeAsociar.value = "";
+    inputCursoAsociar.value = "";
 };
 
 function limpiarFormularioRegistrar() {
@@ -535,7 +590,7 @@ function limpiarFormularioModificar() {
     inputCodigoActual.value = "";
     inputCreditosActual.value = "";
     inputFechaActual.value = "";
-    // inputSedeActual.value = "";
+    inputSedeActual.value = "";
     inputCursoActual.value = "";
     inputEstadoActual.value = "";
 
@@ -543,7 +598,6 @@ function limpiarFormularioModificar() {
 
 function reload() {
     mostrarListaCarreras();
-    // imprimirSedes();
     limpiarAsociar();
     limpiarFormularioModificar();
     limpiarFormularioRegistrar();
