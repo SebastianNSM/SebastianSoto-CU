@@ -109,8 +109,10 @@
                 <h1 class="title">Registrar carreras</h1>
 
                 <div class="form">
-                    <input type="text" id="txtNombre" required placeholder="Nombre de la carrera*">
+                    <label for="txtNombre">Nombre*</label>
+                    <input type="text" id="txtNombre" required placeholder="Ingeniería mecánica">
 
+                    <label for="txtGrado">Grado*</label>
                     <select id="txtGrado" required>
 
                         <option value="">Elija un grado</option>
@@ -124,10 +126,13 @@
 
                     </select>
 
-                    <input type="text" id="txtCodigo" required placeholder="Código de carrera*">
+                    <label for="txtCodigo">Código*</label>
+                    <input type="text" id="txtCodigo" required placeholder="INMEC-80">
 
-                    <input type="number" id="numCreditos" required placeholder="Créditos de la carrera*" min="50" max="200">
+                    <label for="numCreditos">Créditos*</label>
+                    <input type="number" id="numCreditos" required placeholder="Créditos de la carrera" min="50" max="200">
 
+                    <label for="dateFecha">Fecha de creación*</label>
                     <input type="date" id="dateFecha" required autocomplete="">
 
                     <button type="button" class="button" id="btnRegistrar">Registrar</button>
@@ -138,13 +143,15 @@
         <section id="sct_asociar" class="popup-bg">
             <!-- Formulario que aparece -->
             <form class="popup-content">
-                <h1 class="title">Asociar a carreras</h1>
+                <h1 class="title">Asociar</h1>
 
                 <div class="form">
+                    <label for="txtSedeAsociar">Asocie la carrera a una sede</label>
                     <select name="sede" id="txtSedeAsociar">
                         <!-- Debo ser capaz de agregar varias (subdocumento sede) -->
                         <option value="">Elija una sede</option>
                     </select>
+                    <label for="txtCursoAsociar">Asocie un curso a la carrera</label>
                     <select name="curso" id="txtCursoAsociar">
                         <option value="">Elija un curso</option>
                     </select>
@@ -162,8 +169,10 @@
 
                     <input type="hidden" id="txtId">
 
+                    <label for="txtNombreActual">Nombre</label>
                     <input type="text" id="txtNombreActual" required placeholder="Nombre de la carrera*">
 
+                    <label for="txtGradoActual">Grado</label>
                     <select id="txtGradoActual" required>
 
                         <option value="">Elija un grado</option>
@@ -177,20 +186,25 @@
 
                     </select>
 
+                    <label for="txtCodigoActual">Código</label>
                     <input type="text" id="txtCodigoActual" required placeholder="Código de carrera*">
 
-                    <input type="number" id="numCreditosActual" required placeholder="Créditos de la carrera*" min="100" max="500">
+                    <label for="numCreditosActual">Créditos</label>
+                    <input type="number" id="numCreditosActual" required placeholder="Créditos de la carrera*" min="50" max="200">
 
+                    <label for="dateFechaActual">Fecha de creación</label>
                     <input type="date" id="dateFechaActual" required autocomplete="">
 
-                    <select name="sede" id="txtSedeActual">
+                    <!-- Esto creao que lo voy a cambia para que pueda funcionar mejor a punta de checkbox -->
+                    <!-- <select name="sede" id="txtSedeActual">
                         <option value="">Cambie la sede</option>
                     </select>
 
                     <select name="curso" id="txtCursoActual">
                         <option value="">Cambie el curso</option>
-                    </select>
+                    </select> -->
 
+                    <label for="txtEstadoActual">Estado</label>
                     <select id="txtEstadoActual" required>
                         <option value="">Cambie el estado</option>
                         <option value="Activo">Activo</option>

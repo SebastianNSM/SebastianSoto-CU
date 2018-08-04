@@ -95,7 +95,6 @@ function imprimirCursos() {
 
 // Eliminar
 // Eliminar
-// Eliminar
 function eliminar_carrera() {
     let _id = this.dataset._id;
     swal({
@@ -121,7 +120,6 @@ function eliminar_carrera() {
 
 }
 
-// Buscar
 // Buscar
 // Buscar
 inputBuscar.addEventListener('keyup', function () {
@@ -218,7 +216,11 @@ function obtenerDatosAsociar() {
 
     // En caso de que sedes tenga informacion
     if (nombreSede != "") {
-    
+        let nombre_carrera = inputSedeAsociar.dataset.nombre_carrera;
+        let codigo_carrera = inputSedeAsociar.dataset.codigo_carrera;
+        let idSede = getIdSede(nombreSede);
+
+        agregarCarreraSede(idSede, nombre_carrera, codigo_carrera);
     }
     // En caso de que cursos tenga informacion
     if (nombreCurso != "") {
@@ -228,16 +230,16 @@ function obtenerDatosAsociar() {
 
         swal({
             title: 'Asociación correcta',
-            text: 'La carrera se asoció correctamente',
+            text: 'La información se asoció correctamente',
             type: 'success',
             confirmButtonText: 'Entendido'
         });
 
-        agregarCursoCarrera(_id,infoCurso['nombre_curso'], infoCurso['codigo_curso']);
+        agregarCursoCarrera(_id, infoCurso['nombre_curso'], infoCurso['codigo_curso']);
 
         $('.swal2-confirm').click(function () {
             reload();
-        });        
+        });
     }
     ppAsociar.style.display = "none";
 }
@@ -252,30 +254,18 @@ function getInfoCurso(pCursoNombre) {
     }
     return informacionCurso;
 }
-function asociarSweetAlert(bError, funct, _id) {
-    if (bError) {
-        swal({
-            title: 'Asociación incorrecta',
-            text: 'No se pudo asociar la carrera, verifique que completó correctamente la información que se le solicita',
-            type: 'warning',
-            confirmButtonText: 'Entendido'
-        });
-    } else {
-        swal({
-            title: 'Asociación correcta',
-            text: 'La carrera se asoció correctamente',
-            type: 'success',
-            confirmButtonText: 'Entendido'
-        });
-
-        funct(_id);
-
-        $('.swal2-confirm').click(function () {
-            reload();
-        });
+function getIdSede(pSedeNombre) {
+    let listaSedes = obtenerListaSedes();
+    let idSede;
+    for (let i = 0; i < listaSedes.length; i++) {
+        if (listaSedes[i]['nombre_sede'] == pSedeNombre) {
+            idSede = listaSedes[i]['_id'];
+            break;
+        }
     }
-}
+    return idSede;
 
+}
 
 // Modificar
 // Esto recibe la sede actual, no funciona (mantenimiento)
@@ -356,10 +346,30 @@ function mostrarListaCarreras(paBuscar) {
             // Esto despliega la informacion separada para darle formato
             celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
 
+            // Esto es lo que hace por defecto, mientras no tenga el asociar de sedes listo
+            let listaSedes = obtenerListaSedes();
+
+            // Esto va por cada sede registrada
+            for (let i = 0; i < listaSedes.length; i++) {
+                // Si la sede tiene carreras
+                if (listaSedes[i]['carreras_sede'] != "") {
+                    // Esto va por cada carrera de dicha sede
+                    for (let j = 0; listaSedes[i]['carreras_sede'].length; j++) {
+
+                        if (listaCarreras['carreras_sede'] == null) {
+                            celdaSede.innerHTML = "-";
+                        } else {
+                            let carreraSede = listaSedes['carreras_sede'][j]['nombre_carrera'];
+                            console.log(carreraSede);
+                        }
+                    }
+                }else{
+                    celdaSede.innerHTML = "-";
+                }
+            }
+
+            // Esto Imprime el curso que tenga asociado en caso de tener algo
             let aCursosCarrera = listaCarreras[i]['cursos_carrera'];
-
-            celdaSede.innerHTML = '-';
-
             if (aCursosCarrera.length > 0) {
                 for (let j = 0; j < aCursosCarrera.length; j++) {
                     if (aCursosCarrera[j] == null) {
@@ -384,6 +394,9 @@ function mostrarListaCarreras(paBuscar) {
             botonEditar.addEventListener('click', buscar_por_carrera_id);
             botonEditar.addEventListener('click', function () {
                 ppActualizar.style.display = "block";
+
+                // Agregar esto a los formularios que tengan mucho contenido (hace una animacion de scroll a la parte superior del formulario)
+                $(".scroll").animate({ scrollTop: 0 }, "fast");
             });
             celdaOpciones.appendChild(botonEditar);
 
@@ -410,6 +423,8 @@ function mostrarListaCarreras(paBuscar) {
 
             botonAsociar.addEventListener('click', function () {
                 ppAsociar.style.display = "block";
+                inputSedeAsociar.dataset.nombre_carrera = listaCarreras[i]['nombre_carrera'];
+                inputSedeAsociar.dataset.codigo_carrera = listaCarreras[i]['codigo_carrera'];
                 btnAsociar.dataset._id = botonAsociar.dataset._id;
             });
 
@@ -559,6 +574,7 @@ window.onclick = function (event) {
     if (event.target == ppRegistrar) {
         ppRegistrar.style.display = "none";
         limpiarFormularioRegistrar();
+        // Actualizar en cada caso de uso
     }
     if (event.target == ppAsociar) {
         ppAsociar.style.display = "none";

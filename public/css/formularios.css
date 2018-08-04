@@ -33,28 +33,37 @@ input,select{
     border-bottom: 1px solid #b3b0b6;
     margin-bottom: 30px;
 }
+.popup-content label{
+    margin: 0px auto;
+    margin-bottom: 5px;
+    width: 80%;
+    padding: 0px 20px 0px 0px;
+    display: block;
+    color: rgba(30,33,66,0.8);
+    font-weight: 300;
+}
 .popup-content input, select{
     margin: 0px auto;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     width: 80%;
-    height: 34px;
+    height: 25px;
     display: block;
-    
     border: none;
     box-shadow: inset 0px 2px 3px 1.5px rgba(0, 0, 0, 0.2);
-    padding: 0px 10px;
+    padding: 2.5px 10px;
 }
 .popup-content select{
     width: 85%;
+    height: 30px;
 }
 
 #sct_registrar .popup-content{
-    margin-top: 4%;
-    height: 430px;
+    margin-top: 1%;
+    height: 500px;
 }
 #sct_asociar .popup-content{
     margin-top: 10%;
-    height: 250px;
+    height: 274px;
 }
 #sct_modificar .popup-content {
     margin-top: 2%;
