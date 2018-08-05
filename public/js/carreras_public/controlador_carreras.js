@@ -47,7 +47,6 @@ let dFecha = dHoy;
 
 let sNombreActual = "";
 let sGradoActual = "";
-let sSedeActual = "";
 let sCursoActual = "";
 let sCodigoActual = "";
 let nCreditosActual = "";
@@ -298,7 +297,7 @@ function obtenerDatosActual() {
             type: 'success',
             confirmButtonText: 'Entendido'
         });
-        infoCarreraActual.push(id, sNombreActual, sGradoActual, sCodigoActual, nCreditosActual, dFechaActual, sSedeActual, sCursoActual, sEstadoActual);
+        infoCarreraActual.push(id, sNombreActual, sGradoActual, sCodigoActual, nCreditosActual, dFechaActual, sCursoActual, sEstadoActual);
         actualizarCarrera(infoCarreraActual);
         $('.swal2-confirm').click(function () {
             reload();
@@ -581,7 +580,6 @@ function limpiarFormularioModificar() {
     inputCodigoActual.value = "";
     inputCreditosActual.value = "";
     inputFechaActual.value = "";
-    inputSedeActual.value = "";
     inputCursoActual.value = "";
     inputEstadoActual.value = "";
 

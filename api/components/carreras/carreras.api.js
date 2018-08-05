@@ -29,8 +29,7 @@ module.exports.listar_carrera = function (req, res) {
     carreraModel.find().sort({ nombre_carrera: 'asc' }).then(
         function (carreras, error) {
             if (error) {
-               
-                res.json({ success: false, msg: 'No se pudo registrar la sede, ocurrió el siguiente error' + error });
+                res.json({ success: false, msg: 'No se listar las carreras, ocurrió el siguiente error' + error });
             } else {
                 
                 res.send(carreras);
