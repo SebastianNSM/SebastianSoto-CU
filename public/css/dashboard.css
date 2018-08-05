@@ -286,6 +286,9 @@ tbody tr td span.fas:hover{
 /* Scroll */
 /* Scroll */
 
+.scroll{
+    overflow-y: scroll;
+}
 .scroll::-webkit-scrollbar {
     width: .5em;
 }

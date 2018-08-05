@@ -118,6 +118,7 @@ function eliminar_carrera() {
 
 }
 
+
 // Buscar
 // Buscar
 inputBuscar.addEventListener('keyup', function () {
@@ -266,6 +267,7 @@ function getIdSede(pSedeNombre) {
 
 }
 
+
 // Modificar
 // Esto recibe la sede actual, no funciona (mantenimiento)
 function obtenerDatosActual() {
@@ -307,6 +309,7 @@ function obtenerDatosActual() {
 
 
 // Listar
+
 function mostrarListaCarreras(paBuscar) {
     let listaCarreras = obtenerListaCarreras();
     let tbody = document.querySelector('#tblCarreras tbody');
@@ -343,16 +346,37 @@ function mostrarListaCarreras(paBuscar) {
             // Esto despliega la informacion separada para darle formato
             celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
 
-            // Esto Imprime el curso que tenga asociado en caso de tener algo
+            // Arreglo de cursos en la carrera i
             let aCursosCarrera = listaCarreras[i]['cursos_carrera'];
-            if (aCursosCarrera.length > 0) {
-                for (let j = 0; j < aCursosCarrera.length; j++) {
-                    if (aCursosCarrera[j] == null) {
-                        celdaCursos.innerHTML = "-";
-                    } else {
-                        celdaCursos.innerHTML = aCursosCarrera[j]['nombre_curso'];
+            if (aCursosCarrera.length > 0 && aCursosCarrera != null) {
+
+                // Crear boton para ver cursos
+                let btnVerCursos = document.createElement('button');
+                // Le asigna el name para darle los estilos
+                btnVerCursos.name = 'btnTabla';
+                btnVerCursos.dataset.nombre_carrera = listaCarreras[i]['nombre_carrera'];
+                // Esto le asigna un id al boton usando el codigo de la carrera
+                btnVerCursos.id = 'btn' + listaCarreras[i]['codigo_carrera'];
+                // Escribe en el boton
+                btnVerCursos.textContent = 'Ver cursos';
+
+
+                // Por cada boton como evento, genera la informacion en tabla
+                btnVerCursos.addEventListener('click', function(){
+                    let listaCursosAsociados = [];
+                    for (let j = 0; j < aCursosCarrera.length; j++) {
+                        listaCursosAsociados[j] = aCursosCarrera[j]['nombre_curso'];
                     }
-                }
+                    
+                    ppCursosAsociados.style.display = "block";
+                    displayCursosScroll();
+                    
+                    console.log(listaCursosAsociados);
+                });
+
+                // Mete el boton en la tabla
+                celdaCursos.appendChild(btnVerCursos);
+
             } else {
                 celdaCursos.innerHTML = "-";
             }
@@ -408,6 +432,7 @@ function mostrarListaCarreras(paBuscar) {
         }
     }
 };
+
 
 // Validar
 function validarRegistrar() {
@@ -533,17 +558,29 @@ function validarActualizar() {
     return bError;
 };
 
-// Display formulario registrar
+// Display formulario
 let botonAgregar = document.querySelector('#btnAgregar');
 
 let ppRegistrar = document.querySelector('#sct_registrar');
 let ppAsociar = document.querySelector('#sct_asociar');
 let ppActualizar = document.querySelector('#sct_modificar');
+let ppCursosAsociados = document.querySelector('#sct_cursos_asociados');
 
 botonAgregar.addEventListener('click', function () {
     ppRegistrar.style.display = "block";
 });
 
+function displayCursosScroll(){
+    let scrollTblCursos = document.querySelector('#div_tabla_cursos');
+    let tblCursos = document.querySelector('#tblCursos');
+    let alturaTablaCursos = tblCursos.scrollHeight;
+
+    if(alturaTablaCursos < 300){
+        scrollTblCursos.classList.remove('scroll');
+    }else{
+        scrollTblCursos.classList.add('scroll');
+    }
+}
 window.onclick = function (event) {
     if (event.target == ppRegistrar) {
         ppRegistrar.style.display = "none";
@@ -558,7 +595,9 @@ window.onclick = function (event) {
         ppActualizar.style.display = "none";
         limpiarFormularioModificar();
     }
-
+    if (event.target == ppCursosAsociados) {
+        ppCursosAsociados.style.display = "none";
+    }
 }
 
 function limpiarAsociar() {
