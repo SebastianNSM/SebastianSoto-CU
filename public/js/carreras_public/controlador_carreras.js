@@ -22,7 +22,6 @@ let inputGradoActual = document.querySelector('#txtGradoActual');
 let inputCodigoActual = document.querySelector('#txtCodigoActual');
 let inputCreditosActual = document.querySelector('#numCreditosActual');
 let inputFechaActual = document.querySelector('#dateFechaActual');
-let inputSedeActual = document.querySelector('#txtSedeActual');
 let inputCursoActual = document.querySelector('#txtCursoActual');
 let inputEstadoActual = document.querySelector('#txtEstadoActual');
 let inputIdCarrera = document.querySelector('#txtId');
@@ -279,7 +278,6 @@ function obtenerDatosActual() {
     sCodigoActual = inputCodigoActual.value;
     nCreditosActual = inputCreditosActual.value;
     dFechaActual = inputFechaActual.value;
-    // sSedeActual = inputSedeActual.value;
     sCursoActual = inputCursoActual.value;
     sEstadoActual = inputEstadoActual.value;
 
@@ -328,7 +326,6 @@ function mostrarListaCarreras(paBuscar) {
             let celdaCodigo = fila.insertCell();
             let celdaCreditos = fila.insertCell();
             let celdaFechaCreacion = fila.insertCell();
-            let celdaSede = fila.insertCell();
             let celdaCursos = fila.insertCell();
             let celdaEstado = fila.insertCell();
             let celdaOpciones = fila.insertCell();
@@ -346,9 +343,6 @@ function mostrarListaCarreras(paBuscar) {
             let nAnno = dFecha.getUTCFullYear();
             // Esto despliega la informacion separada para darle formato
             celdaFechaCreacion.innerHTML = nDia + '/' + nMes + '/' + nAnno;
-
-            // // Esto es lo que hace por defecto, mientras no tenga el asociar de sedes listo
-            celdaSede.innerHTML = existeEnSede(listaCarreras[i]['nombre_carrera']);
 
             // Esto Imprime el curso que tenga asociado en caso de tener algo
             let aCursosCarrera = listaCarreras[i]['cursos_carrera'];
@@ -416,24 +410,6 @@ function mostrarListaCarreras(paBuscar) {
     }
 };
 
-function existeEnSede(psNombreCarrera) {
-    let text = "-";
-    let listaSedes = obtenerListaSedes();
-    for (let i = 0; i < listaSedes.length; i++) {
-        if (listaSedes[i]['carreras_sede'] == "" || listaSedes[i]['carreras_sede'] == null) {
-            console.log('La sede: '+listaSedes[i]['nombre_sede']+' no tiene carreras asosiadas');
-        } else {
-            for (let j = 0; j < listaSedes[i]['carreras_sede'].length; j++) {
-                let nombreCarreraActual = listaSedes[i]['carreras_sede'][j]['nombre_carrera'];
-                if (nombreCarreraActual === psNombreCarrera) {
-                    text = listaSedes[i]['nombre_sede'];
-                    break;
-                }
-            }
-        }
-    }
-    return text;
-}
 // Validar
 function validarRegistrar() {
     let bError = false;
