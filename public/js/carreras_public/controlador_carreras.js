@@ -170,6 +170,7 @@ function tieneAsociado(objeto, contenido) {
 
 
 // Registrar
+// Registrar
 function obtenerDatos() {
     let infoCarrera = [];
 
@@ -205,7 +206,6 @@ function obtenerDatos() {
 };
 
 
-// Asociar
 // Asociar
 // Asociar
 function obtenerDatosAsociar() {
@@ -362,16 +362,21 @@ function mostrarListaCarreras(paBuscar) {
 
 
                 // Por cada boton como evento, genera la informacion en tabla
-                btnVerCursos.addEventListener('click', function(){
+                btnVerCursos.addEventListener('click', function () {
+
+
                     let listaCursosAsociados = [];
                     for (let j = 0; j < aCursosCarrera.length; j++) {
-                        listaCursosAsociados[j] = aCursosCarrera[j]['nombre_curso'];
+                        let infoCursoActual = [];
+                        infoCursoActual.push(aCursosCarrera[j]['nombre_curso'], aCursosCarrera[j]['codigo_curso']);
+                        listaCursosAsociados.push(infoCursoActual);
                     }
-                    
                     ppCursosAsociados.style.display = "block";
+                    let tblCursos = document.querySelector('#tblCursos tbody');
+                    mostrarListaCursos(listaCursosAsociados, tblCursos);
                     displayCursosScroll();
-                    
-                    console.log(listaCursosAsociados);
+
+
                 });
 
                 // Mete el boton en la tabla
@@ -430,6 +435,23 @@ function mostrarListaCarreras(paBuscar) {
             celdaOpciones.appendChild(botonAsociar);
 
         }
+    }
+};
+function mostrarListaCursos(pArreglo, tbody) {
+
+    tbody.innerHTML = '';
+
+    for (let i = 0; i < pArreglo.length; i++) {
+        let fila = tbody.insertRow();
+        let celdaNombre = fila.insertCell();
+        let celdaCodigo = fila.insertCell();
+        
+        let sNombreCurso = pArreglo[i][0];
+        let sCodigoCurso = pArreglo[i][1];
+
+        celdaNombre.innerHTML = sNombreCurso;
+        celdaCodigo.innerHTML = sCodigoCurso;
+
     }
 };
 
@@ -570,14 +592,14 @@ botonAgregar.addEventListener('click', function () {
     ppRegistrar.style.display = "block";
 });
 
-function displayCursosScroll(){
+function displayCursosScroll() {
     let scrollTblCursos = document.querySelector('#div_tabla_cursos');
     let tblCursos = document.querySelector('#tblCursos');
     let alturaTablaCursos = tblCursos.scrollHeight;
 
-    if(alturaTablaCursos < 300){
+    if (alturaTablaCursos < 300) {
         scrollTblCursos.classList.remove('scroll');
-    }else{
+    } else {
         scrollTblCursos.classList.add('scroll');
     }
 }

@@ -95,6 +95,10 @@ input, select {
     max-height: 259px;
 }
 
+#div_tabla_cursos table tbody td:hover{
+    background: none;
+}
+
 input[type=date]::-webkit-inner-spin-button {
     display: none;
 }
