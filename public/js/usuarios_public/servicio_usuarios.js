@@ -1,6 +1,6 @@
 'use strict';
 
-function registrar_Usuarios(paInfoUsuario) {
+function registrarUsuarios(paInfoUsuario) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_usuarios',
