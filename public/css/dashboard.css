@@ -181,6 +181,7 @@ header nav img{
 .side-buscar>div{
     width: 90%;
 }
+
 .side-elementos{
     grid-area: elementos;
     margin: 10px;
@@ -316,9 +317,8 @@ tbody tr td span.fas:hover{
     transform: translateX(-50%);
 }
 .button{
-    position: absolute;
+    position: relative;
     left: 50%;
-    margin-bottom: 30px;
     transform: translateX(-50%);
     height: 38px;
     padding: 0px 10px;

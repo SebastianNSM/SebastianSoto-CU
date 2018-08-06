@@ -95,8 +95,7 @@ function actualizarCarrera(paInfoCarreraActual){
             codigo_carrera : paInfoCarreraActual[3],
             creditos_carrera : paInfoCarreraActual[4],
             fecha_carrera : paInfoCarreraActual[5],
-            cursos_carrera : paInfoCarreraActual[7],
-            estado_carrera: paInfoCarreraActual[8],
+            estado_carrera: paInfoCarreraActual[6],
         }
       });
     

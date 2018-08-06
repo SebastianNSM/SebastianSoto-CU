@@ -54,10 +54,10 @@
                 <h1 class="x-align">Carreras</h1>
             </div>
             <div class="side-buscar y-align">
-                <div class="x-align">
+                <div class="y-align">
                     <input type="text" placeholder="Buscar" id="txtBusqueda">
-                    <div class="y-align">
-                        <span id="btnBuscar" class="x-align fas fa-search"></span>
+                    <div>
+                        <span id="btnBuscar" class="fas fa-search"></span>
                     </div>
                 </div>
             </div>
@@ -146,14 +146,12 @@
 
                 <div class="form">
                     <label for="txtSedeAsociar">Asocie la carrera a una sede</label>
-                    <select name="sede" id="txtSedeAsociar">
-                        <!-- Debo ser capaz de agregar varias (subdocumento sede) -->
-                        <option value="">Elija una sede</option>
-                    </select>
-                    <label for="txtCursoAsociar">Asocie un curso a la carrera</label>
-                    <select name="curso" id="txtCursoAsociar">
-                        <option value="">Elija un curso</option>
-                    </select>
+                    <div class="asociar" id="divSedeAsociar">
+                    </div>
+
+                    <label for="txtCursoAsociar">Asocie la carrera a una sede</label>
+                    <div class="asociar" id="divCursoAsociar">
+                    </div>
                     <button type="button" class="button" id="btnAsociar">Asociar</button>
                 </div>
             </form>
@@ -161,7 +159,7 @@
         </section>
         <section id="sct_modificar" class="popup-bg">
             <!-- Formulario que aparece -->
-            <form class="popup-content scroll">
+            <form class="popup-content">
                 <h1 class="title">Modificar carrera</h1>
 
                 <div class="form">
@@ -194,11 +192,6 @@
                     <label for="dateFechaActual">Fecha de creación</label>
                     <input type="date" id="dateFechaActual" required autocomplete="">
 
-                    <label for="txtCursoActual">Curso</label>
-                    <select name="curso" id="txtCursoActual">
-                        <option value="">Cambie el curso</option>
-                    </select>
-
                     <label for="txtEstadoActual">Estado</label>
                     <select id="txtEstadoActual" required>
                         <option value="">Cambie el estado</option>
@@ -221,12 +214,33 @@
                             <th>Código del curso</th>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
+
+
+        <!-- Todos deben tener esta seccion de perfil -->
+        <section id="sct_perfil" class="popup-bg">
+            <div class="popup-content">
+                <h1>Sebastián Soto Madrigal</h1>
+                <div class="perfil">
+                    <div id="img">
+                    </div>
+                    <div class="perfil-info">
+                        <h2>Cédula: </h2>
+                        <h2>3-0527-0799</h2>
+                        <h2>Correo: </h2>
+                        <h2>ssotom@ucenfotec.ac.cr</h2>
+                        <h2>Teléfono: </h2>
+                        <h2>86672549</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Todos deben tener esta seccion de perfil -->
     </main>
     <!-- SCRIPTS FIJOS PARA TODOS Dashboards -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>

@@ -105,3 +105,5 @@ function imprimirOpcionesBeca(paOpciones){
         menu.appendChild(newLi);
     }
 }
+
+// style.backgroundImage = "url('" + getImgUrl(listaEntrenador[i]['foto_entrenador']) + "')";
