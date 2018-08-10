@@ -646,7 +646,7 @@ function displayCursosScroll() {
     let tblCursos = document.querySelector('#tblCursos');
     let alturaTablaCursos = tblCursos.scrollHeight;
 
-    if (alturaTablaCursos < 275) {
+    if (alturaTablaCursos < 250) {
         scrollTblCursos.classList.remove('scroll');
     } else {
         scrollTblCursos.classList.add('scroll');
