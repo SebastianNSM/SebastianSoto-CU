@@ -160,7 +160,7 @@ function agregarCarreraSede(pid, sNombreCarrera, sCodigoCarrera){
 function eliminarCarreraSede(pIdSede,pIdCarrera ){
     let respuesta = '';
     let peticion = $.ajax({
-        url : 'http://localhost:4000/api/eliminar_subdocumento_curso_id',
+        url : 'http://localhost:4000/api/eliminar_subdocumento_carrera_id',
         type : 'post',
         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',

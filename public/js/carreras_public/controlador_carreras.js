@@ -149,14 +149,12 @@ function obtenerDatos() {
 // Asociar
 
 // paSedes es el arreglo de sedes checkeadas
-function limpiarSubdocumentoSede(idSede, idCarreraEliminar) {
+function limpiarSubdocumentoSede(idSede, nombreCarreraEliminar) {
     let infoSede = obtener_sede_por_id(idSede);
     for (let i = 0; i < infoSede['carreras_sede'].length; i++) {
-        if(infoSede['carreras_sede'][i]['_id'] == idCarreraEliminar){
-            console.log('Se elimino: '+infoSede['carreras_sede'][i]['_id']);
+        if (infoSede['carreras_sede'][i]['nombre_carrera'] == nombreCarreraEliminar) {
+            eliminarCarreraSede(idSede, infoSede['carreras_sede'][i]['_id']);
         }
-        
-        // eliminarCarreraSede(idSede, infoSede['carreras_sede'][i]['_id']);
     }
 }
 function limpiarSubdocumentosCarrera(idCarrera) {
@@ -193,13 +191,21 @@ function obtenerDatosAsociar() {
                     agregarCursoCarrera(id_carrera, infoCurso['nombre_curso'], infoCurso['codigo_curso']);
                 }
             }
+            let listaSedes = obtenerListaSedes();
+            for (let j = 0; j < listaSedes.length; j++) {
+                if (listaSedes[j]['carreras_sede'] != 0 && listaSedes[j]['carreras_sede'] != undefined) {
+                    for (let k = 0; k < listaSedes[j]['carreras_sede'].length; k++) {
+                        if (listaSedes[j]['carreras_sede'][k]['nombre_carrera'] == nombre_carrera) {
+                            limpiarSubdocumentoSede(getIdSede(listaSedes[j]['nombre_sede']), nombre_carrera);
+                        }
+                    }
+                }
+            }
             if (aSedesChecked.length > 0) {
-                for (let i = 0; i < aSedesChecked.length; i++) {
-                    let idSede = getIdSede(aSedesChecked[i].id);
+                for (let j = 0; j < aSedesChecked.length; j++) {
+                    let idSede = getIdSede(aSedesChecked[j].id);
                     agregarCarreraSede(idSede, nombre_carrera, codigo_carrera);
                 }
-            }else{
-                
             }
             reload();
         }
