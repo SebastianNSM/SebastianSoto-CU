@@ -86,9 +86,9 @@ inputBuscar.addEventListener('keyup', function () {
     let busqueda = inputBuscar.value;
     mostrarListaCarreras(busqueda);
 });
-function buscar_por_carrera_id() {
+function buscarCarrera() {
     let _id = this.dataset._id;
-    let carrera = buscarCarrera(_id);
+    let carrera = buscar_por_carrera_id(_id);
 
     inputNombreActual.value = carrera['nombre_carrera'];
     inputGradoActual.value = carrera['grado_carrera'];
@@ -147,47 +147,74 @@ function obtenerDatos() {
 
 // Asociar
 // Asociar
-function obtenerDatosAsociar() {
-    let sedesElegidas = document.querySelectorAll('#divSedeAsociar input[type=checkbox]:checked');
-    let divSedeAsociar = document.querySelector('#divSedeAsociar');
 
-    let cursosElegidos = document.querySelectorAll('#divCursoAsociar input[type=checkbox]:checked');
-    let divCursoAsociar = document.querySelector('#divCursoAsociar');
-
-    let nombre_carrera = ppAsociar.dataset.nombre_carrera;
-    let codigo_carrera = ppAsociar.dataset.codigo_carrera;
-    let id_carrera = ppAsociar.dataset._id;
-
-
-    // AYUDA PABS
-    // Como puedo hacer para que una vez asociados los cursos, cuando acceda a un
-    if(sedesElegidas.length > 0 || cursosElegidos.length > 0){
-        if(sedesElegidas.length > 0){
-            for (let i = 0; i < sedesElegidas.length; i++) {
-                let nombreSede = sedesElegidas[i].id;
-                let idSede = getIdSede(nombreSede);
-                agregarCarreraSede(idSede,nombre_carrera,codigo_carrera);
-            }
+// paSedes es el arreglo de sedes checkeadas
+function limpiarSubdocumentoSede(idSede, idCarreraEliminar) {
+    let infoSede = obtener_sede_por_id(idSede);
+    for (let i = 0; i < infoSede['carreras_sede'].length; i++) {
+        if(infoSede['carreras_sede'][i]['_id'] == idCarreraEliminar){
+            console.log('Se elimino: '+infoSede['carreras_sede'][i]['_id']);
         }
-        if(cursosElegidos.length > 0){
-            for (let i = 0; i < cursosElegidos.length; i++) {
-                let infoCurso = getInfoCurso(cursosElegidos[i].id);
-                agregarCursoCarrera(id_carrera,infoCurso['nombre_curso'], infoCurso['codigo_curso']);
-            }
-        }
-        swal({
-            title: 'Asociación correcta',
-            text: 'La información se asoció correctamente',
-            type: 'success',
-            confirmButtonText: 'Entendido'
-        });
-        $('.swal2-confirm').click(function () {
-            reload();
-        });
-    }else{
-        ppAsociar.style.display = "none";
+        
+        // eliminarCarreraSede(idSede, infoSede['carreras_sede'][i]['_id']);
     }
 }
+function limpiarSubdocumentosCarrera(idCarrera) {
+    let infoCarrera = buscar_por_carrera_id(idCarrera);
+    for (let i = 0; i < infoCarrera['cursos_carrera'].length; i++) {
+        eliminarCursoCarrera(idCarrera, infoCarrera['cursos_carrera'][i]['_id']);
+    }
+}
+
+function obtenerDatosAsociar() {
+
+    swal({
+        title: '¿Desea realizar estos cambios?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+    }).then((result) => {
+        if (result.value) {
+
+            let nombre_carrera = ppAsociar.dataset.nombre_carrera;
+            let codigo_carrera = ppAsociar.dataset.codigo_carrera;
+            let id_carrera = ppAsociar.dataset._id;
+
+            limpiarSubdocumentosCarrera(id_carrera);
+
+            let aCursosChecked = document.querySelectorAll('#divCursoAsociar input[type=checkbox]:checked');
+            let aSedesChecked = document.querySelectorAll('#divSedeAsociar input[type=checkbox]:checked');
+
+            if (aCursosChecked.length > 0) {
+                for (let i = 0; i < aCursosChecked.length; i++) {
+                    let infoCurso = getInfoCurso(aCursosChecked[i].id);
+                    agregarCursoCarrera(id_carrera, infoCurso['nombre_curso'], infoCurso['codigo_curso']);
+                }
+            }
+            if (aSedesChecked.length > 0) {
+                for (let i = 0; i < aSedesChecked.length; i++) {
+                    let idSede = getIdSede(aSedesChecked[i].id);
+                    agregarCarreraSede(idSede, nombre_carrera, codigo_carrera);
+                }
+            }else{
+                
+            }
+            reload();
+        }
+    });
+}
+
+function getCursosCarrera(id_carrera) {
+    let infoCarrera = buscar_por_carrera_id(id_carrera);
+    let aCursosCarrera = [];
+    for (let i = 0; i < infoCarrera['cursos_carrera'].length; i++) {
+        aCursosCarrera.push(infoCarrera['cursos_carrera'][i]['nombre_curso']);
+    }
+    return aCursosCarrera;
+};
+
 function getInfoCurso(pCursoNombre) {
     let listaCurso = obtenerCursos();
     let informacionCurso = "";
@@ -198,7 +225,7 @@ function getInfoCurso(pCursoNombre) {
         }
     }
     return informacionCurso;
-}
+};
 function getIdSede(pSedeNombre) {
     let listaSedes = obtenerListaSedes();
     let idSede;
@@ -210,7 +237,10 @@ function getIdSede(pSedeNombre) {
     }
     return idSede;
 
-}
+};
+
+
+// Estas funciones muestran el checkbox en el asociar
 function mostrarSedes() {
     let divSedeAsociar = document.querySelector('#divSedeAsociar');
     let listaSedes = obtenerListaSedes();
@@ -229,7 +259,7 @@ function mostrarSedes() {
         divSedeAsociar.appendChild(newLabel);
         newLabel.appendChild(newSpan);
     }
-}
+};
 function mostrarCursos() {
     let divCursoAsociar = document.querySelector('#divCursoAsociar');
     let listaCurso = obtenerCursos();
@@ -248,7 +278,8 @@ function mostrarCursos() {
         divCursoAsociar.appendChild(newLabel);
         newLabel.appendChild(newSpan);
     }
-}
+};
+
 
 // Modificar
 function obtenerDatosActual() {
@@ -352,6 +383,8 @@ function mostrarListaCarreras(paBuscar) {
                     }
                     ppCursosAsociados.style.display = "block";
                     let tblCursos = document.querySelector('#tblCursos tbody');
+                    let tituloCursos = document.querySelector('#sct_cursos_asociados>div>h1');
+                    tituloCursos.textContent = listaCarreras[i]['nombre_carrera'];
                     mostrarListaCursos(listaCursosAsociados, tblCursos);
                     displayCursosScroll();
 
@@ -374,7 +407,7 @@ function mostrarListaCarreras(paBuscar) {
 
             botonEditar.dataset._id = listaCarreras[i]['_id'];
 
-            botonEditar.addEventListener('click', buscar_por_carrera_id);
+            botonEditar.addEventListener('click', buscarCarrera);
             botonEditar.addEventListener('click', function () {
                 ppActualizar.style.display = "block";
 
@@ -408,6 +441,37 @@ function mostrarListaCarreras(paBuscar) {
                 ppAsociar.dataset.codigo_carrera = listaCarreras[i]['codigo_carrera'];
                 ppAsociar.dataset._id = listaCarreras[i]['_id'];
                 btnAsociar.dataset._id = botonAsociar.dataset._id;
+
+                let aSedes = document.querySelectorAll('#divSedeAsociar input[type=checkbox]');
+                let aCursos = document.querySelectorAll('#divCursoAsociar input[type=checkbox]');
+                deselectOptions();
+                let aCursosCarrera = getCursosCarrera(ppAsociar.dataset._id);
+
+                // Esto muestra los cursos que esten activos
+                // Si la carrera ya tiene cursos registrados
+                if (aCursosCarrera.length > 0 && !null) {
+                    // Por cada curso de la carrera
+                    for (let j = 0; j < aCursosCarrera.length; j++) {
+                        // Compare los que tiene registrados con los cursos en la base de datos
+                        for (let k = 0; k < aCursos.length; k++) {
+                            if (aCursosCarrera[j] == aCursos[k].id) {
+                                aCursos[k].checked = true;
+                            }
+                        }
+                    }
+                }
+
+                let listaSedes = obtenerListaSedes();
+                for (let j = 0; j < listaSedes.length; j++) {
+                    if (listaSedes[j]['carreras_sede'] != 0 && listaSedes[j]['carreras_sede'] != undefined) {
+                        for (let k = 0; k < listaSedes[j]['carreras_sede'].length; k++) {
+                            if (listaSedes[j]['carreras_sede'][k]['nombre_carrera'] == ppAsociar.dataset.nombre_carrera) {
+                                aSedes[j].checked = true;
+                            }
+                        }
+                    }
+                }
+
             });
 
             celdaOpciones.appendChild(botonAsociar);
@@ -431,6 +495,7 @@ function mostrarListaCursos(pArreglo, tbody) {
         celdaCodigo.innerHTML = sCodigoCurso;
 
     }
+    $(".scroll").animate({ scrollTop: 0 }, "fast");
 };
 
 
@@ -575,7 +640,7 @@ function displayCursosScroll() {
     let tblCursos = document.querySelector('#tblCursos');
     let alturaTablaCursos = tblCursos.scrollHeight;
 
-    if (alturaTablaCursos < 300) {
+    if (alturaTablaCursos < 275) {
         scrollTblCursos.classList.remove('scroll');
     } else {
         scrollTblCursos.classList.add('scroll');
@@ -589,6 +654,7 @@ window.onclick = function (event) {
     }
     if (event.target == ppAsociar) {
         ppAsociar.style.display = "none";
+        deselectOptions();
     }
     if (event.target == ppActualizar) {
         ppActualizar.style.display = "none";
@@ -614,10 +680,15 @@ function limpiarFormularioModificar() {
     inputCreditosActual.value = "";
     inputFechaActual.value = "";
     inputEstadoActual.value = "";
-
 };
-
+function deselectOptions() {
+    let selected = document.querySelectorAll('#sct_asociar input[type=checkbox]:checked');
+    for (let i = 0; i < selected.length; i++) {
+        selected[i].checked = false;
+    }
+}
 function reload() {
+    deselectOptions();
     mostrarListaCarreras();
     limpiarFormularioModificar();
     limpiarFormularioRegistrar();

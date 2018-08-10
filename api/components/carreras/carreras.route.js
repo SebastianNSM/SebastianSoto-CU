@@ -18,6 +18,11 @@ router.route('/agregar_curso_carrera')
         carrerasApi.agregar_curso_carrera(req, res);
     });
 
+router.route('/eliminar_subdocumento_curso_id')
+    .post(function (req,res){
+        carrerasApi.eliminar_subdocumento_curso_id(req,res);
+    });
+
 router.route('/buscar_carrera')
     .post(function (req, res) {
         carrerasApi.buscar_carrera(req, res);

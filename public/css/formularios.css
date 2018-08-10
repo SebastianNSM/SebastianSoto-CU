@@ -72,6 +72,7 @@ input, select {
 
 #sct_asociar form {
     position: relative;
+    width: 50%;
 }
 
 #sct_cursos_asociados>div.popup-content {
@@ -111,15 +112,18 @@ input.errorInput, select.errorInput {
 }
 
 .asociar {
-    width: 340px;
+    width: 83%;
     margin: 0 auto 1.5em auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 5px;
 }
 
 .asociar input {
     display: none;
+}
+.asociar label{
+    padding: 50px;
 }
 #sct_asociar form.popup-content div.form>label{
     margin-bottom: 10px;

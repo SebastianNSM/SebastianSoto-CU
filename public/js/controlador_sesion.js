@@ -50,7 +50,7 @@ function verificarCredenciales(sCorreo, sContrasenna) {
     let bError = true;
     for (let i = 0; i < listaUsuarios.length; i++) {
         if (sCorreo === listaUsuarios[i]['correo_usuario']) {
-            if (sContrasenna == listaUsuarios[i]['cedula_usuario']) {
+            if (sContrasenna == listaUsuarios[i]['contrasenna_usuario']) {
                 localStorage.setItem('idUsuario', listaUsuarios[i]['_id']);
                 localStorage.setItem('rolUsuario', listaUsuarios[i]['rol_usuario']);
                 inputContrasenna.classList.remove('errorInput');

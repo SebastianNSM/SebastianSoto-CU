@@ -57,7 +57,7 @@ function obtenerListaCarreras(){
       return respuesta;
     
 }
-function buscarCarrera(pid){
+function buscar_por_carrera_id(pid){
     let carrera = '';
     let peticion = $.ajax({
         url : 'http://localhost:4000/api/buscar_carrera',
@@ -144,6 +144,30 @@ function agregarCursoCarrera(pid, sNombreCurso, sCodigoCurso){
             _id : pid,
             nombre_curso : sNombreCurso,
             codigo_curso : sCodigoCurso
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+}
+function eliminarCursoCarrera(pIdCarrera,pIdCurso ){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/eliminar_subdocumento_curso_id',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id : pIdCarrera,
+            id_curso : pIdCurso
         }
       });
     

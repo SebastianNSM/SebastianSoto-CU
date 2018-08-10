@@ -55,7 +55,7 @@ button:hover{
     display: grid;
     grid-gap: 0px 10px;
     grid-template-columns: repeat(3,1fr);
-    grid-template-rows: 600px 800px 250px 500px;
+    grid-template-rows: 600px 900px 250px 550px;
     grid-template-areas: 
     "title title title"
     "mvv mvv mvv"
@@ -148,7 +148,7 @@ button:hover{
     grid-area: mvv;
     display: grid;
     grid-template-columns: 1.5fr 2.6fr;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 300px);
     grid-template-areas:
     "mision box box" 
     "vision box box" 
@@ -209,7 +209,7 @@ button:hover{
 .mvv-side{
     display: grid;
     grid-template-columns: 0.5fr 1.8fr 0.5fr;
-    grid-template-rows: 1fr 2fr;
+    grid-template-rows: 75px 225px;
     grid-template-areas:
     ". t ."
     ". p .";
@@ -322,7 +322,7 @@ button:hover{
 
 /* Esto es para el scroll */
 body::-webkit-scrollbar {
-    width: 1em;
+    width: .5em;
 }
  
 body::-webkit-scrollbar-track {

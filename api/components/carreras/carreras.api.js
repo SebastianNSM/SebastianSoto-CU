@@ -61,6 +61,29 @@ module.exports.agregar_curso_carrera = function (req, res) {
             }
         }
     )
+}; 
+
+module.exports.eliminar_subdocumento_curso_id = function (req, res) {
+
+    carreraModel.update(
+        { _id: req.body._id },
+        {
+            $pull:
+            {
+                'cursos_carrera':
+                {
+                    _id: req.body.id_curso
+                }
+            }
+        },
+        function (error) {
+            if (error) {
+                res.json({ success: false, msg: 'No se pudo eliminar el curso, ocurrió el siguiente error' + error });
+            } else {
+               res.json({ success: true, msg: 'Se ha actualizado correctamente. ' + res });
+            }
+        }
+    )
 };
 
 module.exports.buscar_carrera = function (req, res) {
