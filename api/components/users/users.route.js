@@ -13,9 +13,9 @@ router.route('/listar_usuarios')
         usersApi.listar_usuarios(req, res)
     });
 
-router.route('/buscar_usuario')
+router.route('/buscar_usuario_id')
     .post(function (req, res) {
-        usersApi.buscar_usuario(req, res);
+        usersApi.buscar_usuario_por_id(req, res);
     });
 
 router.route('/modificar_usuario')

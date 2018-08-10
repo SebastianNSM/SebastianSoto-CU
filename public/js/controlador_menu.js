@@ -1,7 +1,7 @@
 ﻿'use strict';
-
+let rolActual = localStorage.getItem('rolUsuario');
 leerRolOpciones();
-
+imprimirInfoPerfil();
 // Para menu Opciones
 $('#btnOpciones').click(function () {
     if ($('#menuOpciones').css('display') === 'none') {
@@ -44,7 +44,7 @@ function cerrarSesion() {
 
 // Desplegar el boton de opciones con las opciones que correopnden
 function leerRolOpciones() {
-    let rolActual = localStorage.getItem('rolUsuario');
+
     let opcionesAdministrador = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos', 'Bitácora'];
     let opcionesRectoria = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos', 'Solicitud'];
     let opcionesDecanatura = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos', 'Solicitud'];
@@ -53,7 +53,7 @@ function leerRolOpciones() {
     let opcionesAsistente = ['Bitácora'];
 
     let becaAsistente = ['Porcentaje de actual'];
-    let becaSuperior = ['Información de beca','Modificar información de beca'];
+    let becaSuperior = ['Información de beca', 'Modificar información de beca'];
 
     switch (rolActual) {
         case 'Administrador':
@@ -94,7 +94,7 @@ function imprimirOpciones(paOpciones) {
     }
 }
 
-function imprimirOpcionesBeca(paOpciones){
+function imprimirOpcionesBeca(paOpciones) {
     let menu = document.querySelector('#menuBeca');
     for (let i = 0; i < paOpciones.length; i++) {
         let newLi = document.createElement('li');
@@ -106,4 +106,44 @@ function imprimirOpcionesBeca(paOpciones){
     }
 }
 
+function imprimirInfoPerfil() {
+    let fotoPerfil = document.querySelector('#img');
+    let nombrePerfil = document.querySelector('#nombrePerfil');
+    let perfilInfo = document.querySelector('.perfil-info');
+    let infoUsuarioActual = obtener_usuario_por_id(localStorage.getItem('idUsuario'));
+
+    fotoPerfil.style.backgroundImage = "url('" + infoUsuarioActual['foto_usuario'] + "')";
+    
+    nombrePerfil.innerHTML = '';
+    let nombreCompleto = infoUsuarioActual['nombre_usuario']+" "+infoUsuarioActual['primer_apellido_usuario']+" "+infoUsuarioActual['segundo_apellido_usuario'];
+    nombrePerfil.innerHTML = nombreCompleto;
+
+    perfilInfo.innerHTML = '';
+    perfilInfo.appendChild(createTextElement('Cédula:','h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['cedula_usuario'],'h2'));
+    perfilInfo.appendChild(createTextElement('Correo:','h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['correo_usuario'],'h2'));
+    perfilInfo.appendChild(createTextElement('Teléfono:','h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['telefono_usuario'],'h2'));
+    perfilInfo.appendChild(createTextElement('Dirección exacta:','h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['direccion_usuario'],'h2'));
+
+}
+function createTextElement(text, element) {
+    let newH2 = document.createElement(element);
+    newH2.textContent = text;
+    return newH2
+}
 // style.backgroundImage = "url('" + getImgUrl(listaEntrenador[i]['foto_entrenador']) + "')";
+let ppPerfil = document.querySelector('#sct_perfil');
+let botonPerfil = document.querySelector('#btnPerfil');
+botonPerfil.addEventListener('click', function () {
+    ppPerfil.style.display = "block";
+    window.onclick = function (event) {
+        if (event.target == ppPerfil) {
+            ppPerfil.style.display = "none";
+        }
+    }
+});
+
+

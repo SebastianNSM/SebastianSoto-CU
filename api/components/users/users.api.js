@@ -5,9 +5,10 @@ module.exports.registrar_usuarios = function (req, res)
 {
 
     let nuevoUsuario = new usersModel({
+        foto_usuario: req.body.foto_usuario,
         nombre_usuario: req.body.nombre_usuario,
-        primerapellido_usuario: req.body.primerapellido_usuario,
-        segundoapellido_usuario: req.body.segundoapellido_usuario,
+        primer_apellido_usuario: req.body.primer_apellido_usuario,
+        segundo_apellido_usuario: req.body.segundo_apellido_usuario,
         cedula_usuario: req.body.cedula_usuario,
         fecha_usuario: req.body.fecha_usuario,
         correo_usuario: req.body.correo_usuario,
@@ -17,7 +18,8 @@ module.exports.registrar_usuarios = function (req, res)
         canton_usuario: req.body.canton_usuario,
         distrito_usuario: req.body.distrito_usuario,
         rol_usuario: req.body.rol_usuario,
-        foto: req.body.foto
+        estado_usuario: "Activo",
+        contrasenna_usuario: req.body.contrasenna_usuario
     });
 
     nuevoUsuario.save(function (error)
@@ -41,7 +43,7 @@ module.exports.listar_usuarios = function (req ,res)
 
 };
 
-module.exports.buscar_usuario = function (req, res) {
+module.exports.buscar_usuario_por_id = function (req, res) {
     usersModel.findById({ _id: req.body._id }).then(
         function (usuario) {
             res.send(usuario);
@@ -51,7 +53,7 @@ module.exports.buscar_usuario = function (req, res) {
 
 module.exports.modificar_usuario = function (req, res) {
     usersModel.findByIdAndUpdate(req.body._id, { $set: req.body },
-        function (err, user) {
+        function (err, usuario) {
             if (err) {
                 res.json({ success: false, msg: 'El usuario no se ha podido modificar. ' + handleError(err) });
 
