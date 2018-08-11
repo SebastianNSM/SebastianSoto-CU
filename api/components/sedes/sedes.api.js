@@ -2,13 +2,13 @@
 
 let sedeModel = require('./sedes.model');
 
-module.exports.registrar = function (req, res) {
+module.exports.registrar_sede = function (req, res) {
     let nuevaSede = new sedeModel({
         nombre_sede: req.body.nombre_sede,
         dirExacta_sede: req.body.dirExacta_sede,
         latitud_sede: req.body.latitud_sede,
         longitud_sede: req.body.longitud_sede,
-        estado_sede: req.body.estado_sede,
+        estado_sede: "Activa"
     });
 
     nuevaSede.save(function (error) {
@@ -53,6 +53,7 @@ module.exports.modificar_sede = function (req, res) {
             }
         });
 };
+
 
 module.exports.eliminar_sede = function (req, res) {
     sedeModel.findByIdAndDelete(req.body._id,

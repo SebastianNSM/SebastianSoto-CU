@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 const sedes = require('./sedes.api');
 
-router.route('/registrar_sedes')
+router.route('/registrar_sede')
     .post(function (req, res) {
-        sedes.registrar(req, res);
+        sedes.registrar_sede(req, res);
     });
 
 router.route('/listar_sedes')
@@ -13,7 +13,7 @@ router.route('/listar_sedes')
         sedes.listar(req, res);
     });
 
-router.route('/buscar_sede_id')
+    router.route('/buscar_sede_id')
     .post(function (req, res) {
         sedes.buscar_sede_por_id(req, res);
     });

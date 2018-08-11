@@ -4,18 +4,17 @@
 function registrarSede(paInfoSede){
     let respuesta = '';
     let peticion = $.ajax({
-        url : 'http://localhost:4000/api/registrar_sedes',
+        url : 'http://localhost:4000/api/registrar_sede',
         type : 'post',
         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
         async : false,
         data:{
-            _id: paInfoSede[0],
-            nombre_sede : paInfoSede[1],
-            dirExacta_sede : paInfoSede[2],
-            latitud_sede : paInfoSede[3],
-            longitud_sede : paInfoSede[4],
-            estado_sede : paInfoSede[5],
+            nombre_sede : paInfoSede[0],
+            dirExacta_sede : paInfoSede[1],
+            latitud_sede : paInfoSede[2],
+            longitud_sede : paInfoSede[3],
+            estado_sede : paInfoSede[4],
         }
       });
     
@@ -92,7 +91,7 @@ function actualizarSede(paInfoSede){
             dirExacta_sede : paInfoSede[2],
             latitud_sede : paInfoSede[3],
             longitud_sede : paInfoSede[4],
-            estado_sede : paInfoSede[5],
+            estado_sede: paInfoSede[5],
         }
       });
     
@@ -155,7 +154,7 @@ function agregarCarreraSede(pid, sNombreCarrera, sCodigoCarrera){
       });
 
       return respuesta;
-}
+};
 
 function eliminarCarreraSede(pIdSede,pIdCarrera ){
     let respuesta = '';
@@ -180,4 +179,5 @@ function eliminarCarreraSede(pIdSede,pIdCarrera ){
       });
 
       return respuesta;
-}
+};
+

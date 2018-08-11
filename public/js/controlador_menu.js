@@ -12,6 +12,16 @@ $('#menuOpciones, header nav>div').mouseleave(function () {
     $('#menuOpciones').slideUp('250');
 });
 
+// Para menu reportes
+$('#btnReportes').click(function () {
+    if ($('#menuReportes').css('display') === 'none') {
+        $('#menuReportes').slideDown('250');
+    }
+});
+$('#menuReportes, header nav>div').mouseleave(function () {
+    $('#menuReportes').slideUp('250');
+});
+
 // Para menu beca
 $('#btnBeca').click(function () {
     if ($('#menuBeca').css('display') === 'none') {
@@ -45,39 +55,86 @@ function cerrarSesion() {
 // Desplegar el boton de opciones con las opciones que correopnden
 function leerRolOpciones() {
 
-    let opcionesAdministrador = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos', 'Bitácora'];
-    let opcionesRectoria = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos', 'Solicitud'];
-    let opcionesDecanatura = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos', 'Solicitud'];
-    let opcionesAsistenteDecanatura = ['Sedes', 'Carreras', 'Cursos', 'Grupos', 'Laboratorios', 'Usuarios', 'Períodos'];
-    let opcionesProfesor = ['Bitácora', 'Solicitud'];
-    let opcionesAsistente = ['Bitácora'];
+    // En el primer espacio va el nombre de la opcion y en el segundo la ruta
 
-    let becaAsistente = ['Porcentaje de actual'];
-    let becaSuperior = ['Información de beca', 'Modificar información de beca'];
+    // Estas son las opciones comunes por rol
+    let opcionSede = ['Sedes', '#'];
+    let opcionCarreras = ['Carreras', '../../html/dashboard/dashboard_carrera.html'];
+    let opcionCursos = ['Cursos', '#'];
+    let opcionGrupos = ['Grupos', '#'];
+    let opcionLaboratorios = ['Laboratorios', '#'];
+    let opcionUsuarios = ['Usuarios', '#'];
+    let opcionPeriodos = ['Períodos', '#'];
+    let opcionBitacora = ['Bitácora', '../../html/dashboard/dashboard_bitacora.html'];
+    let opcionSolicitud = ['Solicitud', '#'];
+
+    let opcionesAdministrador = [];
+    opcionesAdministrador.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora, opcionSolicitud);
+
+    let opcionesRectoria = [];
+    opcionesRectoria.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora);
+    let opcionesDecanatura = [];
+    opcionesDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora)
+    let opcionesAsistenteDecanatura = [];
+    opcionesAsistenteDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionSolicitud)
+    let opcionesProfesor = [];
+    opcionesProfesor.push(opcionBitacora, opcionSolicitud);
+
+    // Estas son las opciones por rol de reportes
+    let opcionGraficoComparativo = ['Gráfico de horas comparativo contra promedio de horas de asistencia', '#'];
+    let opcionReporteCursos = ['Reporte de cursos', '#'];
+    let opcionGraficoCostos = ['Gráfico de costos de asistencias', '#'];
+    let opcionGraficoHorasAsistencia = ['Gráfico cantidad de horas de asistencia', '#'];
+    let opcionGraficoTotalHoras = ['Gráfico del total de horas de asistencia', '#'];
+
+    let opRepSuperior = [];
+    opRepSuperior.push(opcionGraficoCostos, opcionReporteCursos);
+    let opRepProfesor = [];
+    opRepProfesor.push(opcionGraficoHorasAsistencia, opcionGraficoTotalHoras, opcionGraficoComparativo);
+    let opRepAsistente = [];
+    opRepAsistente.push(opcionGraficoHorasAsistencia, opcionGraficoTotalHoras);
+
+    let opcionPorcentajeBeca = ['Porcentaje de actual','#'];
+    let opcionInformacionBeca = ['Información de beca', '#'];
+    let opcionModificarBeca = ['Modificar información de beca','#'];
+
+    let opBecaSuperior = [];
+    opBecaSuperior.push(opcionInformacionBeca,opcionModificarBeca);
+    let opBecaDecAsist = [];
+    opBecaDecAsist.push(opcionInformacionBeca);
+    let opBecAsist = [];
+    opBecAsist.push(opcionPorcentajeBeca);
 
     switch (rolActual) {
         case 'Administrador':
             imprimirOpciones(opcionesAdministrador);
-            imprimirOpcionesBeca(becaSuperior);
+            imprimirOpcionesBeca(opBecaSuperior);
+            imprimirOpcionesReportes(opRepSuperior);
             break;
         case 'Rector':
             imprimirOpciones(opcionesRectoria);
-            imprimirOpcionesBeca(becaSuperior);
+            imprimirOpcionesBeca(opBecaSuperior);
+            imprimirOpcionesReportes(opRepSuperior);
             break;
         case 'Decanatura':
             imprimirOpciones(opcionesDecanatura);
-            imprimirOpcionesBeca(becaSuperior);
+            imprimirOpcionesBeca(opBecaSuperior);
+            imprimirOpcionesReportes(opRepSuperior);
             break;
-        case 'AsistenteDecanatura':
+        case 'Asistente de decanatura':
             imprimirOpciones(opcionesAsistenteDecanatura);
-            imprimirOpcionesBeca(becaSuperior);
+            imprimirOpcionesBeca(opBecaDecAsist);
+            imprimirOpcionesReportes(opRepSuperior);
             break;
         case 'Profesor':
             imprimirOpciones(opcionesProfesor);
+            imprimirOpcionesBeca(opBecaDecAsist);
+            imprimirOpcionesReportes(opRepProfesor);
             break;
         case 'Asistente':
-            imprimirOpciones(opcionesAsistente);
-            imprimirOpcionesBeca(becaAsistente);
+            quitarBotonOpciones();
+            imprimirOpcionesBeca(opBecAsist);
+            imprimirOpcionesReportes(opRepAsistente);
             break;
     }
 }
@@ -87,11 +144,26 @@ function imprimirOpciones(paOpciones) {
     for (let i = 0; i < paOpciones.length; i++) {
         let newLi = document.createElement('li');
         let newA = document.createElement('a');
-        newA.href = "#";//Aca va el link al que redirecciona.
-        newA.textContent = paOpciones[i];
+        newA.href = paOpciones[i][1];
+        newA.textContent = paOpciones[i][0];
         newLi.appendChild(newA);
         menu.appendChild(newLi);
     }
+}
+function imprimirOpcionesReportes(paOpciones) {
+    let menu = document.querySelector('#menuReportes');
+    for (let i = 0; i < paOpciones.length; i++) {
+        let newLi = document.createElement('li');
+        let newA = document.createElement('a');
+        newA.href = paOpciones[i][1];
+        newA.textContent = paOpciones[i][0];
+        newLi.appendChild(newA);
+        menu.appendChild(newLi);
+    }
+}
+function quitarBotonOpciones() {
+    let divOpciones  = document.querySelector('#divOpciones');
+    divOpciones.style.display = "none";
 }
 
 function imprimirOpcionesBeca(paOpciones) {
@@ -99,8 +171,8 @@ function imprimirOpcionesBeca(paOpciones) {
     for (let i = 0; i < paOpciones.length; i++) {
         let newLi = document.createElement('li');
         let newA = document.createElement('a');
-        newA.href = "#";//Aca va el link al que redirecciona.
-        newA.textContent = paOpciones[i];
+        newA.href = paOpciones[i][1];
+        newA.textContent = paOpciones[i][0];
         newLi.appendChild(newA);
         menu.appendChild(newLi);
     }
@@ -113,20 +185,20 @@ function imprimirInfoPerfil() {
     let infoUsuarioActual = obtener_usuario_por_id(localStorage.getItem('idUsuario'));
 
     fotoPerfil.style.backgroundImage = "url('" + infoUsuarioActual['foto_usuario'] + "')";
-    
+
     nombrePerfil.innerHTML = '';
-    let nombreCompleto = infoUsuarioActual['nombre_usuario']+" "+infoUsuarioActual['primer_apellido_usuario']+" "+infoUsuarioActual['segundo_apellido_usuario'];
+    let nombreCompleto = infoUsuarioActual['nombre_usuario'] + " " + infoUsuarioActual['primer_apellido_usuario'] + " " + infoUsuarioActual['segundo_apellido_usuario'];
     nombrePerfil.innerHTML = nombreCompleto;
 
     perfilInfo.innerHTML = '';
-    perfilInfo.appendChild(createTextElement('Cédula:','h2'));
-    perfilInfo.appendChild(createTextElement(infoUsuarioActual['cedula_usuario'],'h2'));
-    perfilInfo.appendChild(createTextElement('Correo:','h2'));
-    perfilInfo.appendChild(createTextElement(infoUsuarioActual['correo_usuario'],'h2'));
-    perfilInfo.appendChild(createTextElement('Teléfono:','h2'));
-    perfilInfo.appendChild(createTextElement(infoUsuarioActual['telefono_usuario'],'h2'));
-    perfilInfo.appendChild(createTextElement('Dirección exacta:','h2'));
-    perfilInfo.appendChild(createTextElement(infoUsuarioActual['direccion_usuario'],'h2'));
+    perfilInfo.appendChild(createTextElement('Cédula:', 'h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['cedula_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Correo:', 'h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['correo_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Teléfono:', 'h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['telefono_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Dirección exacta:', 'h2'));
+    perfilInfo.appendChild(createTextElement(infoUsuarioActual['direccion_usuario'], 'h2'));
 
 }
 function createTextElement(text, element) {

@@ -60,9 +60,6 @@ function verificarCredenciales(sCorreo, sContrasenna) {
         }
     }
     return bError;
-
-
-    return bError;
 }
 function accionRol(psRol) {
     switch (psRol) {
@@ -75,14 +72,14 @@ function accionRol(psRol) {
         case 'Decanatura':
             window.location.href = "../html/dashboard/dashboard_carrera.html";
             break;
-        case 'Asistente decanatura':
+        case 'Asistente de decanatura':
             window.location.href = "../html/dashboard/dashboard_carrera.html";
             break;
         case 'Profesor':
-            window.location.href = "../html/dashboard/dashboard_carrera.html";
+            window.location.href = "../html/dashboard/dashboard_bitacora.html";
             break;
         case 'Asistente':
-            window.location.href = "../html/dashboard/dashboard_carrera.html";
+            window.location.href = "../html/dashboard/dashboard_bitacora.html";
             break;
 
     }

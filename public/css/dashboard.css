@@ -92,7 +92,7 @@ header nav img{
     display: none;
     position: absolute;
     top: 50px;
-    width: 180px;
+    width: 200px;
     background-color:#e6e3ea;
 }
 
@@ -103,7 +103,7 @@ header nav img{
 }
 .menu li{
     text-align: left;
-    padding-left: 20px;
+    padding: 0px 20px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-top: none;
     border-collapse: collapse;

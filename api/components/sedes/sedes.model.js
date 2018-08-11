@@ -13,6 +13,6 @@ let sedeSchema = new mongoose.Schema({
             codigo_carrera: { type: String }
         }
     ]
-})
+});
 
 module.exports = mongoose.model('Sede', sedeSchema);

@@ -424,17 +424,17 @@ function mostrarListaCarreras(paBuscar) {
 
 
 
-            // Este es el boton de eliminar
-            let botonEliminar = document.createElement('span');
-            botonEliminar.classList.add('fas');
-            botonEliminar.classList.add('fa-trash-alt');
-            botonEliminar.dataset._id = listaCarreras[i]['_id'];
+            if (localStorage.getItem('rolUsuario') != 'Asistente de decanatura') {
+                // Este es el boton de eliminar
+                let botonEliminar = document.createElement('span');
+                botonEliminar.classList.add('fas');
+                botonEliminar.classList.add('fa-trash-alt');
+                botonEliminar.dataset._id = listaCarreras[i]['_id'];
 
-            celdaOpciones.appendChild(botonEliminar);
-            botonEliminar.addEventListener('click', eliminar_carrera);
-            // Este es el boton de eliminar
-
-
+                celdaOpciones.appendChild(botonEliminar);
+                botonEliminar.addEventListener('click', eliminar_carrera);
+                // Este es el boton de eliminar
+            }
 
             // Este es el boton de asociar
             let botonAsociar = document.createElement('span');
