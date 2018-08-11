@@ -82,8 +82,8 @@
             <table id="tblBitacoras" class="scroll">
                 <thead>
                     <tr>
-                        <th>Cédula del asistente</th>
-                        <th>Nombre del asistente</th>
+                        <th>Profesor</th>
+                        <th>Asistente</th>
                         <th>Curso</th>
                         <th>Cantidad de horas actuales</th>
                         <th>Actividades</th>
@@ -103,15 +103,18 @@
                 <h1 class="title">Registrar bitácora</h1>
 
                 <div class="form">
-                    <label for="txtCedulaAsistente">Cédula del asistente</label>
-                    <input type="text" id="txtCedulaAsistente">
-
-                    <label for="txtNombreAsistente">Nombre del asistente</label>
-                    <input type="text" id="txtNombreAsistente">
+                    <label for="txtNombreProfesor">Profesor responsable*</label>
+                    <select id="txtNombreProfesor">
+                        <option value="">Seleccione un profesor</option>
+                    </select>
+                    <label for="txtNombreAsistente">Asistente responsable*</label>
+                    <select id="txtNombreAsistente">
+                        <option value="">Seleccione un asistente</option>
+                    </select>
 
                     <label for="sltCurso">Curso de asistencia</label>
                     <select name="Cursos" id="sltCurso">
-                        <option value="">-- Seleccione un curso --</option>
+                        <option value="">Seleccione un curso</option>
                     </select>
 
 
@@ -124,7 +127,7 @@
             <div class="popup-content">
                 <h1 class="title"></h1>
                 <div id="div_tabla_actividades">
-                    <table id="tblActividades">
+                    <table id="tblActividades" hidden>
                         <thead>
                             <tr>
                                 <th>Fecha de registro</th>

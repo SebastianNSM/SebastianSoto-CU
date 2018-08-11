@@ -3,8 +3,8 @@
 let mongoose = require('mongoose');
 
 let bitacoraSchema = new mongoose.Schema({
-    cedula_bitacora : {type: String, required: true},
-    nombre_bitacora : {type: String, required: true},
+    nombre_profesor_bitacora : {type: String, required: true},
+    nombre_asistente_bitacora : {type: String, required: true},
     curso_bitacora : {type: String, required: true},
     horas_totales_bitacora : {type: Number},
     actividades_bitacora: [

@@ -10,8 +10,8 @@ function registrarBitacora (paInfoBitacora)
         dataType: 'json',
         async: false,
         data: {
-            cedula_bitacora: paInfoBitacora[0],
-            nombre_bitacora: paInfoBitacora[1],
+            nombre_profesor_bitacora: paInfoBitacora[0],
+            nombre_asistente_bitacora: paInfoBitacora[1],
             curso_bitacora: paInfoBitacora[2]
         }
     });

@@ -51,8 +51,13 @@ function verificarCredenciales(sCorreo, sContrasenna) {
     for (let i = 0; i < listaUsuarios.length; i++) {
         if (sCorreo === listaUsuarios[i]['correo_usuario']) {
             if (sContrasenna == listaUsuarios[i]['contrasenna_usuario']) {
+
+                let nombreCompleto = listaUsuarios[i]['nombre_usuario']+' '+listaUsuarios[i]['primer_apellido_usuario']+' '+listaUsuarios[i]['segundo_apellido_usuario']
                 localStorage.setItem('idUsuario', listaUsuarios[i]['_id']);
                 localStorage.setItem('rolUsuario', listaUsuarios[i]['rol_usuario']);
+                localStorage.setItem('nombreCompletoUsuario', nombreCompleto);
+
+
                 inputContrasenna.classList.remove('errorInput');
                 bError = false;
                 break;

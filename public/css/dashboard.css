@@ -226,6 +226,7 @@ table{
     width: 100%;
     border-collapse: collapse;
     box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 10px;
+    margin-bottom: 20px;
 }
 table thead{
     position: sticky;

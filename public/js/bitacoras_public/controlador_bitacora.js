@@ -1,16 +1,22 @@
 'use strict';
-mostrarListaBitacoras();
+let rolUsuarioActual = localStorage.getItem('rolUsuario');
+if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Profesor' ) {
+    mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
+}else{
+    mostrarListaBitacoras();
+}
+
 mostrarCursos();
+mostrarProfesorAsistente();
 
 // Esto es para el registrar
 let botonRegistrarBitacora = document.querySelector('#btnRegistrar');
 botonRegistrarBitacora.addEventListener('click', obtenerDatos);
 let inputBuscar = document.querySelector('#txtBusqueda');
-let inputCedulaAsistente = document.querySelector('#txtCedulaAsistente');
-let inputNombreAsistente = document.querySelector('#txtNombreAsistente');
+let selectNombreProfesor = document.querySelector('#txtNombreProfesor');
+let selectNombreAsistente = document.querySelector('#txtNombreAsistente');
 let inputCurso = document.querySelector('#sltCurso');
 
-let sCedulaAsistente = "";
 let sNombreAsistente = "";
 let sCurso = "";
 
@@ -26,6 +32,25 @@ function mostrarCursos() {
         selectCurso.appendChild(nuevaOpcion);
     }
 };
+
+function mostrarProfesorAsistente() {
+    let listaUsuarios = obtenerLista_Usuarios();
+
+    let selectNombreProfesor = document.querySelector('#txtNombreProfesor');
+    let selectNombreAsistente = document.querySelector('#txtNombreAsistente');
+
+    for (let i = 0; i < listaUsuarios.length; i++) {
+        let nombreCompleto = listaUsuarios[i]['nombre_usuario'] + ' ' + listaUsuarios[i]['primer_apellido_usuario'] + ' ' + listaUsuarios[i]['segundo_apellido_usuario']
+        let nuevaOpcion = new Option(nombreCompleto);
+        nuevaOpcion.value = nombreCompleto;
+        let rolUsuario = listaUsuarios[i]['rol_usuario'];
+        if (rolUsuario == 'Asistente') {
+            selectNombreAsistente.appendChild(nuevaOpcion);
+        } else if (rolUsuario == 'Profesor') {
+            selectNombreProfesor.appendChild(nuevaOpcion);
+        }
+    }
+}
 
 // Eliminar
 // Eliminar
@@ -115,8 +140,8 @@ inputBuscar.addEventListener('keyup', function () {
 function obtenerDatos() {
     let infoBitacora = [];
 
-    let sCedulaAsistente = inputCedulaAsistente.value;
-    let sNombreAsistente = inputNombreAsistente.value;
+    let sNombreProfesor = selectNombreProfesor.value;
+    let sNombreAsistente = selectNombreAsistente.value;
     let sCurso = inputCurso.value;
 
     let bError = false;
@@ -136,7 +161,7 @@ function obtenerDatos() {
             type: 'success',
             confirmButtonText: 'Entendido'
         });
-        infoBitacora.push(sCedulaAsistente, sNombreAsistente, sCurso);
+        infoBitacora.push(sNombreProfesor, sNombreAsistente, sCurso);
         registrarBitacora(infoBitacora);
         $('.swal2-confirm').click(function () {
             reload();
@@ -157,16 +182,19 @@ function mostrarListaBitacoras(paBuscar) {
     tbody.innerHTML = '';
 
     for (let i = 0; i < listaBitacoras.length; i++) {
-        if ((listaBitacoras[i]['nombre_bitacora'].toLowerCase().includes(paBuscar.toLowerCase())) || (listaBitacoras[i]['cedula_bitacora'].toLowerCase().includes(paBuscar.toLowerCase())) || (listaBitacoras[i]['curso_bitacora'].toLowerCase().includes(paBuscar.toLowerCase()))) {
+        if ((listaBitacoras[i]['nombre_profesor_bitacora'].toLowerCase().includes(paBuscar.toLowerCase())) ||
+            (listaBitacoras[i]['nombre_asistente_bitacora'].toLowerCase().includes(paBuscar.toLowerCase())) ||
+            (listaBitacoras[i]['curso_bitacora'].toLowerCase().includes(paBuscar.toLowerCase()))) {
+
             let fila = tbody.insertRow();
-            let celdaCedulaAsistente = fila.insertCell();
+            let celdaNombreProfesor = fila.insertCell();
             let celdaNombreAsistente = fila.insertCell();
             let celdaCurso = fila.insertCell();
             let celdaHorasTotales = fila.insertCell();
             let celdaActividades = fila.insertCell();
 
-            celdaNombreAsistente.innerHTML = listaBitacoras[i]['nombre_bitacora'];
-            celdaCedulaAsistente.innerHTML = listaBitacoras[i]['cedula_bitacora'];
+            celdaNombreProfesor.innerHTML = listaBitacoras[i]['nombre_profesor_bitacora'];
+            celdaNombreAsistente.innerHTML = listaBitacoras[i]['nombre_asistente_bitacora'];
             celdaCurso.innerHTML = listaBitacoras[i]['curso_bitacora'];
 
             // Esto es por si no tiene actividades, que en horas totales salga el guion
@@ -215,10 +243,8 @@ function mostrarListaBitacoras(paBuscar) {
             let btnActividades = document.createElement('button');
             btnActividades.name = 'btnTabla';
             btnActividades.textContent = 'Ver actividades'
-
             btnActividades.dataset._id = listaBitacoras[i]['_id'];
-
-            btnActividades.addEventListener('click',mostrarTablaActividades);
+            btnActividades.addEventListener('click', mostrarTablaActividades);
 
             celdaActividades.appendChild(btnActividades);
         }
@@ -229,37 +255,38 @@ function mostrarTablaActividades() {
     ppActividades.style.display = "block";
     // Toma el id de la bitacora
     let idBitacora = this.dataset._id;
-    
+    let infoBitacora = buscarBitacora(idBitacora);
+
+    // Este titulo se adquiere del curso al que pertenece la bitacora
+    let tituloBitacora = document.querySelector('#sct_actividades>div>h1');
+    tituloBitacora.textContent = 'Bitácora de: ' + infoBitacora['curso_bitacora'];
+
+    // Este es el boton para agregar una actividad
+    let btnAgregarActividad = document.createElement('button');
+    btnAgregarActividad.textContent = 'Agregar actividad';
+    btnAgregarActividad.name = 'btnTabla';
+    btnAgregarActividad.addEventListener('click', function () {
+        console.log(infoBitacora['_id']);
+    });
+
+    tituloBitacora.appendChild(btnAgregarActividad);
+
 }
 
 // Validar
 function validarRegistrar() {
 
-    let regexSoloLetras = /^[a-z A-Z áéíóúÁÉÍÓÚñÑ]+$/;
-    let regexCodigo = /^[0-9 --]+$/;
-
-
     let bError = false;
 
-    if (inputCedulaAsistente.value == '' || (regexCodigo.test(inputCedulaAsistente.value) == false)) {
-        inputCedulaAsistente.classList.add('errorInput');
-        bError = true;
-    } else {
-        inputCedulaAsistente.classList.remove('errorInput');
-    }
+    let arregloInputs = document.querySelectorAll('#sct_registrar div.form select');
+    for (let i = 0; i < arregloInputs.length; i++) {
 
-    if (inputNombreAsistente.value == '' || (regexSoloLetras.test(inputNombreAsistente.value) == false)) {
-        inputNombreAsistente.classList.add('errorInput');
-        bError = true;
-    } else {
-        inputNombreAsistente.classList.remove('errorInput');
-    }
-
-    if (inputCurso.value == '') {
-        inputCurso.classList.add('errorInput');
-        bError = true;
-    } else {
-        inputCurso.classList.remove('errorInput');
+        if (arregloInputs[i].value == "") {
+            bError = true;
+            arregloInputs[i].classList.add('errorInput');
+        } else {
+            arregloInputs[i].classList.remove('errorInput');
+        }
     }
 
     return bError;
@@ -303,8 +330,8 @@ window.onclick = function (event) {
 }
 
 function limpiarFormularioRegistrar() {
-    inputCedulaAsistente.value = "";
-    inputNombreAsistente.value = "";
+    selectNombreAsistente.value = "";
+    selectNombreProfesor.value = "";
     inputCurso.value = "";
 };
 

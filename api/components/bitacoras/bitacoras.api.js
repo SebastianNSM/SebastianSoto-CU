@@ -4,8 +4,8 @@ const bitacoraModel = require('./bitacoras.model');
 
 module.exports.registrar_bitacora = function (req, res) {
     let nuevaBitacora = new bitacoraModel({
-        cedula_bitacora : req.body.cedula_bitacora,
-        nombre_bitacora : req.body.nombre_bitacora,
+        nombre_profesor_bitacora : req.body.nombre_profesor_bitacora,
+        nombre_asistente_bitacora : req.body.nombre_asistente_bitacora,
         curso_bitacora : req.body.curso_bitacora
     })
 
