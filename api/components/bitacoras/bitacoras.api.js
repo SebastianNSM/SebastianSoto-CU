@@ -46,7 +46,7 @@ module.exports.eliminar_bitacora = function (req, res) {
         });
 };
 
-module.exports.agregar_actividad_carrera = function (req, res) {
+module.exports.agregar_actividad_bitacora = function (req, res) {
 
     bitacoraModel.update(
         { _id: req.body._id },

@@ -28,9 +28,9 @@ router.route('/eliminar_bitacora')
     .post(function (req, res) {
         bitacorasApi.eliminar_bitacora(req, res);
     });
-router.route('/agregar_actividad_carrera')
+router.route('/agregar_actividad_bitacora')
     .post(function (req, res) {
-        bitacorasApi.agregar_actividad_carrera(req, res);
+        bitacorasApi.agregar_actividad_bitacora(req, res);
     });
 router.route('/eliminar_subdocumento_actividad_id')
     .post(function (req, res) {
