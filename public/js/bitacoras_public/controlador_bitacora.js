@@ -1,8 +1,8 @@
 'use strict';
 let rolUsuarioActual = localStorage.getItem('rolUsuario');
-if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Profesor' ) {
+if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Profesor') {
     mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
-}else{
+} else {
     mostrarListaBitacoras();
 }
 
@@ -17,10 +17,27 @@ let selectNombreProfesor = document.querySelector('#txtNombreProfesor');
 let selectNombreAsistente = document.querySelector('#txtNombreAsistente');
 let inputCurso = document.querySelector('#sltCurso');
 
-let sNombreAsistente = "";
-let sCurso = "";
+// Esto es para registrar una actividad
+let botonRegistrarActividad = document.querySelector('#btnRegistrarActividad');
+botonRegistrarActividad.addEventListener('click', obtenerDatosActividad);
+let inputFechaActividad = document.querySelector('#dateFechaActividad');
+// Esto es para llenar por defecto con la fecha de hoy
+inputFechaActividad.valueAsDate = new Date();
+let inputHoraInicio = document.querySelector('#numHoraInicioActividad');
+let currentMinute = moment().minute();
+let currentHour = moment().hour();
+inputHoraInicio.value = currentHour + ":" + currentMinute;
+let inputHoraFin = document.querySelector('#numHoraFinActividad');
+let selectActividad = document.querySelector('#sltActividad');
+let inputEstudianteAtendido = document.querySelector('#txtEstudiante');
+let inputDescripcionActividad = document.querySelector('#txtDescripcionActividad');
 
-let dHoy = new Date();
+let dFechaActividad = new Date();
+let tHoraInicio = "";
+let tHoraFin = "";
+let sActividad = "";
+let sEstudianteAtendido = "";
+let sDescripcionActividad = "";
 
 function mostrarCursos() {
     let listaCursos = obtenerCursos();
@@ -137,6 +154,9 @@ inputBuscar.addEventListener('keyup', function () {
 });
 // Registrar
 // Registrar
+if (selectActividad.value = 'Atención individual') {
+    console.log('Es indiv');
+}
 function obtenerDatos() {
     let infoBitacora = [];
 
@@ -169,6 +189,49 @@ function obtenerDatos() {
     }
 };
 
+function obtenerDatosActividad() {
+    let infoActividad = [];
+    dFechaActividad = inputFechaActividad.valueAsDate;
+    tHoraInicio = inputHoraInicio.value;
+    tHoraFin = inputHoraFin.value;
+    let totalHoras = getHorasActividad(tHoraInicio, tHoraFin);
+    console.log(totalHoras);
+
+    sActividad = selectActividad.value;
+
+
+
+    ppActividades.style.display = "block";
+    ppRegistrarActividad.style.display = "none";
+
+};
+// Esta funcion traduce la hora de inicio y la de fin en la totalidad de horas trabajadas de la persona
+function getHorasActividad(tHoraInicio, tHoraFin) {
+
+    // Esto convierte un string a un objeto moment
+    let valorHoraInicio = moment(tHoraInicio, "HH:mm");
+    let valorHoraFin = moment(tHoraFin, "HH:mm");
+
+    // Esto saca las horas y minutos individualmente de dicho objeto
+    let hourHoraInicio = valorHoraInicio.hours();
+    let minHInicio = valorHoraInicio.minutes();
+    let hourHoraFin = valorHoraFin.hours();
+    let minHFin = valorHoraFin.minutes();
+
+    // Esto substrae las horas de inicio y fin para sacar la cantidad de horas trabajada
+    let horasTrabajadas = hourHoraFin - hourHoraInicio;
+    let minutosTrabajados = minHFin - minHInicio;
+
+    let totalHoras = moment.duration({
+        minutes: minutosTrabajados,
+        hours: horasTrabajadas
+    });
+    let tHoras = totalHoras.asHours();
+    if (tHoras < 0) {
+        tHoras = 24 + tHoras;
+    }
+    return tHoras;
+};
 // Listar
 // Listar
 function mostrarListaBitacoras(paBuscar) {
@@ -244,14 +307,15 @@ function mostrarListaBitacoras(paBuscar) {
             btnActividades.name = 'btnTabla';
             btnActividades.textContent = 'Ver actividades'
             btnActividades.dataset._id = listaBitacoras[i]['_id'];
-            btnActividades.addEventListener('click', mostrarTablaActividades);
+            btnActividades.addEventListener('click', mostrarContenidoBitacora);
 
             celdaActividades.appendChild(btnActividades);
         }
     }
 };
 
-function mostrarTablaActividades() {
+// En esta funcion se genera el texto o la tabla segun lo amerite, tambien crea el boton de agregar actividad
+function mostrarContenidoBitacora() {
     ppActividades.style.display = "block";
     // Toma el id de la bitacora
     let idBitacora = this.dataset._id;
@@ -261,17 +325,41 @@ function mostrarTablaActividades() {
     let tituloBitacora = document.querySelector('#sct_actividades>div>h1');
     tituloBitacora.textContent = 'Bitácora de: ' + infoBitacora['curso_bitacora'];
 
+    // Esto es el contenido del popup
+    let contenidoActividades = document.querySelector('#sct_actividades .popup-content');
+
     // Este es el boton para agregar una actividad
+    let plus = document.createElement('span');
+    plus.classList.add('fas');
+    plus.classList.add('fa-plus');
+
+    // Esto crea el boton de agregar actividad
     let btnAgregarActividad = document.createElement('button');
-    btnAgregarActividad.textContent = 'Agregar actividad';
     btnAgregarActividad.name = 'btnTabla';
+    btnAgregarActividad.dataset._id = infoBitacora['_id'];
+    btnAgregarActividad.classList.add('plus');
+    btnAgregarActividad.appendChild(plus);
     btnAgregarActividad.addEventListener('click', function () {
-        console.log(infoBitacora['_id']);
+        ppActividades.style.display = "none";
+        ppRegistrarActividad.style.display = "block";
     });
+    contenidoActividades.appendChild(btnAgregarActividad);
 
-    tituloBitacora.appendChild(btnAgregarActividad);
+    let table = document.querySelector('#tblActividades');
+    let msgNoActividad = document.querySelector('#div_tabla_actividades div> p');
 
-}
+    if(infoBitacora['actividades_bitacora'].length == 0 || infoBitacora['actividades_bitacora'].length == null || infoBitacora['actividades_bitacora'].length == undefined){
+        table.hidden = true;
+        msgNoActividad.hidden = false;
+    }else{
+        mostrarTablaActividades(idBitacora);
+        displayActividadesScroll();
+    }
+};
+
+function mostrarTablaActividades(idBitacora) {
+    
+};
 
 // Validar
 function validarRegistrar() {
@@ -293,26 +381,26 @@ function validarRegistrar() {
 
 
 };
+function validarRegistrarActividad() {
 
+}
 // Display formulario
 let botonAgregar = document.querySelector('#btnAgregar');
 let ppRegistrar = document.querySelector('#sct_registrar');
 let ppActividades = document.querySelector('#sct_actividades');
-
-//display actividades
-let ppActividadesRegistrar = document.querySelector('#sct_registrarActividad');
-
+let ppRegistrarActividad = document.querySelector('#sct_registrar_actividad');
+let ppActividadesRegistrar = document.querySelector('#sct_registrar_actividad');
 
 botonAgregar.addEventListener('click', function () {
     ppRegistrar.style.display = "block";
 });
 
 function displayActividadesScroll() {
-    let scrollTblActividades = document.querySelector('#div_tabla_actividades');
+    let scrollTblActividades = document.querySelector('#div_tabla_actividades>div');
     let tblActividades = document.querySelector('#tblActividades');
     let alturaTablaActividades = tblActividades.scrollHeight;
 
-    if (alturaTablaActividades < 250) {
+    if (alturaTablaActividades < 200) {
         scrollTblActividades.classList.remove('scroll');
     } else {
         scrollTblActividades.classList.add('scroll');
@@ -327,6 +415,9 @@ window.onclick = function (event) {
     if (event.target == ppActividades) {
         ppActividades.style.display = "none";
     }
+    if (event.target == ppRegistrarActividad) {
+        ppRegistrarActividad.style.display = "none";
+    }
 }
 
 function limpiarFormularioRegistrar() {
@@ -339,6 +430,7 @@ function reload() {
     mostrarListaBitacoras();
     limpiarFormularioRegistrar();
     ppRegistrar.style.display = "none";
+    ppRegistrarActividad.style.display = "none";
     ppActividades.style.display = "none";
 }
 // Esto es para que despliegue el formulario

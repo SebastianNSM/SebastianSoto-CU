@@ -125,42 +125,35 @@
         </section>
         <section id="sct_actividades" class="popup-bg">
             <div class="popup-content">
-                <h1 class="title"></h1>
-                <div id="div_tabla_actividades">
-                    <table id="tblActividades" hidden>
-                        <thead>
-                            <tr>
-                                <th>Fecha de registro</th>
-                                <th>Fecha de la actividad</th>
-                                <th>Horas trabajadas</th>
-                                <th>Actividad</th>
-                                <th>Descripción</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+                <h1 class="title actividad-title"></h1>
+                <div id="div_tabla_actividades" class="actividad">
+                    <div>
+                        <table id="tblActividades">
+                            <thead>
+                            </tbody>
+                        </table>
+                    <p hidden>En este momento, la bitácora no posee ninguna actividad registrada. Cuando registre una, esta se mostrará
+                            en lugar de este mensaje.</p>
+                    </div>
                 </div>
             </div>
         </section>
-        <section id="sct_registrarActividad" class="popup-bg" style="">
+        <section id="sct_registrar_actividad" class="popup-bg">
             <!-- Formulario que aparece -->
             <form class="popup-content">
                 <h1 class="title">Registrar actividad</h1>
 
                 <div class="form">
 
-                    <label for="dateFechaActividad">Fecha en la que se realiza la actividad</label>
-                    <input type="date" id="dateFechaActividad" required autocomplete="">
+                    <label for="dateFechaActividad">Fecha en la que se realiza la actividad*</label>
+                    <input type="date" id="dateFechaActividad" required>
 
-                    <label for="numHoraInicioActividad">Hora de inicio de la actividad</label>
-                    <input type="time" id="numHoraInicioActividad" required min="00" max="23">
+                    <label for="numHoraInicioActividad">Hora al iniciar*</label>
+                    <input type="time" id="numHoraInicioActividad" required>
 
 
-                    <label for="numHoraFinActividad">Hora de fin de la actividad</label>
-                    <input type="time" id="numHoraFinActividad" required min="00" max="23">
+                    <label for="numHoraFinActividad">Hora al finalizar*</label>
+                    <input type="time" id="numHoraFinActividad" required>
 
                     <label for="sltActividad">Actividad relizada*</label>
                     <select id="sltActividad">
@@ -183,7 +176,7 @@
                     <label for="txtDescripcionActividad">Descripción de la actividad*</label>
                     <input type="text" id="txtDescripcionActividad" required placeholder="Se imparte centro de backend">
 
-                    <button type="button" class="button" id="btnRegistrar">Registrar</button>
+                    <button type="button" class="button" id="btnRegistrarActividad">Registrar</button>
                 </div>
             </form>
             <!-- Formulario que aparece -->
@@ -207,6 +200,7 @@
     </main>
     <!-- SCRIPTS FIJOS PARA TODOS Dashboards -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../../js/moment-2.22.2.js"></script>
     <script src="../../js/jquery-3.3.1.js"></script>
     <!-- SCRIPTS FIJOS PARA TODOS -->
 

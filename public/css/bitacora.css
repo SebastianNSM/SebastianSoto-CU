@@ -1,14 +1,62 @@
 #sct_actividades .popup-content{
     width: 90%;
+    display: grid;
+    padding: 0px;
+    padding-right: 0px;
+    grid-template-columns: 1fr 45px;
+    grid-template-rows: 96px 1fr;
+    grid-template-areas:
+    "actividad-title plus"
+    "actividad plus";
+}
+.actividad{
+    grid-area: actividad;
+    padding: 30px;
+    padding-top: 0px;
+    max-height: 250px;
+}
+#sct_actividades button.plus{
+    grid-area: plus;
+    width: 80%;
+    box-shadow: none;
+    border-radius: inherit;
+    height: 95%;
+    margin: auto auto;
+    font-size: 1.8em;
+}
+.actividad-title{
+    grid-area: actividad-title;
 }
 
 #sct_actividades h1{
     font-size: 1.3em;
+    padding-top: 30px;
+    width: 94%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#sct_actividades h1>button{
-    position: absolute;
-    width: 100px;
-    margin-left: 15px;
-    right: 0px;
+#sct_actividades p{
+    width: 60%;
+    line-height: 1.6em;
+    font-size: 1em;
+    text-align: center;
+    margin: 0px auto;
+}
+
+#sct_actividades>div.popup-content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0px auto;
+    height: auto;
+}
+
+#div_tabla_actividades>div {
+    height: auto;
+    max-height: 250px;
+}
+
+#div_tabla_actividades table tbody td:hover {
+    background: none;
 }
