@@ -6,7 +6,8 @@ module.exports.registrar_bitacora = function (req, res) {
     let nuevaBitacora = new bitacoraModel({
         nombre_profesor_bitacora: req.body.nombre_profesor_bitacora,
         nombre_asistente_bitacora: req.body.nombre_asistente_bitacora,
-        curso_bitacora: req.body.curso_bitacora
+        curso_bitacora: req.body.curso_bitacora,
+        estado_bitacora: "En revisión"
     })
 
     nuevaBitacora.save(function (error) {
@@ -95,4 +96,17 @@ module.exports.eliminar_subdocumento_actividad_id = function (req, res) {
             }
         }
     )
+};
+
+// modificar_bitacora
+module.exports.modificar_bitacora = function (req, res) {
+    bitacoraModel.findByIdAndUpdate(req.body._id, { $set: req.body },
+        function (err) {
+            if (err) {
+                res.json({ success: false, msg: 'La bitácora no se ha podido modificar. ' + err });
+
+            } else {
+                res.json({ success: true, msg: 'Se ha actualizado correctamente. ' + res });
+            }
+        });
 };

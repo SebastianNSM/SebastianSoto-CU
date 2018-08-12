@@ -87,7 +87,8 @@
                         <th>Curso</th>
                         <th>Cantidad de horas actuales</th>
                         <th>Actividades</th>
-                        <th id="cOpciones" hidden>Opciones</th>
+                        <th>Estado</th>
+                        <th id="cOpcionesBitacora" hidden>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -130,12 +131,27 @@
                     <div>
                         <table id="tblActividades">
                             <thead>
+                                <tr>
+                                    <th>Fecha registro</th>
+                                    <th>Fecha actividad</th>
+                                    <th>Hora inicio</th>
+                                    <th>Hora fin</th>
+                                    <th>Horas trabajadas</th>
+                                    <th>Actividad realizada</th>
+                                    <th>Estudiante atendido</th>
+                                    <th>Descripción de la actividad</th>
+                                    <th id="cOpcionesActividad" hidden>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
                             </tbody>
                         </table>
-                    <p hidden>En este momento, la bitácora no posee ninguna actividad registrada. Cuando registre una, esta se mostrará
-                            en lugar de este mensaje.</p>
+                        <p hidden>En este momento, la bitácora no posee ninguna actividad registrada. Cuando registre una, esta se
+                            mostrará en lugar de este mensaje.</p>
                     </div>
                 </div>
+                <button id="btnAgregarActividad" name="btnTabla" class="plus"><span class="fas fa-plus"></span></button>
             </div>
         </section>
         <section id="sct_registrar_actividad" class="popup-bg">
@@ -144,7 +160,7 @@
                 <h1 class="title">Registrar actividad</h1>
 
                 <div class="form">
-
+                    <input type="hidden" id="idBitacora">
                     <label for="dateFechaActividad">Fecha en la que se realiza la actividad*</label>
                     <input type="date" id="dateFechaActividad" required>
 
@@ -169,7 +185,7 @@
                     <div id="atencionIndividual" hidden>
 
                         <label for="txtEstudiante">Estudiante atendido*</label>
-                        <input type="text" id="txtEstudiante" required placeholder="Esteban Salom*">
+                        <input type="text" id="txtEstudiante" placeholder="Esteban Salom*">
 
                     </div>
 

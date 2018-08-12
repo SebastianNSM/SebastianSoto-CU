@@ -37,4 +37,10 @@ router.route('/eliminar_subdocumento_actividad_id')
         bitacorasApi.eliminar_subdocumento_actividad_id(req, res);
     });
 
+
+router.route('/modificar_bitacora')
+    .post(function (req, res) {
+        bitacorasApi.modificar_bitacora(req, res);
+    });
+
 module.exports = router;

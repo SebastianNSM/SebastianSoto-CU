@@ -7,6 +7,7 @@ let bitacoraSchema = new mongoose.Schema({
     nombre_asistente_bitacora : {type: String, required: true},
     curso_bitacora : {type: String, required: true},
     horas_totales_bitacora : {type: Number},
+    estado_bitacora: {type: String},
     actividades_bitacora: [
         {
             fecha_registro_actividad : {type: Date},

@@ -1,7 +1,6 @@
 'use strict';
 
-function registrarBitacora (paInfoBitacora)
-{
+function registrarBitacora(paInfoBitacora) {
     let respuesta = '';
     let peticion = $.ajax({
         url: 'http://localhost:4000/api/registrar_bitacora',
@@ -12,35 +11,165 @@ function registrarBitacora (paInfoBitacora)
         data: {
             nombre_profesor_bitacora: paInfoBitacora[0],
             nombre_asistente_bitacora: paInfoBitacora[1],
-            curso_bitacora: paInfoBitacora[2]
+            curso_bitacora: paInfoBitacora[2],
         }
     });
 
-    peticion.done(function (response)
-    {
+    peticion.done(function (response) {
         respuesta = response;
     });
 
-    peticion.fail(function (response)
-    {
+    peticion.fail(function (response) {
 
     });
 
     return respuesta;
 }
 
-function obtenerListaBitacoras(){
+function obtenerListaBitacoras() {
     let listaBitacoras = [];
 
     let respuesta = '';
     let peticion = $.ajax({
-        url : 'http://localhost:4000/api/listar_bitacora',
-        type : 'get',
+        url: 'http://localhost:4000/api/listar_bitacora',
+        type: 'get',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        data: {
+
+        }
+    });
+
+    peticion.done(function (response) {
+        respuesta = response;
+    });
+
+    peticion.fail(function (response) {
+
+    });
+
+    return respuesta;
+
+};
+function buscarBitacora(pid) {
+    let bitacora = '';
+    let peticion = $.ajax({
+        url: 'http://localhost:4000/api/buscar_bitacora_id',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        data: {
+            _id: pid
+        }
+    });
+
+    peticion.done(function (response) {
+        bitacora = response;
+    });
+
+    peticion.fail(function (response) {
+
+    });
+
+    return bitacora;
+};
+
+function eliminarBitacora(_pid) {
+    let respuesta = '';
+    let peticion = $.ajax({
+        url: 'http://localhost:4000/api/eliminar_bitacora',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        data: {
+            _id: _pid
+        }
+    });
+
+    peticion.done(function (response) {
+        respuesta = response;
+    });
+
+    peticion.fail(function (response) {
+
+    });
+
+    return respuesta;
+};
+function agregarActividadBitacora(paInfoActividad) {
+    let respuesta = '';
+    let peticion = $.ajax({
+        url: 'http://localhost:4000/api/agregar_actividad_carrera',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        data: {
+            _id: paInfoActividad[0],
+            fecha_registro_actividad: paInfoActividad[1],
+            fecha_actividad_actividad: paInfoActividad[2],
+            hora_inicio_actividad: paInfoActividad[3],
+            hora_fin_actividad: paInfoActividad[4],
+            horas_trabajadas_actividad: paInfoActividad[5],
+            accion_actividad: paInfoActividad[6],
+            estudiantes_atendidos_actividad: paInfoActividad[7],
+            descripcion_actividad: paInfoActividad[8]
+        }
+    });
+
+    peticion.done(function (response) {
+        respuesta = response;
+    });
+
+    peticion.fail(function (response) {
+
+    });
+
+    return respuesta;
+};
+
+function eliminarActividadBitacora(pIdBitacora, pIdActividad) {
+    let respuesta = '';
+    let peticion = $.ajax({
+        url: 'http://localhost:4000/api/eliminar_subdocumento_actividad_id',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        async: false,
+        data: {
+            _id: pIdBitacora,
+            id_actividad: pIdActividad
+        }
+    });
+
+    peticion.done(function (response) {
+        respuesta = response;
+    });
+
+    peticion.fail(function (response) {
+
+    });
+
+    return respuesta;
+};
+
+function actualizarBitacora(paInfoBitacora){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_bitacora',
+        type : 'post',
         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
         async : false,
         data:{
-            
+            _id: paInfoBitacora[0],
+            nombre_profesor_bitacora : paInfoBitacora[1],
+            nombre_asistente_bitacora : paInfoBitacora[2],
+            curso_bitacora : paInfoBitacora[3],
+            horas_totales_bitacora : paInfoBitacora[4]
         }
       });
     
@@ -53,42 +182,69 @@ function obtenerListaBitacoras(){
       });
 
       return respuesta;
-    
 };
-function buscarBitacora(pid){
-    let bitacora = '';
+
+function actualizarTotalHoras(pid,tHoras){
+    let respuesta = '';
     let peticion = $.ajax({
-        url : 'http://localhost:4000/api/buscar_bitacora_id',
+        url : 'http://localhost:4000/api/modificar_bitacora',
         type : 'post',
         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
         async : false,
         data:{
-            _id : pid
+            _id: pid,
+            horas_totales_bitacora : tHoras
         }
       });
     
       peticion.done(function(response){
-        bitacora = response;
+       respuesta = response;
       });
     
       peticion.fail(function(response){
        
       });
 
-      return bitacora;
+      return respuesta;
 };
 
-function eliminarBitacora(_pid){
+function aprobarBitacora(pid){
     let respuesta = '';
     let peticion = $.ajax({
-        url : 'http://localhost:4000/api/eliminar_bitacora',
+        url : 'http://localhost:4000/api/modificar_bitacora',
         type : 'post',
         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
         async : false,
         data:{
-            _id: _pid
+            _id: pid,
+            estado_bitacora: "Activo"
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
+
+      return respuesta;
+};
+
+function rechazarBitacora(pid){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_bitacora',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            _id: pid,
+            estado_bitacora: "Inactivo"
         }
       });
     

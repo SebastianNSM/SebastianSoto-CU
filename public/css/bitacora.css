@@ -1,3 +1,7 @@
+#tblBitacoras{
+    margin-bottom: 15px;
+}
+
 #sct_actividades .popup-content{
     width: 90%;
     display: grid;
@@ -55,6 +59,9 @@
 #div_tabla_actividades>div {
     height: auto;
     max-height: 250px;
+}
+#div_tabla_actividades table {
+    width: 100%;
 }
 
 #div_tabla_actividades table tbody td:hover {
