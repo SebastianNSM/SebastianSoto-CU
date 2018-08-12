@@ -264,9 +264,10 @@ function obtenerDatosActividad() {
             type: 'success',
             confirmButtonText: 'Entendido'
         });
+        // Sacar el id de la actividad
         infoActividad.push(idBitacora, dFechaRegistro, dFechaActividad, tHoraInicio, tHoraFin, totalHorasActividad, sActividad, sEstudianteAtendido, sDescripcionActividad);
         $('.swal2-confirm').click(function () {
-            agregarActividadBitacora(infoActividad);
+            modificarActividadBitacora(infoActividad);
             reload();
             mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
         });
@@ -410,6 +411,7 @@ function mostrarContenidoBitacora() {
             ppActividades.style.display = "none";
             ppRegistrarActividad.style.display = "block";
         });
+        btnAgregarActividad.addEventListener('click',cambiarDatosFormulario);
     } else {
         btnAgregarActividad.hidden = true;
         document.querySelector('#sct_actividades .popup-content').style.display = 'block';
@@ -479,13 +481,14 @@ function mostrarContenidoBitacora() {
             botonEditar.classList.add('fa-cogs');
 
             botonEditar.dataset.id_actividad = listaActividades[i]['_id'];
+            botonEditar.name = "btnEditarActividad"
 
             if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Administrador') {
                 botonEditar.addEventListener('click', function () {
                     ppActividades.style.display = "none";
                     ppRegistrarActividad.style.display = "block";
-                    cambiarDatosFormulario();
                 });
+                botonEditar.addEventListener('click', cambiarDatosFormulario);
             }
 
             celdaOpciones.appendChild(botonEditar);
@@ -664,6 +667,7 @@ function quitarRegistrarBitacora() {
 }
 
 function cambiarDatosFormulario() {
+    
     let actividadTitle = document.querySelector('#sct_registrar_actividad h1.title');
     let labelFechaActividad = document.querySelector('label[for="dateFechaActividad"]');
     let labelHoraInicio = document.querySelector('label[for="numHoraInicioActividad"]');
@@ -674,7 +678,8 @@ function cambiarDatosFormulario() {
 
     let btnRegistrarActividad = document.querySelector('#btnRegistrarActividad');
     let btnActualizarActividad = document.querySelector('#btnActualizarActividad');
-    if (btnActualizarActividad.hidden) {
+
+    if (this.name == "btnEditarActividad") {
 
         actividadTitle.innerHTML = 'Actualizar actividad';
         labelFechaActividad.innerHTML = 'Fecha en la que se realiza la actividad';
@@ -687,7 +692,7 @@ function cambiarDatosFormulario() {
         btnRegistrarActividad.hidden = true;
         btnActualizarActividad.hidden = false;
     } else {
-        actividadTitle.innerHTML = 'Actualizar actividad*';
+        actividadTitle.innerHTML = 'Registrar actividad';
         labelFechaActividad.innerHTML = 'Fecha en la que se realiza la actividad*';
         labelHoraInicio.innerHTML = 'Hora al iniciar*';
         labelHoraFin.innerHTML = 'Hora al finalizar*';
