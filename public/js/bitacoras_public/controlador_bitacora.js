@@ -10,6 +10,8 @@ if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Profesor') {
 mostrarCursos();
 mostrarProfesorAsistente();
 
+let regexSoloLetras = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/;
+
 // Esto es para el registrar
 let botonRegistrarBitacora = document.querySelector('#btnRegistrar');
 botonRegistrarBitacora.addEventListener('click', obtenerDatos);
@@ -28,8 +30,9 @@ inputFechaActividad.valueAsDate = new Date();
 let inputHoraInicio = document.querySelector('#numHoraInicioActividad');
 let currentMinute = moment().minute();
 let currentHour = moment().hour();
-inputHoraInicio.value = currentHour + ":" + currentMinute;
+inputHoraInicio.value = "00:00";
 let inputHoraFin = document.querySelector('#numHoraFinActividad');
+inputHoraFin.value = "00:00";
 let selectActividad = document.querySelector('#sltActividad');
 let inputEstudianteAtendido = document.querySelector('#txtEstudiante');
 let inputDescripcionActividad = document.querySelector
@@ -82,7 +85,7 @@ function mostrarProfesorAsistente() {
             selectNombreProfesor.appendChild(nuevaOpcion);
         }
     }
-}
+};
 
 // Eliminar
 // Eliminar
@@ -109,8 +112,8 @@ function eliminar_bitacora() {
         }
     });
 
-}
-function eliminar_actividad(){
+};
+function eliminar_actividad() {
     let id_actividad = this.dataset.id_actividad;
     let _id = inputIdBitacora.value;
     swal({
@@ -123,7 +126,7 @@ function eliminar_actividad(){
         confirmButtonText: '¡Eliminar!'
     }).then((result) => {
         if (result.value) {
-            eliminarActividadBitacora(_id,id_actividad);
+            eliminarActividadBitacora(_id, id_actividad);
 
             reload();
             swal(
@@ -133,7 +136,7 @@ function eliminar_actividad(){
             )
         }
     });
-}
+};
 
 // Aprobar y rechazar
 function aprobar_bitacora() {
@@ -159,7 +162,7 @@ function aprobar_bitacora() {
         }
     });
 
-}
+};
 function rechazar_bitacora() {
     let _id = this.dataset._id;
     swal({
@@ -183,7 +186,7 @@ function rechazar_bitacora() {
         }
     });
 
-}
+};
 
 // Buscar
 // Buscar`
@@ -265,7 +268,7 @@ function obtenerDatosActividad() {
         $('.swal2-confirm').click(function () {
             agregarActividadBitacora(infoActividad);
             reload();
-            mostrarListaBitacoras();
+            mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
         });
     }
 };
@@ -388,7 +391,7 @@ function getTotalHorasBitacora(paBitacora) {
         totalHoras += paBitacora[i]['horas_trabajadas_actividad'];
     }
     return totalHoras;
-}
+};
 
 // En esta funcion se genera el texto o la tabla segun lo amerite, tambien crea el boton de agregar actividad
 function mostrarContenidoBitacora() {
@@ -413,16 +416,18 @@ function mostrarContenidoBitacora() {
     }
 
     let table = document.querySelector('#tblActividades');
-    let msgNoActividad = document.querySelector('#div_tabla_actividades div> p');
+    let msgNoActividad = document.querySelector('#msjActividad');
 
     let listaActividades = infoBitacora['actividades_bitacora'];
 
     if (infoBitacora['actividades_bitacora'].length == 0 || infoBitacora['actividades_bitacora'].length == null || infoBitacora['actividades_bitacora'].length == undefined) {
         table.style.display = "none";
-        msgNoActividad.hidden = false;
+        document.querySelector('#sct_actividades .popup-content').style.width = '50%';
+        msgNoActividad.style.display = "block";
     } else {
         table.style.display = "table";
-        msgNoActividad.hidden = true;
+        document.querySelector('#sct_actividades .popup-content').style.width = '90%';
+        msgNoActividad.style.display = "none";
     }
 
     let tbody = document.querySelector('#tblActividades tbody');
@@ -475,9 +480,17 @@ function mostrarContenidoBitacora() {
 
             botonEditar.dataset.id_actividad = listaActividades[i]['_id'];
 
+            if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Administrador') {
+                botonEditar.addEventListener('click', function () {
+                    ppActividades.style.display = "none";
+                    ppRegistrarActividad.style.display = "block";
+                    cambiarDatosFormulario();
+                });
+            }
+
             celdaOpciones.appendChild(botonEditar);
 
-            
+
             let botonEliminar = document.createElement('span');
             botonEliminar.classList.add('fas');
             botonEliminar.classList.add('fa-trash-alt');
@@ -516,8 +529,60 @@ function validarRegistrar() {
 
 };
 function validarRegistrarActividad() {
+    let bError = false;
 
-}
+    let arregloInputs = document.querySelectorAll('#sct_registrar_actividad form input:required');
+
+    dFechaActividad = inputFechaActividad.value;
+    tHoraInicio = inputHoraInicio.value;
+    tHoraFin = inputHoraFin.value;
+    sActividad = selectActividad.value;
+    sEstudianteAtendido = inputEstudianteAtendido.value;
+    sDescripcionActividad = inputDescripcionActividad.value;
+
+    // Validacion contra blancos y validacion del time
+    for (let i = 0; i < arregloInputs.length; i++) {
+        if (arregloInputs[i].value == "") {
+            bError = true;
+            arregloInputs[i].classList.add('errorInput');
+        }
+        else {
+            arregloInputs[i].classList.remove('errorInput');
+        }
+
+        if(arregloInputs[1].value == "00:00"){
+            bError = true;
+            arregloInputs[1].classList.add('errorInput');
+        }else{
+            arregloInputs[1].classList.remove('errorInput');
+        }
+        if(arregloInputs[2].value == "00:00"){
+            bError = true;
+            arregloInputs[2].classList.add('errorInput');
+        }else{
+            arregloInputs[2].classList.remove('errorInput');
+        }
+    }
+
+    // Validacion del select de actividad
+    if(selectActividad.selectedIndex == 0){
+        bError = true;
+        selectActividad.classList.add('errorInput');
+    }
+    else {
+        selectActividad.classList.remove('errorInput');
+    }
+
+    if(sEstudianteAtendido != "" && (regexSoloLetras.test(sEstudianteAtendido) == false )){
+        bError = true;
+        inputEstudianteAtendido.classList.add('errorInput');
+    }
+    else {
+        inputEstudianteAtendido.classList.remove('errorInput');
+    }
+
+    return bError;
+};
 
 // Utilidades
 // Utilidades
@@ -557,7 +622,7 @@ function formatDate(dateObject) {
 window.onclick = function (event) {
     if (event.target == ppRegistrar) {
         ppRegistrar.style.display = "none";
-        limpiarFormularioRegistrar();
+        limpiarFormularioRegistrarBitacora();
     }
     if (event.target == ppActividades) {
         ppActividades.style.display = "none";
@@ -567,18 +632,26 @@ window.onclick = function (event) {
     }
 }
 
-function limpiarFormularioRegistrar() {
+function limpiarFormularioRegistrarBitacora() {
     selectNombreAsistente.value = "";
     selectNombreProfesor.value = "";
     inputCurso.value = "";
 };
-
+function limpiarFormularioRegistrarActividad() {
+    inputFechaActividad.valueAsDate = new Date();
+    inputHoraInicio.value = "00:00"
+    inputHoraFin.value = "00:00"
+    selectActividad.selectedIndex = 0;
+    inputEstudianteAtendido.value = "";
+    inputDescripcionActividad.value = "";
+}
 function reload() {
     ppRegistrar.style.display = "none";
     ppRegistrarActividad.style.display = "none";
     ppActividades.style.display = "none";
-    mostrarListaBitacoras();
-    limpiarFormularioRegistrar();
+    mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
+    limpiarFormularioRegistrarBitacora();
+    limpiarFormularioRegistrarActividad();
 }
 
 function quitarRegistrarBitacora() {
@@ -588,5 +661,42 @@ function quitarRegistrarBitacora() {
     let newSpace = document.createElement('div');
     newSpace.classList.add('side-agregar');
     side.appendChild(newSpace);
+}
+
+function cambiarDatosFormulario() {
+    let actividadTitle = document.querySelector('#sct_registrar_actividad h1.title');
+    let labelFechaActividad = document.querySelector('label[for="dateFechaActividad"]');
+    let labelHoraInicio = document.querySelector('label[for="numHoraInicioActividad"]');
+    let labelHoraFin = document.querySelector('label[for="numHoraFinActividad"]');
+    let labelActividad = document.querySelector('label[for="sltActividad"]');
+    let labelEstudianteAtendido = document.querySelector('label[for="txtEstudiante"]');
+    let labelDescripcion = document.querySelector('label[for="txtDescripcionActividad"]');
+
+    let btnRegistrarActividad = document.querySelector('#btnRegistrarActividad');
+    let btnActualizarActividad = document.querySelector('#btnActualizarActividad');
+    if (btnActualizarActividad.hidden) {
+
+        actividadTitle.innerHTML = 'Actualizar actividad';
+        labelFechaActividad.innerHTML = 'Fecha en la que se realiza la actividad';
+        labelHoraInicio.innerHTML = 'Hora al iniciar';
+        labelHoraFin.innerHTML = 'Hora al finalizar';
+        labelActividad.innerHTML = 'Actividad relizada';
+        labelEstudianteAtendido.innerHTML = 'Estudiante atendido';
+        labelDescripcion.innerHTML = 'Descripción de la actividad';
+
+        btnRegistrarActividad.hidden = true;
+        btnActualizarActividad.hidden = false;
+    } else {
+        actividadTitle.innerHTML = 'Actualizar actividad*';
+        labelFechaActividad.innerHTML = 'Fecha en la que se realiza la actividad*';
+        labelHoraInicio.innerHTML = 'Hora al iniciar*';
+        labelHoraFin.innerHTML = 'Hora al finalizar*';
+        labelActividad.innerHTML = 'Actividad relizada*';
+        labelEstudianteAtendido.innerHTML = 'Estudiante atendido*';
+        labelDescripcion.innerHTML = 'Descripción de la actividad*';
+
+        btnRegistrarActividad.hidden = false;
+        btnActualizarActividad.hidden = true;
+    }
 }
 // Esto es para que despliegue el formulario

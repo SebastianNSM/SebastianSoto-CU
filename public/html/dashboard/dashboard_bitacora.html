@@ -147,11 +147,15 @@
 
                             </tbody>
                         </table>
-                        <p hidden>En este momento, la bitácora no posee ninguna actividad registrada. Cuando registre una, esta se
-                            mostrará en lugar de este mensaje.</p>
+                        <p id="msjActividad">
+                            <span>En este momento, la bitácora no posee ninguna actividad registrada.</span>
+                            <br> Use el botón + de la derecha para registrar una actividad.
+                        </p>
                     </div>
                 </div>
-                <button id="btnAgregarActividad" name="btnTabla" class="plus"><span class="fas fa-plus"></span></button>
+                <button id="btnAgregarActividad" name="btnTabla" class="plus">
+                    <span class="fas fa-plus"></span>
+                </button>
             </div>
         </section>
         <section id="sct_registrar_actividad" class="popup-bg">
@@ -185,7 +189,7 @@
                     <div id="atencionIndividual" hidden>
 
                         <label for="txtEstudiante">Estudiante atendido*</label>
-                        <input type="text" id="txtEstudiante" placeholder="Esteban Salom*">
+                        <input type="text" id="txtEstudiante" placeholder="Nombre completo del estudiante">
 
                     </div>
 
@@ -193,6 +197,7 @@
                     <input type="text" id="txtDescripcionActividad" required placeholder="Se imparte centro de backend">
 
                     <button type="button" class="button" id="btnRegistrarActividad">Registrar</button>
+                    <button type="button" class="button" hidden id="btnActualizarActividad">Actualizar</button>
                 </div>
             </form>
             <!-- Formulario que aparece -->
