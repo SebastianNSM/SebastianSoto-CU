@@ -219,7 +219,7 @@ function aprobarBitacora(pid){
         async : false,
         data:{
             _id: pid,
-            estado_bitacora: "Activo"
+            estado_bitacora: "Aprobado"
         }
       });
     
@@ -244,7 +244,7 @@ function rechazarBitacora(pid){
         async : false,
         data:{
             _id: pid,
-            estado_bitacora: "Inactivo"
+            estado_bitacora: "Rechazado"
         }
       });
     

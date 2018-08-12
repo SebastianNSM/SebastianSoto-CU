@@ -76,7 +76,7 @@ function leerRolOpciones() {
     let opcionesDecanatura = [];
     opcionesDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora)
     let opcionesAsistenteDecanatura = [];
-    opcionesAsistenteDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionSolicitud)
+    opcionesAsistenteDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora, opcionSolicitud)
     let opcionesProfesor = [];
     opcionesProfesor.push(opcionBitacora, opcionSolicitud);
 

@@ -57,6 +57,9 @@ let sActividad = "";
 let sEstudianteAtendido = "";
 let sDescripcionActividad = "";
 
+let btnActualizarActividad = document.querySelector('#btnActualizarActividad');
+btnActualizarActividad.addEventListener('click',actualizarDatosActividad);
+
 function mostrarCursos() {
     let listaCursos = obtenerCursos();
     let selectCurso = document.querySelector('#sltCurso');
@@ -244,11 +247,10 @@ function obtenerDatosActividad() {
     } else {
         sEstudianteAtendido = "";
     }
-
     sDescripcionActividad = inputDescripcionActividad.value;
 
     let bError = false;
-    bError = validarRegistrarActividad();
+    bError = validarRegistrarActividad(false);
 
     if (bError) {
         swal({
@@ -264,13 +266,78 @@ function obtenerDatosActividad() {
             type: 'success',
             confirmButtonText: 'Entendido'
         });
-        // Sacar el id de la actividad
         infoActividad.push(idBitacora, dFechaRegistro, dFechaActividad, tHoraInicio, tHoraFin, totalHorasActividad, sActividad, sEstudianteAtendido, sDescripcionActividad);
         $('.swal2-confirm').click(function () {
-            modificarActividadBitacora(infoActividad);
+            agregarActividadBitacora(infoActividad);
             reload();
-            mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
         });
+    }
+};
+
+function actualizarDatosActividad() {
+    let infoActividad = [];
+
+    let id_actividad = this.dataset.id_actividad;
+    let idBitacora = inputIdBitacora.value;
+    let dFechaRegistro = new Date();
+    dFechaActividad = inputFechaActividad.valueAsDate;
+    tHoraInicio = inputHoraInicio.value;
+    tHoraFin = inputHoraFin.value;
+    let totalHorasActividad = getHorasActividad(tHoraInicio, tHoraFin);
+    sActividad = selectActividad.value;
+
+    if (selectActividad.selectedIndex == 6) {
+        sEstudianteAtendido = inputEstudianteAtendido.value;
+    } else {
+        sEstudianteAtendido = "";
+    }
+    sDescripcionActividad = inputDescripcionActividad.value;
+
+    let bError = false;
+    bError = validarRegistrarActividad(true);
+
+    if (bError) {
+        swal({
+            title: 'Actualización incorrecta',
+            text: 'No se pudo actualizar la actividad, verifique que completó correctamente los espacios que desea modificar',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        swal({
+            title: 'Registro correcto',
+            text: 'La actividad se registró correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        infoActividad.push(idBitacora, id_actividad, dFechaRegistro, dFechaActividad, tHoraInicio, tHoraFin, totalHorasActividad, sActividad, sEstudianteAtendido, sDescripcionActividad);
+        $('.swal2-confirm').click(function () {
+            actualizarActividad(infoActividad);
+            reload();
+        });
+    }
+};
+
+function llenarFormularioActualizar() {
+    let idBitacora = inputIdBitacora.value;
+    let idActivdad = this.dataset.id_actividad;
+    let infoBitacora = buscarBitacora(idBitacora);
+    for (let i = 0; i < infoBitacora['actividades_bitacora'].length; i++) {
+        let actividadActual = infoBitacora['actividades_bitacora'][i];
+        if (actividadActual['_id'] == idActivdad) {
+            inputFechaActividad.valueAsDate = new Date(actividadActual['fecha_actividad_actividad']);
+            inputHoraInicio.value = actividadActual['hora_inicio_actividad'];
+            inputHoraFin.value = actividadActual['hora_fin_actividad'];
+            selectActividad.value = actividadActual['accion_actividad'];
+            if (selectActividad.selectedIndex == 6) {
+                inputEstudianteAtendido.value = actividadActual['estudiantes_atendidos_actividad'];
+                aIndividual.hidden = false;
+                inputEstudianteAtendido.required = true;
+            } else {
+                sEstudianteAtendido = "";
+            }
+            inputDescripcionActividad.value = actividadActual['descripcion_actividad'];
+        }
     }
 };
 // Esta funcion traduce la hora de inicio y la de fin en la totalidad de horas trabajadas de la persona
@@ -341,38 +408,52 @@ function mostrarListaBitacoras(paBuscar) {
             }
 
             // Imprime la columna de opciones si el usuario no es asistente
-            if (localStorage.getItem('rolUsuario') != 'Asistente') {
+            if (localStorage.getItem('rolUsuario') != 'Asistente' || rolUsuarioActual == 'Administrador') {
 
                 let cOpciones = document.querySelector('#cOpcionesBitacora');
                 cOpciones.hidden = false;
 
                 let celdaOpciones = fila.insertCell();
-                // Este es el boton de aprobar
-                let botonAprobar = document.createElement('span');
-                botonAprobar.classList.add('fas');
-                botonAprobar.classList.add('fa-check-circle');
-                botonAprobar.dataset._id = listaBitacoras[i]['_id'];
 
-                celdaOpciones.appendChild(botonAprobar);
-                botonAprobar.addEventListener('click', aprobar_bitacora);
+                if (rolUsuarioActual == 'Profesor' || rolUsuarioActual == 'Administrador') {
+                    // Este es el boton de aprobar
+                    let botonAprobar = document.createElement('span');
+                    botonAprobar.classList.add('fas');
+                    botonAprobar.classList.add('fa-check-circle');
+                    botonAprobar.dataset._id = listaBitacoras[i]['_id'];
 
-                // este es el boton de rechazar
-                let botonRechazar = document.createElement('span');
-                botonRechazar.classList.add('fas');
-                botonRechazar.classList.add('fa-times-circle');
-                botonRechazar.dataset._id = listaBitacoras[i]['_id'];
+                    celdaOpciones.appendChild(botonAprobar);
+                    botonAprobar.addEventListener('click', aprobar_bitacora);
 
-                celdaOpciones.appendChild(botonRechazar);
-                botonRechazar.addEventListener('click', rechazar_bitacora);
+                    // este es el boton de rechazar
+                    let botonRechazar = document.createElement('span');
+                    botonRechazar.classList.add('fas');
+                    botonRechazar.classList.add('fa-times-circle');
+                    botonRechazar.dataset._id = listaBitacoras[i]['_id'];
 
-                // Este es el boton de eliminar
-                let botonEliminar = document.createElement('span');
-                botonEliminar.classList.add('fas');
-                botonEliminar.classList.add('fa-trash-alt');
-                botonEliminar.dataset._id = listaBitacoras[i]['_id'];
+                    celdaOpciones.appendChild(botonRechazar);
+                    botonRechazar.addEventListener('click', rechazar_bitacora);
+                }
 
-                celdaOpciones.appendChild(botonEliminar);
-                botonEliminar.addEventListener('click', eliminar_bitacora);
+                if (rolUsuarioActual == 'Asistente de decanatura' || rolUsuarioActual == 'Administrador') {
+                    // Este es el boton editar
+                    let botonEditar = document.createElement('span');
+                    botonEditar.classList.add('fas');
+                    botonEditar.classList.add('fa-edit');
+                    botonEditar.dataset._id = listaBitacoras[i]['_id'];
+
+                    celdaOpciones.appendChild(botonEditar);
+                    botonEditar.addEventListener('click', eliminar_bitacora);
+
+                    // Este es el boton de eliminar
+                    let botonEliminar = document.createElement('span');
+                    botonEliminar.classList.add('fas');
+                    botonEliminar.classList.add('fa-trash-alt');
+                    botonEliminar.dataset._id = listaBitacoras[i]['_id'];
+
+                    celdaOpciones.appendChild(botonEliminar);
+                    botonEliminar.addEventListener('click', eliminar_bitacora);
+                }
             }
 
             // Imprime el boton de ver actividades
@@ -411,7 +492,7 @@ function mostrarContenidoBitacora() {
             ppActividades.style.display = "none";
             ppRegistrarActividad.style.display = "block";
         });
-        btnAgregarActividad.addEventListener('click',cambiarDatosFormulario);
+        btnAgregarActividad.addEventListener('click', cambiarDatosFormulario);
     } else {
         btnAgregarActividad.hidden = true;
         document.querySelector('#sct_actividades .popup-content').style.display = 'block';
@@ -424,7 +505,7 @@ function mostrarContenidoBitacora() {
 
     if (infoBitacora['actividades_bitacora'].length == 0 || infoBitacora['actividades_bitacora'].length == null || infoBitacora['actividades_bitacora'].length == undefined) {
         table.style.display = "none";
-        document.querySelector('#sct_actividades .popup-content').style.width = '50%';
+        document.querySelector('#sct_actividades .popup-content').style.width = '60%';
         msgNoActividad.style.display = "block";
     } else {
         table.style.display = "table";
@@ -489,6 +570,7 @@ function mostrarContenidoBitacora() {
                     ppRegistrarActividad.style.display = "block";
                 });
                 botonEditar.addEventListener('click', cambiarDatosFormulario);
+                botonEditar.addEventListener('click', llenarFormularioActualizar);
             }
 
             celdaOpciones.appendChild(botonEditar);
@@ -531,7 +613,7 @@ function validarRegistrar() {
 
 
 };
-function validarRegistrarActividad() {
+function validarRegistrarActividad(estado) {
     let bError = false;
 
     let arregloInputs = document.querySelectorAll('#sct_registrar_actividad form input:required');
@@ -542,48 +624,59 @@ function validarRegistrarActividad() {
     sActividad = selectActividad.value;
     sEstudianteAtendido = inputEstudianteAtendido.value;
     sDescripcionActividad = inputDescripcionActividad.value;
+    if (!estado) {
+        // Validacion contra blancos y validacion del time
+        for (let i = 0; i < arregloInputs.length; i++) {
+            if (arregloInputs[i].value == "") {
+                bError = true;
+                arregloInputs[i].classList.add('errorInput');
+            }
+            else {
+                arregloInputs[i].classList.remove('errorInput');
+            }
 
-    // Validacion contra blancos y validacion del time
-    for (let i = 0; i < arregloInputs.length; i++) {
-        if (arregloInputs[i].value == "") {
+            if (arregloInputs[1].value == "00:00") {
+                bError = true;
+                arregloInputs[1].classList.add('errorInput');
+            } else {
+                arregloInputs[1].classList.remove('errorInput');
+            }
+            if (arregloInputs[2].value == "00:00") {
+                bError = true;
+                arregloInputs[2].classList.add('errorInput');
+            } else {
+                arregloInputs[2].classList.remove('errorInput');
+            }
+        }
+
+        // Validacion del select de actividad
+        if (selectActividad.selectedIndex == 0) {
             bError = true;
-            arregloInputs[i].classList.add('errorInput');
+            selectActividad.classList.add('errorInput');
         }
         else {
-            arregloInputs[i].classList.remove('errorInput');
+            selectActividad.classList.remove('errorInput');
         }
 
-        if(arregloInputs[1].value == "00:00"){
+        if (sEstudianteAtendido != "" && (regexSoloLetras.test(sEstudianteAtendido) == false)) {
             bError = true;
-            arregloInputs[1].classList.add('errorInput');
-        }else{
-            arregloInputs[1].classList.remove('errorInput');
+            inputEstudianteAtendido.classList.add('errorInput');
         }
-        if(arregloInputs[2].value == "00:00"){
-            bError = true;
-            arregloInputs[2].classList.add('errorInput');
-        }else{
-            arregloInputs[2].classList.remove('errorInput');
+        else {
+            inputEstudianteAtendido.classList.remove('errorInput');
         }
+    } else {
+        if (selectActividad.selectedIndex == 6) {
+            if (regexSoloLetras.test(sEstudianteAtendido) == false || inputEstudianteAtendido.value == "") {
+                bError = true;
+                inputEstudianteAtendido.classList.add('errorInput');
+            }
+            else {
+                inputEstudianteAtendido.classList.remove('errorInput');
+            }
+        }
+        
     }
-
-    // Validacion del select de actividad
-    if(selectActividad.selectedIndex == 0){
-        bError = true;
-        selectActividad.classList.add('errorInput');
-    }
-    else {
-        selectActividad.classList.remove('errorInput');
-    }
-
-    if(sEstudianteAtendido != "" && (regexSoloLetras.test(sEstudianteAtendido) == false )){
-        bError = true;
-        inputEstudianteAtendido.classList.add('errorInput');
-    }
-    else {
-        inputEstudianteAtendido.classList.remove('errorInput');
-    }
-
     return bError;
 };
 
@@ -631,6 +724,7 @@ window.onclick = function (event) {
         ppActividades.style.display = "none";
     }
     if (event.target == ppRegistrarActividad) {
+        limpiarFormularioRegistrarActividad();
         ppRegistrarActividad.style.display = "none";
     }
 }
@@ -647,12 +741,22 @@ function limpiarFormularioRegistrarActividad() {
     selectActividad.selectedIndex = 0;
     inputEstudianteAtendido.value = "";
     inputDescripcionActividad.value = "";
+
+    let arregloInput = document.querySelectorAll('#sct_registrar_actividad form input:required');
+    for (let i = 0; i < arregloInput.length; i++) {
+        arregloInput[i].classList.remove('errorInput');
+    }
+    selectActividad.classList.remove('errorInput');
 }
 function reload() {
     ppRegistrar.style.display = "none";
     ppRegistrarActividad.style.display = "none";
     ppActividades.style.display = "none";
-    mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
+    if (rolUsuarioActual == 'Asistente' || rolUsuarioActual == 'Profesor') {
+        mostrarListaBitacoras(localStorage.getItem('nombreCompletoUsuario'));
+    } else {
+        mostrarListaBitacoras();
+    }
     limpiarFormularioRegistrarBitacora();
     limpiarFormularioRegistrarActividad();
 }
@@ -667,7 +771,9 @@ function quitarRegistrarBitacora() {
 }
 
 function cambiarDatosFormulario() {
-    
+
+    let id_actividad = this.dataset.id_actividad;
+
     let actividadTitle = document.querySelector('#sct_registrar_actividad h1.title');
     let labelFechaActividad = document.querySelector('label[for="dateFechaActividad"]');
     let labelHoraInicio = document.querySelector('label[for="numHoraInicioActividad"]');
@@ -678,6 +784,8 @@ function cambiarDatosFormulario() {
 
     let btnRegistrarActividad = document.querySelector('#btnRegistrarActividad');
     let btnActualizarActividad = document.querySelector('#btnActualizarActividad');
+
+    btnActualizarActividad.dataset.id_actividad = id_actividad;
 
     if (this.name == "btnEditarActividad") {
 
