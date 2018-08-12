@@ -258,3 +258,36 @@ function rechazarBitacora(pid){
 
       return respuesta;
 };
+
+function actualizarActividad(paInfoActividad){
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/modificar_actividad_bitacora',
+        type : 'post',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            id_bitacora: paInfoActividad[0],
+            id_actividad: paInfoActividad[1],
+            fecha_registro_actividad: paInfoActividad[2],
+            fecha_actividad_actividad: paInfoActividad[3],
+            hora_inicio_actividad: paInfoActividad[4],
+            hora_fin_actividad: paInfoActividad[5],
+            horas_trabajadas_actividad: paInfoActividad[6],
+            accion_actividad: paInfoActividad[7],
+            estudiantes_atendidos_actividad: paInfoActividad[8],
+            descripcion_actividad: paInfoActividad[9]
+        }
+      });
+
+      peticion.done(function(response){
+       respuesta = response;
+      });
+
+      peticion.fail(function(response){
+
+      });
+
+      return respuesta;
+};

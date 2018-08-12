@@ -110,3 +110,28 @@ module.exports.modificar_bitacora = function (req, res) {
             }
         });
 };
+
+module.exports.modificar_actividad_bitacora = function(req, res){
+    bitacoraModel.findOneAndUpdate(
+        {_id: req.body.id_bitacora, "actividades_bitacora._id": req.body.id_actividad}, 
+        {
+            "$set": {
+                'actividades_bitacora.$.fecha_registro_actividad': req.body.fecha_registro_actividad,
+                'actividades_bitacora.$.fecha_actividad_actividad': req.body.actifecha_actividad_actividadvidad,
+                'actividades_bitacora.$.hora_inicio_actividad': req.body.hora_inicio_actividad,
+                'actividades_bitacora.$.hora_fin_actividad': req.body.hora_fin_actividad,
+                'actividades_bitacora.$.horas_trabajadas_actividad': req.body.horas_trabajadas_actividad,
+                'actividades_bitacora.$.accion_actividad': req.body.accion_actividad,
+                'actividades_bitacora.$.estudiantes_atendidos_actividad': req.body.estudiantes_atendidos_actividad,
+                'actividades_bitacora.$.descripcion_actividad': req.body.descripcion_actividad
+            }
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo actualizar la actividad de esta bitácora, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'La actividad se actualizó con éxito'});
+            }
+        }
+    )
+};

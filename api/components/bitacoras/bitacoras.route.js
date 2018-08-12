@@ -43,4 +43,9 @@ router.route('/modificar_bitacora')
         bitacorasApi.modificar_bitacora(req, res);
     });
 
+router.route('/modificar_actividad_bitacora')
+    .post(function (req, res) {
+        bitacorasApi.modificar_actividad_bitacora(req, res);
+    });
+
 module.exports = router;
