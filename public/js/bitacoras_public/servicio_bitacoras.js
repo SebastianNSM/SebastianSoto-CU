@@ -169,7 +169,6 @@ function actualizarBitacora(paInfoBitacora){
             nombre_profesor_bitacora : paInfoBitacora[1],
             nombre_asistente_bitacora : paInfoBitacora[2],
             curso_bitacora : paInfoBitacora[3],
-            horas_totales_bitacora : paInfoBitacora[4]
         }
       });
     

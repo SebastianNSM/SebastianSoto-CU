@@ -58,8 +58,9 @@ let sEstudianteAtendido = "";
 let sDescripcionActividad = "";
 
 let btnActualizarActividad = document.querySelector('#btnActualizarActividad');
-btnActualizarActividad.addEventListener('click',actualizarDatosActividad);
-
+btnActualizarActividad.addEventListener('click', actualizarDatosActividad);
+let btnActualizarBitacora = document.querySelector('#btnActualizarBitacora');
+btnActualizarBitacora.addEventListener('click', actualizarDatosBitacora);
 function mostrarCursos() {
     let listaCursos = obtenerCursos();
     let selectCurso = document.querySelector('#sltCurso');
@@ -250,7 +251,7 @@ function obtenerDatosActividad() {
     sDescripcionActividad = inputDescripcionActividad.value;
 
     let bError = false;
-    bError = validarRegistrarActividad(false);
+    bError = validarRegistrarActividad(true);
 
     if (bError) {
         swal({
@@ -280,7 +281,7 @@ function actualizarDatosActividad() {
     let id_actividad = this.dataset.id_actividad;
     let idBitacora = inputIdBitacora.value;
     let dFechaRegistro = new Date();
-    dFechaActividad = inputFechaActividad.valueAsDate;
+    dFechaActividad = new Date(inputFechaActividad.value);
     tHoraInicio = inputHoraInicio.value;
     tHoraFin = inputHoraFin.value;
     let totalHorasActividad = getHorasActividad(tHoraInicio, tHoraFin);
@@ -288,13 +289,14 @@ function actualizarDatosActividad() {
 
     if (selectActividad.selectedIndex == 6) {
         sEstudianteAtendido = inputEstudianteAtendido.value;
-    } else {
-        sEstudianteAtendido = "";
+    } else{
+        inputEstudianteAtendido.value = "";
     }
+
     sDescripcionActividad = inputDescripcionActividad.value;
 
     let bError = false;
-    bError = validarRegistrarActividad(true);
+    bError = validarRegistrarActividad(false);
 
     if (bError) {
         swal({
@@ -317,7 +319,57 @@ function actualizarDatosActividad() {
         });
     }
 };
+function actualizarDatosBitacora() {
+    let infoBitacora = [];
+    let idBitacora = this.dataset._id;
+    let nombreProfe = selectNombreProfesor.value;
+    let nombreAsistente = selectNombreAsistente.value;
+    let nombreCurso = inputCurso.value;
 
+    infoBitacora.push(idBitacora, nombreProfe, nombreAsistente, nombreCurso);
+    let selectList = [];
+
+    selectList.push(selectNombreProfesor, selectNombreAsistente, inputCurso);
+    let bError = false;
+
+    for (let i = 0; i < selectList.length; i++) {
+        if (selectList[i].selectedIndex == 0) {
+            bError = true;
+            selectList[i].classList.add('errorInput');
+        } else {
+            selectList[i].classList.remove('errorInput');
+        }
+    }
+
+    if (bError) {
+        swal({
+            title: 'Actualización incorrecta',
+            text: 'No se pudo actualizar la bitacora, verifique que completó correctamente los espacios que desea modificar',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        swal({
+            title: 'Registro correcto',
+            text: 'La bitacora se actualizó correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        $('.swal2-confirm').click(function () {
+
+            actualizarBitacora(infoBitacora);
+            reload();
+        });
+    }
+
+}
+function llenarFormularioBitacora() {
+    let idBitacora = this.dataset._id;
+    let infoBitacora = buscarBitacora(idBitacora);
+    selectNombreProfesor.value = infoBitacora['nombre_profesor_bitacora'];
+    selectNombreAsistente.value = infoBitacora['nombre_asistente_bitacora'];
+    inputCurso.value = infoBitacora['curso_bitacora'];
+}
 function llenarFormularioActualizar() {
     let idBitacora = inputIdBitacora.value;
     let idActivdad = this.dataset.id_actividad;
@@ -443,7 +495,12 @@ function mostrarListaBitacoras(paBuscar) {
                     botonEditar.dataset._id = listaBitacoras[i]['_id'];
 
                     celdaOpciones.appendChild(botonEditar);
-                    botonEditar.addEventListener('click', eliminar_bitacora);
+                    botonEditar.addEventListener('click', llenarFormularioBitacora);
+                    botonEditar.addEventListener('click', cambiarDatosFormularioBitacora);
+                    botonEditar.addEventListener('click', function () {
+                        ppRegistrar.style.display = "block";
+                        btnActualizarBitacora.dataset._id = botonEditar.dataset._id;
+                    });
 
                     // Este es el boton de eliminar
                     let botonEliminar = document.createElement('span');
@@ -492,7 +549,7 @@ function mostrarContenidoBitacora() {
             ppActividades.style.display = "none";
             ppRegistrarActividad.style.display = "block";
         });
-        btnAgregarActividad.addEventListener('click', cambiarDatosFormulario);
+        btnAgregarActividad.addEventListener('click', cambiarDatosFormularioActividad);
     } else {
         btnAgregarActividad.hidden = true;
         document.querySelector('#sct_actividades .popup-content').style.display = 'block';
@@ -569,7 +626,7 @@ function mostrarContenidoBitacora() {
                     ppActividades.style.display = "none";
                     ppRegistrarActividad.style.display = "block";
                 });
-                botonEditar.addEventListener('click', cambiarDatosFormulario);
+                botonEditar.addEventListener('click', cambiarDatosFormularioActividad);
                 botonEditar.addEventListener('click', llenarFormularioActualizar);
             }
 
@@ -624,7 +681,7 @@ function validarRegistrarActividad(estado) {
     sActividad = selectActividad.value;
     sEstudianteAtendido = inputEstudianteAtendido.value;
     sDescripcionActividad = inputDescripcionActividad.value;
-    if (!estado) {
+    if (estado) {
         // Validacion contra blancos y validacion del time
         for (let i = 0; i < arregloInputs.length; i++) {
             if (arregloInputs[i].value == "") {
@@ -634,19 +691,19 @@ function validarRegistrarActividad(estado) {
             else {
                 arregloInputs[i].classList.remove('errorInput');
             }
+        }
 
-            if (arregloInputs[1].value == "00:00") {
-                bError = true;
-                arregloInputs[1].classList.add('errorInput');
-            } else {
-                arregloInputs[1].classList.remove('errorInput');
-            }
-            if (arregloInputs[2].value == "00:00") {
-                bError = true;
-                arregloInputs[2].classList.add('errorInput');
-            } else {
-                arregloInputs[2].classList.remove('errorInput');
-            }
+        if (arregloInputs[1].value == "00:00") {
+            bError = true;
+            arregloInputs[1].classList.add('errorInput');
+        } else {
+            arregloInputs[1].classList.remove('errorInput');
+        }
+        if (arregloInputs[2].value == "00:00") {
+            bError = true;
+            arregloInputs[2].classList.add('errorInput');
+        } else {
+            arregloInputs[2].classList.remove('errorInput');
         }
 
         // Validacion del select de actividad
@@ -658,13 +715,21 @@ function validarRegistrarActividad(estado) {
             selectActividad.classList.remove('errorInput');
         }
 
-        if (sEstudianteAtendido != "" && (regexSoloLetras.test(sEstudianteAtendido) == false)) {
+        selectActividad.addEventListener('change', function () {
+            if (selectActividad.selectedIndex == 6) {
+                sEstudianteAtendido = "";
+                inputEstudianteAtendido.classList.remove('errorInput');
+            }
+        });
+
+        if (sEstudianteAtendido == "" && (regexSoloLetras.test(sEstudianteAtendido) == false)) {
             bError = true;
             inputEstudianteAtendido.classList.add('errorInput');
         }
         else {
             inputEstudianteAtendido.classList.remove('errorInput');
         }
+
     } else {
         if (selectActividad.selectedIndex == 6) {
             if (regexSoloLetras.test(sEstudianteAtendido) == false || inputEstudianteAtendido.value == "") {
@@ -675,7 +740,7 @@ function validarRegistrarActividad(estado) {
                 inputEstudianteAtendido.classList.remove('errorInput');
             }
         }
-        
+
     }
     return bError;
 };
@@ -770,7 +835,26 @@ function quitarRegistrarBitacora() {
     side.appendChild(newSpace);
 }
 
-function cambiarDatosFormulario() {
+function cambiarDatosFormularioBitacora() {
+    let idBitacora = this.dataset._id;
+    let title = document.querySelector('#sct_registrar h1.title');
+    let sProfe = document.querySelector('label[for="txtNombreProfesor"]');
+    let sAsist = document.querySelector('label[for="txtNombreAsistente"]');
+    let sCurso = document.querySelector('label[for="sltCurso"]');
+
+    let btnRegistrarBitacora = document.querySelector('#btnRegistrar');
+    let btnActualizarBitacora = document.querySelector('#btnActualizarBitacora');
+
+    title.innerHTML = 'Actualizar bitácora';
+    sProfe.innerHTML = 'Profesor responsable';
+    sAsist.innerHTML = 'Asistente responsable';
+    sCurso.innerHTML = 'Curso asignado';
+
+    btnRegistrarBitacora.hidden = true;
+    btnActualizarBitacora.hidden = false;
+}
+
+function cambiarDatosFormularioActividad() {
 
     let id_actividad = this.dataset.id_actividad;
 

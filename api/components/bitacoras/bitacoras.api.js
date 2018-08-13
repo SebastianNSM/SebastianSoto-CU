@@ -117,7 +117,7 @@ module.exports.modificar_actividad_bitacora = function(req, res){
         {
             "$set": {
                 'actividades_bitacora.$.fecha_registro_actividad': req.body.fecha_registro_actividad,
-                'actividades_bitacora.$.fecha_actividad_actividad': req.body.actifecha_actividad_actividadvidad,
+                'actividades_bitacora.$.fecha_actividad_actividad': req.body.fecha_actividad_actividad,
                 'actividades_bitacora.$.hora_inicio_actividad': req.body.hora_inicio_actividad,
                 'actividades_bitacora.$.hora_fin_actividad': req.body.hora_fin_actividad,
                 'actividades_bitacora.$.horas_trabajadas_actividad': req.body.horas_trabajadas_actividad,

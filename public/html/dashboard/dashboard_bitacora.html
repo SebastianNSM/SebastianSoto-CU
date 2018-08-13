@@ -113,13 +113,14 @@
                         <option value="">Seleccione un asistente</option>
                     </select>
 
-                    <label for="sltCurso">Curso de asistencia</label>
+                    <label for="sltCurso">Curso asignado*</label>
                     <select name="Cursos" id="sltCurso">
                         <option value="">Seleccione un curso</option>
                     </select>
 
 
                     <button type="button" class="button" id="btnRegistrar">Registrar</button>
+                    <button type="button" class="button" hidden id="btnActualizarBitacora">Actualizar</button>
                 </div>
             </form>
             <!-- Formulario que aparece -->
@@ -170,7 +171,6 @@
 
                     <label for="numHoraInicioActividad">Hora al iniciar*</label>
                     <input type="time" id="numHoraInicioActividad" required>
-
 
                     <label for="numHoraFinActividad">Hora al finalizar*</label>
                     <input type="time" id="numHoraFinActividad" required>
