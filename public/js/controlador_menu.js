@@ -94,7 +94,7 @@ function leerRolOpciones() {
     let opcionCarreras = ['Carreras', '../../html/dashboard/dashboard_carrera.html'];
     let opcionCursos = ['Cursos', '#'];
     let opcionGrupos = ['Grupos', '#'];
-    let opcionLaboratorios = ['Laboratorios', '#'];
+    let opcionLaboratorios = ['Laboratorios','#'];
     let opcionUsuarios = ['Usuarios', '../../html/dashboard/dashboard_usuarios.html'];
     let opcionPeriodos = ['Períodos', '../../html/dashboard/dashboard_periodos.html'];
     let opcionBitacora = ['Bitácora', '../../html/dashboard/dashboard_bitacora.html'];

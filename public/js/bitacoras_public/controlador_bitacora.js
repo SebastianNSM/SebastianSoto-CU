@@ -289,7 +289,7 @@ function actualizarDatosActividad() {
 
     if (selectActividad.selectedIndex == 6) {
         sEstudianteAtendido = inputEstudianteAtendido.value;
-    } else{
+    } else {
         inputEstudianteAtendido.value = "";
     }
 
@@ -307,14 +307,14 @@ function actualizarDatosActividad() {
         });
     } else {
         swal({
-            title: 'Registro correcto',
-            text: 'La actividad se registró correctamente',
+            title: 'Actualización correcta',
+            text: 'La actividad se actualizó correctamente',
             type: 'success',
             confirmButtonText: 'Entendido'
         });
         infoActividad.push(idBitacora, id_actividad, dFechaRegistro, dFechaActividad, tHoraInicio, tHoraFin, totalHorasActividad, sActividad, sEstudianteAtendido, sDescripcionActividad);
         $('.swal2-confirm').click(function () {
-            actualizarActividad(infoActividad);
+            modificarActividadBitacora(infoActividad);
             reload();
         });
     }
@@ -350,7 +350,7 @@ function actualizarDatosBitacora() {
         });
     } else {
         swal({
-            title: 'Registro correcto',
+            title: 'Actualización correcta',
             text: 'La bitacora se actualizó correctamente',
             type: 'success',
             confirmButtonText: 'Entendido'
@@ -496,6 +496,7 @@ function mostrarListaBitacoras(paBuscar) {
 
                     celdaOpciones.appendChild(botonEditar);
                     botonEditar.addEventListener('click', llenarFormularioBitacora);
+                    botonEditar.dataset.actualizar = true;
                     botonEditar.addEventListener('click', cambiarDatosFormularioBitacora);
                     botonEditar.addEventListener('click', function () {
                         ppRegistrar.style.display = "block";
@@ -722,14 +723,6 @@ function validarRegistrarActividad(estado) {
             }
         });
 
-        if (sEstudianteAtendido == "" && (regexSoloLetras.test(sEstudianteAtendido) == false)) {
-            bError = true;
-            inputEstudianteAtendido.classList.add('errorInput');
-        }
-        else {
-            inputEstudianteAtendido.classList.remove('errorInput');
-        }
-
     } else {
         if (selectActividad.selectedIndex == 6) {
             if (regexSoloLetras.test(sEstudianteAtendido) == false || inputEstudianteAtendido.value == "") {
@@ -754,7 +747,7 @@ let ppRegistrar = document.querySelector('#sct_registrar');
 let ppActividades = document.querySelector('#sct_actividades');
 let ppRegistrarActividad = document.querySelector('#sct_registrar_actividad');
 let ppActividadesRegistrar = document.querySelector('#sct_registrar_actividad');
-
+botonAgregar.addEventListener('click',cambiarDatosFormularioBitacora);
 botonAgregar.addEventListener('click', function () {
     ppRegistrar.style.display = "block";
 });
@@ -845,13 +838,24 @@ function cambiarDatosFormularioBitacora() {
     let btnRegistrarBitacora = document.querySelector('#btnRegistrar');
     let btnActualizarBitacora = document.querySelector('#btnActualizarBitacora');
 
-    title.innerHTML = 'Actualizar bitácora';
-    sProfe.innerHTML = 'Profesor responsable';
-    sAsist.innerHTML = 'Asistente responsable';
-    sCurso.innerHTML = 'Curso asignado';
 
-    btnRegistrarBitacora.hidden = true;
-    btnActualizarBitacora.hidden = false;
+    if (this.dataset.actualizar) {
+        title.innerHTML = 'Actualizar bitácora';
+        sProfe.innerHTML = 'Profesor responsable';
+        sAsist.innerHTML = 'Asistente responsable';
+        sCurso.innerHTML = 'Curso asignado';
+
+        btnRegistrarBitacora.hidden = true;
+        btnActualizarBitacora.hidden = false;
+    }else{
+        title.innerHTML = 'Registrar bitácora';
+        sProfe.innerHTML = 'Profesor responsable*';
+        sAsist.innerHTML = 'Asistente responsable*';
+        sCurso.innerHTML = 'Curso asignado*';
+
+        btnRegistrarBitacora.hidden = false;
+        btnActualizarBitacora.hidden = true;
+    }
 }
 
 function cambiarDatosFormularioActividad() {
