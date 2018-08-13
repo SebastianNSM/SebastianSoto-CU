@@ -19,7 +19,8 @@ module.exports.registrar_usuarios = function (req, res)
         distrito_usuario: req.body.distrito_usuario,
         rol_usuario: req.body.rol_usuario,
         estado_usuario: "Activo",
-        contrasenna_usuario: req.body.contrasenna_usuario
+        contrasenna_usuario: req.body.contrasenna_usuario,
+        first_log: true
     });
 
     nuevoUsuario.save(function (error)
@@ -51,6 +52,14 @@ module.exports.buscar_usuario_por_id = function (req, res) {
     );
 };
 
+module.exports.buscar_masInfo_por_id = function (req, res) {
+    usersModel.findById({ _id: req.body._id }).then(
+        function (usuario) {
+            res.send(usuario);
+        }
+    );
+};
+
 module.exports.modificar_usuario = function (req, res) {
     usersModel.findByIdAndUpdate(req.body._id, { $set: req.body },
         function (err, usuario) {
@@ -62,6 +71,7 @@ module.exports.modificar_usuario = function (req, res) {
             }
         });
 };
+
 
 module.exports.eliminar_usuario = function (req, res) {
     usersModel.findByIdAndDelete(req.body._id,

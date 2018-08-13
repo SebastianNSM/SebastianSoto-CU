@@ -1,4 +1,4 @@
-'use strict'
+﻿'use strict'
 
 /**
  * Exportamos todas las dependencias necesarias para establecer la conexión
@@ -66,6 +66,7 @@ const carreras = require('./components/carreras/carreras.route');
 const becas = require('./components/becas/becas.route');
 const users = require('./components/users/users.route');
 const sedes = require('./components/sedes/sedes.route');
+const periodos = require('./components/periodos/periodos.route');
 const cursos = require('./components/cursos/curso.route');
 const bitacoras = require('./components/bitacoras/bitacoras.route');
 
@@ -78,6 +79,7 @@ app.use('/api', users);
 app.use('/api', sedes);
 app.use('/api', cursos);
 app.use('/api', bitacoras);
+app.use('/api', periodos);
 
 
 // Se guarda todo lo que se ha realizado

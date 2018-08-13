@@ -1,7 +1,39 @@
 ﻿'use strict';
+
+window.onload = function(){
+    let infoUsuario = obtener_usuario_por_id(localStorage.getItem('idUsuario'));
+
+    let firstLog = infoUsuario['first_log'];
+    if(firstLog){
+        swal({
+            title: 'Bienvenido a Asistentes Cenfotec',
+            text: 'Por favor, cambie su contraseña.',
+            type: 'info',
+            confirmButtonText: 'Entendido'
+        });
+        $('.swal2-confirm').click(function () {
+            // Aca va la funcion donde aparece lo de cambiar la contrasenna
+            actualizarFirstLog(infoUsuario['_id']);
+            cambiarFormulario();
+            obtenerContrasennaActual();
+        });
+    }
+};
+
+
 let rolActual = localStorage.getItem('rolUsuario');
 leerRolOpciones();
 imprimirInfoPerfil();
+let inputContrasennaActual = document.querySelector('#txtNuevaContrasenna');
+let inputConfirmacion = document.querySelector('#txtConfirmacion');
+let inputIdContrasenna = document.querySelector('#txtIdContrasenna');
+let botonObtenerContrasenna = document.querySelector('#btnContrasenna');
+
+let sContrasenna = '';
+let sConfirmacion = '';
+let sId = '';
+
+
 // Para menu Opciones
 $('#btnOpciones').click(function () {
     if ($('#menuOpciones').css('display') === 'none') {
@@ -58,13 +90,13 @@ function leerRolOpciones() {
     // En el primer espacio va el nombre de la opcion y en el segundo la ruta
 
     // Estas son las opciones comunes por rol
-    let opcionSede = ['Sedes', '#'];
+    let opcionSede = ['Sedes', '../../html/dashboard/dashboard_sedes.html'];
     let opcionCarreras = ['Carreras', '../../html/dashboard/dashboard_carrera.html'];
     let opcionCursos = ['Cursos', '#'];
     let opcionGrupos = ['Grupos', '#'];
     let opcionLaboratorios = ['Laboratorios', '#'];
-    let opcionUsuarios = ['Usuarios', '#'];
-    let opcionPeriodos = ['Períodos', '#'];
+    let opcionUsuarios = ['Usuarios', '../../html/dashboard/dashboard_usuarios.html'];
+    let opcionPeriodos = ['Períodos', '../../html/dashboard/dashboard_periodos.html'];
     let opcionBitacora = ['Bitácora', '../../html/dashboard/dashboard_bitacora.html'];
     let opcionSolicitud = ['Solicitud', '#'];
 
@@ -76,7 +108,7 @@ function leerRolOpciones() {
     let opcionesDecanatura = [];
     opcionesDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora)
     let opcionesAsistenteDecanatura = [];
-    opcionesAsistenteDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionBitacora, opcionSolicitud)
+    opcionesAsistenteDecanatura.push(opcionSede, opcionCarreras, opcionCursos, opcionGrupos, opcionLaboratorios, opcionUsuarios, opcionPeriodos, opcionSolicitud)
     let opcionesProfesor = [];
     opcionesProfesor.push(opcionBitacora, opcionSolicitud);
 
@@ -94,12 +126,12 @@ function leerRolOpciones() {
     let opRepAsistente = [];
     opRepAsistente.push(opcionGraficoHorasAsistencia, opcionGraficoTotalHoras);
 
-    let opcionPorcentajeBeca = ['Porcentaje de actual','#'];
+    let opcionPorcentajeBeca = ['Porcentaje de actual', '#'];
     let opcionInformacionBeca = ['Información de beca', '#'];
-    let opcionModificarBeca = ['Modificar información de beca','#'];
+    let opcionModificarBeca = ['Modificar información de beca', '#'];
 
     let opBecaSuperior = [];
-    opBecaSuperior.push(opcionInformacionBeca,opcionModificarBeca);
+    opBecaSuperior.push(opcionInformacionBeca, opcionModificarBeca);
     let opBecaDecAsist = [];
     opBecaDecAsist.push(opcionInformacionBeca);
     let opBecAsist = [];
@@ -162,7 +194,7 @@ function imprimirOpcionesReportes(paOpciones) {
     }
 }
 function quitarBotonOpciones() {
-    let divOpciones  = document.querySelector('#divOpciones');
+    let divOpciones = document.querySelector('#divOpciones');
     divOpciones.style.display = "none";
 }
 
@@ -199,16 +231,102 @@ function imprimirInfoPerfil() {
     perfilInfo.appendChild(createTextElement(infoUsuarioActual['telefono_usuario'], 'h2'));
     perfilInfo.appendChild(createTextElement('Dirección exacta:', 'h2'));
     perfilInfo.appendChild(createTextElement(infoUsuarioActual['direccion_usuario'], 'h2'));
-
+    let divEspacio = document.createElement('div');
+    perfilInfo.appendChild(divEspacio);
+    let botonCambioForm = document.createElement('button');
+    botonCambioForm.classList.add('boton-cambio-contrasenna');
+    botonCambioForm.innerHTML = "Cambiar contraseña";
+    botonCambioForm.addEventListener('click', obtenerContrasennaActual)
+    botonCambioForm.addEventListener('click', cambiarFormulario);
+    perfilInfo.appendChild(botonCambioForm);
 }
+
+
 function createTextElement(text, element) {
     let newH2 = document.createElement(element);
     newH2.textContent = text;
     return newH2
 }
+
+function cambiarFormulario() {
+    let ppPerfil = document.querySelector('#sct_perfil');
+    ppPerfil.style.display = "none";
+    let ppContrasenna = document.querySelector('#sct_contrasenna');
+    ppContrasenna.style.display = "block";
+
+}
+
+//cambio de contrase;a
+function obtenerContrasennaActual() {
+    let infoUsuarioActual = obtener_usuario_por_id(localStorage.getItem('idUsuario'));
+    
+    inputContrasennaActual.value = infoUsuarioActual['contrasenna_usuario'];
+    botonObtenerContrasenna.addEventListener('click', obtenerNuevaContrasenna)
+};
+
+function obtenerNuevaContrasenna() {
+    let infoContrasenna = [];
+    let infoUsuario = obtener_usuario_por_id(localStorage.getItem('idUsuario'));
+    let id = infoUsuario['_id'];
+    sContrasenna = inputContrasennaActual.value;
+    sConfirmacion = inputConfirmacion.value;
+    // validar pequenno
+    if (sContrasenna == "") {
+        inputContrasennaActual.classList.add('errorInput');
+    } else {
+        inputContrasennaActual.classList.remove('errorInput');
+    }
+    if (sConfirmacion == "") {
+        inputConfirmacion.classList.add('errorInput');
+    } else {
+        inputConfirmacion.classList.remove('errorInput');
+    }
+    // validar pequenno
+
+    let bError = false;
+    bError = verificarContrasenna(sContrasenna, sConfirmacion);
+    if (bError) {
+        swal({
+            title: 'No se pudo cambiar la contrase;a',
+            text: 'Verifique que la contraseña sea igual a la confirmacion',
+            type: 'warning',
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        swal({
+            title: 'Actualización correcta',
+            text: 'El usuario se actualizó correctamente',
+            type: 'success',
+            confirmButtonText: 'Entendido'
+        });
+        infoContrasenna.push(id, sContrasenna);
+        actualizarContrasenna(infoContrasenna);
+        $('.swal2-confirm').click(function () {
+            let ppContrasenna = document.querySelector('#sct_contrasenna');
+    ppContrasenna.style.display = "none";
+            reload();
+        });
+    }
+}
+
+function verificarContrasenna(sContrasenna, sConfirmacion) {
+
+    let bError = true;
+
+        if (sContrasenna == sConfirmacion){
+            inputContrasennaActual.classList.remove('errorInput');
+            inputConfirmacion.classList.remove('errorInput');
+            bError = false;
+        }
+    return bError;
+};
+
+
+
 // style.backgroundImage = "url('" + getImgUrl(listaEntrenador[i]['foto_entrenador']) + "')";
 let ppPerfil = document.querySelector('#sct_perfil');
 let botonPerfil = document.querySelector('#btnPerfil');
+botonPerfil.addEventListener('click', imprimirInfoPerfil);
 botonPerfil.addEventListener('click', function () {
     ppPerfil.style.display = "block";
     window.onclick = function (event) {
@@ -217,5 +335,3 @@ botonPerfil.addEventListener('click', function () {
         }
     }
 });
-
-

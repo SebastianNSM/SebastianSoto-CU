@@ -47,5 +47,6 @@ router.route('/modificar_actividad_bitacora')
     .post(function (req, res) {
         bitacorasApi.modificar_actividad_bitacora(req, res);
     });
-
 module.exports = router;
+
+// Este comentario debe salir

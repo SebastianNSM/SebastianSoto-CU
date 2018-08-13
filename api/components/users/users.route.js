@@ -18,6 +18,11 @@ router.route('/buscar_usuario_id')
         usersApi.buscar_usuario_por_id(req, res);
     });
 
+    router.route('/buscar_masInfo_id')
+    .post(function (req, res) {
+        usersApi.buscar_masInfo_por_id(req, res);
+    });
+
 router.route('/modificar_usuario')
     .post(function (req, res) {
         usersApi.modificar_usuario(req, res);

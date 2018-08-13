@@ -1,0 +1,186 @@
+<!-- Inicio de lo que deben tener todos los dashboards -->
+<!-- Inicio de lo que deben tener todos los dashboards -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Asistentes Cenfotec</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/reset.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/formularios_sedes.css">
+    <!-- Si otra hoja de estilos se necesita, se agrega aqui -->
+
+</head>
+
+<body class="scroll">
+    <header>
+        <h1>
+            <a href="../landing_page.html">Asistentes Cenfotec</a>
+        </h1>
+        <nav>
+            <a href="../landing_page.html">Inicio</a>
+            <a id="btnPerfil">Perfil</a>
+            <div>
+                <a id="btnBeca">Beca
+                    <span class="fas fa-caret-down"></span>
+                </a>
+                <!-- Agregar esta parte nueva y cambiar el controlador menu -->
+                <ul id="menuBeca" class="menu">
+
+                </ul>
+            </div>
+            <div>
+                <a id="btnReportes">Reportes
+                    <span class="fas fa-caret-down"></span>
+                </a>
+                <ul id="menuReportes" class="menu">
+
+                </ul>
+            </div>
+            <div>
+                <a id="btnOpciones">Opciones
+                    <span class="fas fa-caret-down"></span>
+                </a>
+                <ul id="menuOpciones" class="menu">
+
+                </ul>
+            </div>
+            <a id="btnCerrarSesion">Cerrar sesión</a>
+        </nav>
+    </header>
+    <!-- Fin de lo que deben tener todos los dashboards -->
+    <!-- Fin de lo que deben tener todos los dashboards -->
+    <!-- Fin de lo que deben tener todos los dashboards -->
+    <!-- Fin de lo que deben tener todos los dashboards -->
+
+    <main>
+        <section id="sct_side">
+            <div class="side-title y-align">
+                <h1 class="x-align">Sedes</h1>
+            </div>
+            <div class="side-buscar y-align">
+                <div class="x-align">
+                    <input type="text" placeholder="Buscar" id="txtBusqueda">
+                    <div class="y-align">
+                        <span id="btnBuscar" class="x-align fas fa-search"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-elementos y-align">
+                <img class="x-align" src="../../img/logo.png" alt="Logo de Cenfotec">
+            </div>
+            <a class="side-agregar" id="btnAgregar">
+                <h1>Agregar</h1>
+                <span class="fas fa-plus"></span>
+            </a>
+        </section>
+        <section id="sct_main_content">
+            <!-- Como ejemplo los datos estan quemados -->
+            <table id="tblSedes" class="scroll">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección exacta</th>
+                        <th>Latitud</th>
+                        <th>Longitud</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
+        <section id="sct_registrar" class="popup-bg">
+            <!-- Formulario que aparece -->
+            <form class="popup-content scroll">
+                <h1 class="title" id="h1">Registrar sedes</h1>
+
+                <div class="form">
+
+                    <input type="hidden" id="txtId">
+
+                    <label for="txtNombre">Nombre</label>
+                    <input type="text" id="txtNombre" required placeholder="Nombre de la sede*">
+
+                    <label for="txtDirExacta">Dirección exacta</label>
+                    <input type="text" id="txtDirExacta" required placeholder="Dirección exacta de la sede*">
+
+                    <div id="mapa"></div>
+
+                    <label for="numLatitud">Latitud</label>
+                    <input type="number" id="numLatitud" disabled required placeholder="Latitud de la sede*">
+
+                    <label for="numLongitud">Longitud</label>
+                    <input type="number" id="numLongitud" disabled required placeholder="Longitud de la sede*">
+
+
+                    <div id="divEstado" hidden>
+                        <label for="txtEstado">Estado</label>
+                        <select id="txtEstado" required>
+                            <option value="Activa">Activa</option>
+                            <option value="Inactiva">Inactiva</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="button" id="btnRegistrar">Registrar</button>
+                    <button type="button" class="button" id="btnActualizar">Actualizar</button>
+                </div>
+            </form>
+            <!-- Formulario que aparece -->
+        </section>
+        <!-- Todos deben tener esta seccion de perfil -->
+        <section id="sct_perfil" class="popup-bg">
+            <div class="popup-content">
+                <h1 id="nombrePerfil"></h1>
+                <div class="perfil">
+                    <div id="img">
+                    </div>
+                    <div class="perfil-info">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="sct_contrasenna" class="popup-bg">
+            <div class="popup-content">
+                <h1>Cambio de Contraseña</h1>
+                <div class="form-contrasenna-holder">
+                    <div>
+                        <label for="txtNuevaContrasenna">Contraseña</label>
+                        <input type="text" id="txtNuevaContrasenna">
+                        <label for="txtConfirmacion">Confirmación</label>
+                        <input type="text" id="txtConfirmacion">
+                        <span></span>
+                        <button type="button" id="btnContrasenna" class="boton-contrasenna">Cambiar Contraseña</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- SCRIPTS FIJOS PARA TODOS Dashboards -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="../../js/jquery-3.3.1.js"></script>
+    <!-- SCRIPTS FIJOS PARA TODOS -->
+
+    <!-- Todos los servicios necesarios -->
+    <script src="../../js/usuarios_public/servicio_usuarios.js"></script>
+    <script src="../../js/sedes_public/servicio_sedes.js"></script>
+    <script src="../../js/carreras_public/servicio_carreras.js"></script>
+    <!-- Todos los servicios necesarios -->
+
+    <!-- Todos los controladores necesarios -->
+    <script src="../../js/controlador_menu.js"></script>
+    <script src="../../js/sedes_public/mapa.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIJ2TrApBrLvBsy7Rx-8WNrYfZNO39waQ&callback=initMap"></script>
+    <script src="../../js/sedes_public/controlador_sedes.js"></script>
+    <!-- Todos los controladores necesarios -->
+
+</body>
+
+</html>

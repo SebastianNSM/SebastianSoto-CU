@@ -27,6 +27,7 @@ let inputCanton = document.querySelector('#sltCanton');
 let inputDistrito = document.querySelector('#sltDistrito');
 let inputRol = document.querySelector('#txtRol');
 let inputEstado = document.querySelector('#txtEstado');
+let firstLog = true;
 
 let regexSoloLetras = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/;
 let regexDireccion = /^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/;
@@ -100,8 +101,20 @@ function mostrarListaUsuarios(paBuscar) {
 
             //Este es el boton de ver mas info
             let botonVerMas = document.createElement('button');
-            botonVerMas.classList.add('boton-ver-mas');
+            botonVerMas.name = "btnTabla";
             botonVerMas.innerHTML = "Ver mas informacion";
+            botonVerMas.dataset._id = listaUsuarios[i]['_id'];
+            botonVerMas.addEventListener('click', verMas);
+            let ppPerfil = document.querySelector('#sct_perfil');
+            botonVerMas.addEventListener('click', function () {
+                ppPerfil.style.display = "block";
+                window.onclick = function (event) {
+                    if (event.target == ppPerfil) {
+                        ppPerfil.style.display = "none";
+                    }
+                }
+            });
+
             celdaVerMas.appendChild(botonVerMas);
 
 
@@ -180,6 +193,7 @@ function obtenerDatosUsuario() {
     sDistrito = inputDistrito.value;
     sRol = inputRol.value;
     sEstado = inputEstado.value;
+    firstLog = true;
 
     let bError = false;
     bError = validarUsuario();
@@ -197,10 +211,10 @@ function obtenerDatosUsuario() {
             type: 'success',
             confirmButtonText: 'Entendido'
         });
-        infoUsuario.push(imagenUrl, sNombre, sPrimerApellido, sSegundoApellido, nCedula, dFecha, sCorreo, nTelefono, sDireccion, sProvincia, sDistrito, sCanton, sRol, sEstado, nCedula);
+        infoUsuario.push(imagenUrl, sNombre, sPrimerApellido, sSegundoApellido, nCedula, dFecha, sCorreo, nTelefono, sDireccion, sProvincia, sDistrito, sCanton, sRol, sEstado, nCedula, firstLog);
         registrar_Usuarios(infoUsuario);
         $('.swal2-confirm').click(function () {
-        reload();
+            reload();
         });
     }
 };
@@ -246,7 +260,7 @@ function obtenerDatosActual() {
         infoUsuarioActual.push(id, imagenUrl, sNombre, sPrimerApellido, sSegundoApellido, nCedula, dFecha, sCorreo, nTelefono, sDireccion, sProvincia, sCanton, sDistrito, sRol, sEstado);
         actualizarUsuario(infoUsuarioActual);
         $('.swal2-confirm').click(function () {
-        reload();
+            reload();
         });
         botonRegistrar.hidden = false;
         botonActualizar.hidden = true;
@@ -405,11 +419,65 @@ function buscar_por_id() {
     inputCorreo.value = usuario['correo_usuario'];
     inputTelefono.value = usuario['telefono_usuario'];
     inputDireccion.value = usuario['direccion_usuario'];
-    inputProvincia.value = usuario['provincia_usuario'];
-    inputCanton.value = usuario['canton_usuario'];
-    inputDistrito.value = usuario['distrito_usuario'];
     inputRol.value = usuario['rol_usuario'];
+
+    let sProvincia = document.querySelector('#sltProvincia');
+for (let i = 1; i < sProvincia.length; i++) {
+    if (sProvincia.options[i].value == usuario['provincia_usuario']) {
+        sProvincia.selectedIndex = i;
+    }
+}
+llenarCanton();
+let sCanton = document.querySelector('#sltCanton');
+for (let i = 1; i < sCanton.length; i++) {
+    if (sCanton.options[i].value == usuario['canton_usuario']) {
+        sCanton.selectedIndex = i;
+    }
+}
+llenarDistrito();
+let sDistrito = document.querySelector('#sltDistrito');
+for (let i = 1; i < sDistrito.length; i++) {
+    if (sDistrito.options[i].value == usuario['distrito_usuario']) {
+        sDistrito.selectedIndex = i;
+    }
+}
 };
+
+
+function verMas() {
+    let fotoPerfil = document.querySelector('#img');
+    let nombrePerfil = document.querySelector('#nombrePerfil');
+    let perfilInfo = document.querySelector('.perfil-info');
+    let _id = this.dataset._id;
+    let masInfo = obtener_masInfo_por_id(_id);
+
+    fotoPerfil.style.backgroundImage = "url('" + masInfo['foto_usuario'] + "')";
+
+    nombrePerfil.innerHTML = '';
+    let nombreCompleto = masInfo['nombre_usuario'] + " " + masInfo['primer_apellido_usuario'] + " " + masInfo['segundo_apellido_usuario'];
+    nombrePerfil.innerHTML = nombreCompleto;
+
+    perfilInfo.innerHTML = '';
+    perfilInfo.appendChild(createTextElement('Cédula:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['cedula_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Correo:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['correo_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Teléfono:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['telefono_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Provincia:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['provincia_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Canton:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['canton_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Distrito:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['distrito_usuario'], 'h2'));
+    perfilInfo.appendChild(createTextElement('Dirección exacta:', 'h2'));
+    perfilInfo.appendChild(createTextElement(masInfo['direccion_usuario'], 'h2'));
+}
+function createTextElement(text, element) {
+    let newH2 = document.createElement(element);
+    newH2.textContent = text;
+    return newH2
+}
 
 function eliminar_usuario() {
     let _id = this.dataset._id;
@@ -484,10 +552,10 @@ function limpiarFormularioRegistrar() {
 };
 
 
+
 function reload() {
     mostrarListaUsuarios();
     limpiarFormularioRegistrar();
     ppRegistrar.style.display = "none";
-    ppActualizar.style.display = "none";
 }
 // Esto es para que despliegue el formulario

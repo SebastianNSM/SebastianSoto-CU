@@ -179,5 +179,4 @@ function eliminarCarreraSede(pIdSede,pIdCarrera ){
       });
 
       return respuesta;
-};
-
+}
